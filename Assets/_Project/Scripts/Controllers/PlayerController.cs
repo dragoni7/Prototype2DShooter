@@ -1,28 +1,44 @@
 ﻿using UnityEngine;
-using static dragoni7.ScriptablePlayer;
 
 namespace dragoni7
 {
     public class PlayerController : Singletone<PlayerController>
     {
-        private AbstractPlayer currentPlayer;
-        public void SpawnPlayer(PlayerType type, Vector2 pos)
+        public AbstractPlayer CurrentPlayer { get; set; }
+        public void SpawnPlayer(string name, Vector2 pos)
         {
-            var scriptablePlayer = ResourceSystem.Instance.GetPlayer(type);
+            // spawn player
+            var scriptablePlayer = ResourceSystem.Instance.GetPlayer(name);
 
-            AbstractPlayer spawned = Instantiate(scriptablePlayer.prefab, pos, Quaternion.identity, transform);
+            AbstractPlayer spawnedPlayer = Instantiate(scriptablePlayer.playerPrefab, pos, Quaternion.identity, transform);
 
             // modify stats if needed
-            var stats = scriptablePlayer.BaseStats;
-            stats.health += 10;
+            var playerStats = scriptablePlayer.BaseStats;
+            playerStats.health += 10;
 
-            spawned.SetStats(stats);
-            currentPlayer = spawned;
+            spawnedPlayer.SetStats(playerStats);
+            spawnedPlayer.Abilities = scriptablePlayer.Abilities;
+            spawnedPlayer.EquipPos = scriptablePlayer.equipPos;
+
+            // create player's gun
+            var scriptableWeapon = ResourceSystem.Instance.GetWeapon(scriptablePlayer.scriptableWeapon.name);
+            AbstractWeapon spawnedWeapon = Instantiate(scriptablePlayer.scriptableWeapon.weaponPrefab, pos, Quaternion.identity, transform);
+            var weaponStats = scriptableWeapon.BaseStats;
+            spawnedWeapon.SetStats(weaponStats);
+
+            // set bullet for gun
+            spawnedWeapon.Bullet = ResourceSystem.Instance.GetBullet(scriptableWeapon.scriptableBullet.name);
+
+            // set player gun
+            spawnedPlayer.Weapon = spawnedWeapon;
+
+            // set current player
+            CurrentPlayer = spawnedPlayer;
         }
 
-        private void Update()
+        public void DamagePlayer(int damage)
         {
-            // execute updates on the current player
+            CurrentPlayer.TakeDamage(damage);
         }
     }
 }

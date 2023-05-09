@@ -1,4 +1,5 @@
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace dragoni7
@@ -7,19 +8,12 @@ namespace dragoni7
     {
         public EntityType type;
 
-        [SerializeField] private Stats stats;
-        public Stats BaseStats => stats;
+        [SerializeField, SerializeReference] private List<AbstractAbility> abilities;
+        public List<AbstractAbility> Abilities => abilities;
+
+        public string entityName;
 
         public string description;
-
-        [Serializable]
-        public struct Stats
-        {
-            public int health;
-            public int damage;
-            public float speed;
-            public float shootingSpeed;
-        }
 
         [Serializable]
         public enum EntityType
@@ -27,7 +21,8 @@ namespace dragoni7
             Player = 0,
             Friendly = 1,
             Neutral = 2,
-            Enemy = 3
+            Enemy = 3,
+            Bullet = 4
         }
     }
 }

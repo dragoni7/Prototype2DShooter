@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: Player1
   m_EditorClassIdentifier: 
   type: 0
+  abilities:
+  - {fileID: 2385704455612521622, guid: c4980158e0cee4e42866916537fdcd72, type: 3}
+  entityName: Player1
+  description: For Testing
+  playerPrefab: {fileID: -5676312503209429653, guid: 6c60d8f925887e941bc9943aafacb945, type: 3}
+  scriptableWeapon: {fileID: 11400000, guid: 236f17957f63b3d4eb78423038d2f281, type: 2}
+  equipPos: {x: 0.6, y: 0}
   stats:
     health: 5
     damage: 0
-    speed: 5
-    shootingSpeed: 3
-  description: For Testing
-  playerType: 0
-  prefab: {fileID: -5676312503209429653, guid: 6c60d8f925887e941bc9943aafacb945, type: 3}
+    speed: 4
+    shootingSpeed: 2

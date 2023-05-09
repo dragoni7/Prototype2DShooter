@@ -46,7 +46,7 @@ namespace dragoni7
 
         private void HandleSpawningPlayers()
         {
-            PlayerController.Instance.SpawnPlayer(PlayerType.Player1, Vector2.zero);
+            PlayerController.Instance.SpawnPlayer("Player1", Vector2.zero);
         }
 
         [Serializable]

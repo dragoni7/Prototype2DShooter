@@ -44,3 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d48a5fa62f1fc204d9a4d5235f4ee76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
+  abilities: []
+  canMove: 1
+  canAttack: 1
+  references:
+    version: 2
+    RefIds: []

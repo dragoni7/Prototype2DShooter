@@ -1,36 +1,48 @@
-﻿using UnityEngine.InputSystem;
-using UnityEngine;
+﻿using UnityEngine;
 using static dragoni7.GameController;
-using static dragoni7.AbstractScriptableEntity;
+using static dragoni7.ScriptablePlayer;
 
 namespace dragoni7
 {
     public abstract class AbstractPlayer : Entity
     {
-        public Rigidbody2D rb;
-        public Vector2 equipPos;
-        public PlayerGun gunPrefab;
+        public Vector2 EquipPos { get; set; }
+        public AbstractWeapon Weapon { get; set; }
+        public PlayerStats Stats { get; private set; }
 
-        protected Camera cam;
         protected Vector2 currentMove;
-        protected bool isFiring = false;
         protected float currentSpeed;
-        protected PlayerGun gun;
-        public void OnMove(InputAction.CallbackContext context)
+        public float CurrentSpeed
         {
-            currentMove = context.ReadValue<Vector2>();
+            get { return currentSpeed; } 
+            set
+            {
+                if (value != currentSpeed)
+                {
+                    currentSpeed = value;
+                }
+                return;
+            }
         }
 
-        public void OnFire(InputAction.CallbackContext context)
+        protected virtual void Start()
         {
-            isFiring = context.ReadValueAsButton();
+            CurrentSpeed = Stats.speed;
+            canMove = true;
+            canAttack = true;
+
+            Vector2 gunPosition = (Vector2)transform.position + EquipPos;
+            Weapon.transform.position = gunPosition;
         }
-        public abstract void OnAbility1Use(InputAction.CallbackContext context);
-        private void OnStateChanged(GameState newState)
+
+        public void SetStats(PlayerStats stats)
+        {
+            Stats = stats;
+        }
+        protected virtual void OnStateChanged(GameState newState)
         {
             // change logic according to state
         }
-
         private void Awake()
         {
             // Subscribe events
