@@ -14,6 +14,7 @@ namespace dragoni7
         public struct BulletStats
         {
             public int damage;
+            public int duration;
         }
     }
 }

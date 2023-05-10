@@ -21,4 +21,4 @@ MonoBehaviour:
   stats:
     damage: 3
     attackCooldown: 10
-    bulletForce: 10
+    bulletForce: 5

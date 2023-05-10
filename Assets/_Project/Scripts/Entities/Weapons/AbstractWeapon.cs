@@ -12,7 +12,8 @@ namespace dragoni7
 
         [SerializeField] protected Transform bulletSpawnPoint;
         protected int attackCounter;
-        protected Vector2 mousePosition;
+        protected Vector3 lookDirection;
+        protected float angle;
         private Camera cam;
 
         public virtual void Start()
@@ -30,14 +31,15 @@ namespace dragoni7
         public abstract void PerformAttack();
         public virtual void Update()
         {
-            mousePosition = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector3 mousePosition = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            lookDirection = mousePosition - transform.position;
+            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
         public virtual void FixedUpdate()
         {
-            Vector2 lookDir = mousePosition - rb.position;
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
+            
         }
     }
 }

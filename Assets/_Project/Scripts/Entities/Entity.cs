@@ -11,7 +11,6 @@ namespace dragoni7
 
         public bool canMove;
         public bool canAttack;
-
         public virtual void TakeDamage(int damage)
         {
 

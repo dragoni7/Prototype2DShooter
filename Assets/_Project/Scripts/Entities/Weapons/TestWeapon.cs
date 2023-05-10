@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -10,20 +11,11 @@ namespace dragoni7
         {
             if (attackCounter == Stats.attackCooldown)
             {
-                AbstractBullet bullet = Instantiate(Bullet.bulletPrefab, bulletSpawnPoint.position, bulletSpawnPoint.rotation);
-                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                rb.AddForce(bulletSpawnPoint.up * Stats.bulletForce, ForceMode2D.Impulse);
+                BulletController.Instance.SpawnBullet(Bullet, bulletSpawnPoint.position, Quaternion.Euler(0, 0, angle + 90), new Vector2(lookDirection.x, lookDirection.y).normalized, Stats.bulletForce);
                 attackCounter = 0;
             }
 
             attackCounter++;
-        }
-
-        public override void FixedUpdate()
-        {
-            Vector2 lookDir = mousePosition - rb.position;
-            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 45;
-            rb.rotation = angle;
         }
     }
 }
