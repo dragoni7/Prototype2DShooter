@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 namespace dragoni7
 {
@@ -20,16 +22,21 @@ namespace dragoni7
             spawnedPlayer.Abilities = scriptablePlayer.Abilities;
             spawnedPlayer.EquipPos = scriptablePlayer.equipPos;
 
-            // create player's gun
+            // create player's weapon
             var scriptableWeapon = ResourceSystem.Instance.GetWeapon(scriptablePlayer.scriptableWeapon.name);
             AbstractWeapon spawnedWeapon = Instantiate(scriptablePlayer.scriptableWeapon.weaponPrefab, pos, Quaternion.identity, transform);
-            var weaponStats = scriptableWeapon.BaseStats;
-            spawnedWeapon.SetStats(weaponStats);
 
-            // set bullet for gun
-            spawnedWeapon.Bullet = ResourceSystem.Instance.GetBullet(scriptableWeapon.scriptableBullet.name);
+            // create weapon
+            var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableWeapon.scriptableEmitter.name);
+            BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, pos, Quaternion.identity, transform);
+            spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
+            spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
+            spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
-            // set player gun
+            // set player weapon emitter
+            spawnedWeapon.Emitter = spawnedEmitter;
+
+            // set player weapon
             spawnedPlayer.Weapon = spawnedWeapon;
 
             // set current player

@@ -5,27 +5,18 @@ using static dragoni7.ScriptableWeapon;
 
 namespace dragoni7
 {
-    public abstract class AbstractWeapon : Entity
+    public abstract class AbstractWeapon : MonoBehaviour
     {
-        public ScriptableBullet Bullet { get; set; }
-        public WeaponStats Stats { get; protected set; }
+        public BaseEmitter Emitter { get; set; }
 
-        [SerializeField] protected Transform bulletSpawnPoint;
-        protected int attackCounter;
+        [SerializeField] protected Transform emitPoint;
         protected Vector3 lookDirection;
         protected float angle;
         private Camera cam;
 
         public virtual void Start()
         {
-            canMove = true;
-            canAttack = true;
             cam = FindAnyObjectByType<Camera>();
-        }
-
-        public void SetStats(WeaponStats stats)
-        {
-            Stats = stats;
         }
 
         public abstract void PerformAttack();
@@ -35,6 +26,9 @@ namespace dragoni7
             lookDirection = mousePosition - transform.position;
             angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
+
+            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90;
+            Emitter.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
         public virtual void FixedUpdate()

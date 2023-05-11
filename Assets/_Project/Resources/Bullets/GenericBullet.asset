@@ -13,10 +13,9 @@ MonoBehaviour:
   m_Name: GenericBullet
   m_EditorClassIdentifier: 
   type: 4
-  abilities: []
-  entityName: GenericBullet
+  objectName: GenericBullet
   description: Test bullet
-  bulletPrefab: {fileID: 8919082657257243997, guid: aaae42754eade2b4c9a47fde3b962065, type: 3}
+  bulletPrefab: {fileID: 7907342162027068562, guid: 76f0764d48af0d640a3bb24246761de3, type: 3}
   stats:
     damage: 1
     duration: 60

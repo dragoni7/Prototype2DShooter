@@ -1,9 +1,10 @@
+using System.Linq;
 using UnityEngine;
 using static dragoni7.ScriptableBullet;
 
 namespace dragoni7
 {
-    public class AbstractBullet : Entity
+    public class AbstractBullet : MonoBehaviour
     {
         public Vector2 Velocity { get; set; }
         public float BulletForce { get; set; }
@@ -13,8 +14,6 @@ namespace dragoni7
 
         public virtual void Start()
         {
-            canMove = true;
-            canAttack = true;
             timer = 0;
         }
 
@@ -29,9 +28,14 @@ namespace dragoni7
 
             RaycastHit2D[] hits = Physics2D.LinecastAll(currentPosition, newPosition);
 
-            foreach (RaycastHit2D hit in hits)
+            if (hits.Count() > 0)
             {
                 gameObject.SetActive(false);
+            }
+
+            foreach (RaycastHit2D hit in hits)
+            {
+                timer = 0;
             }
 
             transform.position = newPosition;
@@ -39,11 +43,6 @@ namespace dragoni7
 
         public virtual void FixedUpdate()
         {
-            if (!canMove)
-            {
-                return;
-            }
-
             if (timer >= Stats.duration)
             {
                 timer = 0;

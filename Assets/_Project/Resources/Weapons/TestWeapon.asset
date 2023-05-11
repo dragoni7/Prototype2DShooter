@@ -13,12 +13,7 @@ MonoBehaviour:
   m_Name: TestWeapon
   m_EditorClassIdentifier: 
   type: 2
-  abilities: []
-  entityName: TestWeapon
+  objectName: TestWeapon
   description: Weapon for testing
   weaponPrefab: {fileID: 4295456574892165578, guid: 35ff6232d3c23ec42912b1f8ad5bad32, type: 3}
-  scriptableBullet: {fileID: 11400000, guid: 6e0c18fb6856b4844bc88fa047657aa8, type: 2}
-  stats:
-    damage: 3
-    attackCooldown: 10
-    bulletForce: 5
+  scriptableEmitter: {fileID: 11400000, guid: 56951ac7daa237a4791b165bb00be982, type: 2}

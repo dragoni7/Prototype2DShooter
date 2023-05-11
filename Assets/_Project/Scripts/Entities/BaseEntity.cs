@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using static dragoni7.AbstractScriptableEntity;
+using static dragoni7.AbstractScriptable;
 
 namespace dragoni7
 {
-    public class Entity : MonoBehaviour
+    public class BaseEntity : MonoBehaviour
     {
         public Rigidbody2D rb;
         public List<AbstractAbility> Abilities { get; set; }

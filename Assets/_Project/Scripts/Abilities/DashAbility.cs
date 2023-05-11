@@ -11,7 +11,7 @@ namespace dragoni7
         [SerializeField] private float dashingPower = 24f;
         [SerializeField] private float dashingTime = 0.2f;
         [SerializeField] private float dashingCooldown = 1f;
-        public override IEnumerator Execute(Entity subject)
+        public override IEnumerator Execute(BaseEntity subject)
         {
             if (canDash)
             {

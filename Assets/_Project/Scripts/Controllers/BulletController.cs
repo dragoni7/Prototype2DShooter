@@ -24,7 +24,7 @@ namespace dragoni7
             bullet.GetComponent<AbstractBullet>().SetStats(scriptableBullet.BaseStats);
             bullet.GetComponent<AbstractBullet>().Velocity = velocity;
             bullet.GetComponent<AbstractBullet>().BulletForce = force;
-
+            //bullet.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
         }
     }
 }

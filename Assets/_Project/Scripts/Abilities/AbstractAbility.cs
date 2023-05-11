@@ -11,6 +11,6 @@ namespace dragoni7
 {
     public abstract class AbstractAbility : MonoBehaviour
     {
-        public abstract IEnumerator Execute(Entity subject);
+        public abstract IEnumerator Execute(BaseEntity subject);
     }
 }

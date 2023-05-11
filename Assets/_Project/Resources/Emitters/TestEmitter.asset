@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3d468d5b587d7543b06fd9031e01230, type: 3}
+  m_Name: TestEmitter
+  m_EditorClassIdentifier: 
+  type: 0
+  objectName: TestEmitter
+  description: Emitter for testing
+  emitterPrefab: {fileID: 3296497370567831315, guid: fdef32e4b2ebe314bbfd7a3b59f58921, type: 3}
+  scriptableBullet: {fileID: 11400000, guid: 6e0c18fb6856b4844bc88fa047657aa8, type: 2}
+  patternPrefab: {fileID: 7766644300974218740, guid: 7720d37eb2094434092540a014c853c9, type: 3}
+  stats:
+    emitTime: 30
+    bulletForce: 5

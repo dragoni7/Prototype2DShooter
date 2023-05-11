@@ -4,13 +4,12 @@ using static dragoni7.ScriptablePlayer;
 
 namespace dragoni7
 {
-    public abstract class AbstractPlayer : Entity
+    public abstract class AbstractPlayer : BaseEntity
     {
         public Vector2 EquipPos { get; set; }
         public AbstractWeapon Weapon { get; set; }
         public PlayerStats Stats { get; private set; }
 
-        protected Vector2 currentMove;
         protected float currentSpeed;
         public float CurrentSpeed
         {
@@ -31,8 +30,8 @@ namespace dragoni7
             canMove = true;
             canAttack = true;
 
-            Vector2 gunPosition = (Vector2)transform.position + EquipPos;
-            Weapon.transform.position = gunPosition;
+            Vector2 weaponPosition = (Vector2)transform.position + EquipPos;
+            Weapon.transform.position = weaponPosition;
         }
 
         public void SetStats(PlayerStats stats)

@@ -15,6 +15,9 @@ namespace dragoni7
         public List<ScriptableBullet> ScriptableBullets { get; private set; }
         private Dictionary<string, ScriptableBullet> bulletsDict;
 
+        public List<ScriptableEmitter> ScriptableEmitters { get; private set; }
+        private Dictionary<string, ScriptableEmitter> emittersDict;
+
         protected override void Awake()
         {
             base.Awake();
@@ -25,17 +28,21 @@ namespace dragoni7
         {
             // Players
             ScriptablePlayers = Resources.LoadAll<ScriptablePlayer>("Players").ToList();
-            playersDict = ScriptablePlayers.ToDictionary(r => r.entityName, r => r);
+            playersDict = ScriptablePlayers.ToDictionary(r => r.objectName, r => r);
 
             // Enemies
 
             // Weapons
             ScriptableWeapons = Resources.LoadAll<ScriptableWeapon>("Weapons").ToList();
-            weaponsDict = ScriptableWeapons.ToDictionary(r => r.entityName, r => r);
+            weaponsDict = ScriptableWeapons.ToDictionary(r => r.objectName, r => r);
 
             // Bullets
             ScriptableBullets = Resources.LoadAll<ScriptableBullet>("Bullets").ToList();
-            bulletsDict = ScriptableBullets.ToDictionary(r => r.entityName, r => r);
+            bulletsDict = ScriptableBullets.ToDictionary(r => r.objectName, r => r);
+
+            // Emitters
+            ScriptableEmitters = Resources.LoadAll<ScriptableEmitter>("Emitters").ToList();
+            emittersDict = ScriptableEmitters.ToDictionary(r => r.objectName, r => r);
         }
 
         public ScriptablePlayer GetPlayer(string name) => playersDict[name];
@@ -43,5 +50,7 @@ namespace dragoni7
         public ScriptableWeapon GetWeapon(string name) => weaponsDict[name];
 
         public ScriptableBullet GetBullet(string name) => bulletsDict[name];
+
+        public ScriptableEmitter GetEmitter(string name) => emittersDict[name];
     }
 }

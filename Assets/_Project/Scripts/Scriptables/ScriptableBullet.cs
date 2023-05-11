@@ -4,7 +4,7 @@ using UnityEngine;
 namespace dragoni7
 {
     [CreateAssetMenu(fileName = "New Scriptable Bullet")]
-    public class ScriptableBullet : AbstractScriptableEntity
+    public class ScriptableBullet : AbstractScriptable
     {
         public AbstractBullet bulletPrefab;
 

@@ -88,7 +88,9 @@ namespace dragoni7
                 pController.CurrentPlayer.transform.position += (Vector3)moveThisFrame;
             }
 
-            pController.CurrentPlayer.Weapon.transform.position = (Vector2)pController.CurrentPlayer.transform.position + pController.CurrentPlayer.EquipPos;
+            pController.CurrentPlayer.Weapon.transform.position = pController.CurrentPlayer.transform.position + (Vector3)pController.CurrentPlayer.EquipPos;
+            pController.CurrentPlayer.Weapon.Emitter.transform.position = pController.CurrentPlayer.Weapon.transform.position;
         }
     }
 }
+

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333476410277265342}
-  - component: {fileID: 7385173268065014191}
   - component: {fileID: 7389377051127765415}
   - component: {fileID: 1021003066942347298}
   - component: {fileID: 4295456574892165578}
@@ -36,21 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7385173268065014191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099416640520648690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d48a5fa62f1fc204d9a4d5235f4ee76d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 0}
-  canMove: 1
-  canAttack: 1
 --- !u!50 &7389377051127765415
 Rigidbody2D:
   serializedVersion: 4
@@ -136,10 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6a60e798f14bd4fb61c9dd6fd63bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 7389377051127765415}
-  canMove: 1
-  canAttack: 1
-  bulletSpawnPoint: {fileID: 6672894196276800938}
+  emitPoint: {fileID: 0}
 --- !u!1 &5388726989822501910
 GameObject:
   m_ObjectHideFlags: 0
