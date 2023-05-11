@@ -10,30 +10,26 @@ namespace dragoni7
         public BaseEmitter Emitter { get; set; }
 
         [SerializeField] protected Transform emitPoint;
-        protected Vector3 lookDirection;
-        protected float angle;
-        private Camera cam;
-
-        public virtual void Start()
-        {
-            cam = FindAnyObjectByType<Camera>();
-        }
 
         public abstract void PerformAttack();
+
+        public virtual void UpdatePosition(Vector3 position, Quaternion rotation)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+
+            Vector3 emitterAngles = rotation.eulerAngles;
+
+            Emitter.UpdatePosition(emitPoint.position, Quaternion.Euler(emitterAngles.x, emitterAngles.y, emitterAngles.z - 90));
+        }
         public virtual void Update()
         {
-            Vector3 mousePosition = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-            lookDirection = mousePosition - transform.position;
-            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90;
-            Emitter.transform.rotation = Quaternion.Euler(0, 0, angle);
         }
 
         public virtual void FixedUpdate()
         {
-            
+
         }
     }
 }

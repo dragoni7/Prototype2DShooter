@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using static dragoni7.GameController;
-using static dragoni7.ScriptablePlayer;
+using UnityEngine.InputSystem;
+using static dragoni7.ScriptableEntity;
 
 namespace dragoni7
 {
@@ -8,12 +8,14 @@ namespace dragoni7
     {
         public Vector2 EquipPos { get; set; }
         public AbstractWeapon Weapon { get; set; }
-        public PlayerStats Stats { get; private set; }
+        public EntityStats Stats { get; private set; }
 
         protected float currentSpeed;
+
+        private Camera cam;
         public float CurrentSpeed
         {
-            get { return currentSpeed; } 
+            get { return currentSpeed; }
             set
             {
                 if (value != currentSpeed)
@@ -26,32 +28,37 @@ namespace dragoni7
 
         protected virtual void Start()
         {
+            cam = FindAnyObjectByType<Camera>();
+
             CurrentSpeed = Stats.speed;
             canMove = true;
             canAttack = true;
 
-            Vector2 weaponPosition = (Vector2)transform.position + EquipPos;
-            Weapon.transform.position = weaponPosition;
+            Weapon.transform.position = (Vector2)transform.position + EquipPos;
         }
 
-        public void SetStats(PlayerStats stats)
+        public override void Move(Vector3 moveThisFrame)
+        {
+            MoveThisFrame = moveThisFrame;
+            // Move player
+            transform.position += moveThisFrame;
+
+            // Move weapon
+            Vector3 mousePosition = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector3 lookDirection = mousePosition - Weapon.transform.position;
+            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+
+            Weapon.UpdatePosition(transform.position + (Vector3)EquipPos, Quaternion.Euler(0, 0, angle));
+        }
+
+        public virtual void ToggleWeaponVisible(bool value)
+        {
+            Weapon.gameObject.SetActive(value);
+        }
+
+        public void SetStats(EntityStats stats)
         {
             Stats = stats;
-        }
-        protected virtual void OnStateChanged(GameState newState)
-        {
-            // change logic according to state
-        }
-        private void Awake()
-        {
-            // Subscribe events
-            GameController.OnBeforeStateChanged += OnStateChanged;
-        }
-
-        private void OnDestroy()
-        {
-            // Unsubscribe events
-            GameController.OnBeforeStateChanged -= OnStateChanged;
         }
     }
 }

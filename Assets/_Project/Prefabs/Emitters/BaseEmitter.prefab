@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pattern: {fileID: 0}
-  emitTime: 20
+  emitTime: 0

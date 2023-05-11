@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TestWeapon
   m_EditorClassIdentifier: 
   type: 2
-  objectName: TestWeapon
+  displayName: TestWeapon
   description: Weapon for testing
   weaponPrefab: {fileID: 4295456574892165578, guid: 35ff6232d3c23ec42912b1f8ad5bad32, type: 3}
   scriptableEmitter: {fileID: 11400000, guid: 56951ac7daa237a4791b165bb00be982, type: 2}

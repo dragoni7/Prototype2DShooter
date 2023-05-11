@@ -57,7 +57,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1669110245294508419, guid: 0b91f4847a8707b4aadb89c50e4aeb41, type: 3}
       propertyPath: points.Array.data[0].y
-      value: 0.15
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1669110245294508476, guid: 0b91f4847a8707b4aadb89c50e4aeb41, type: 3}
       propertyPath: m_Name

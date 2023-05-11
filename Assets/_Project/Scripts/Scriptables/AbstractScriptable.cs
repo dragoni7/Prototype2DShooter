@@ -8,7 +8,7 @@ namespace dragoni7
     {
         public Type type;
 
-        public string objectName;
+        public string displayName;
 
         public string description;
 

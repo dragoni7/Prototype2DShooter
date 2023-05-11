@@ -65,7 +65,10 @@ namespace dragoni7
 
             moveThisFrame = Time.deltaTime * moveVelocity;
 
-            MovePlayer();
+            if (pController.CurrentPlayer.canMove)
+            {
+                pController.CurrentPlayer.Move(moveThisFrame);
+            }
         }
 
         public void FixedUpdate()
@@ -79,17 +82,6 @@ namespace dragoni7
             {
                 pController.CurrentPlayer.Weapon.PerformAttack();
             }
-        }
-
-        private void MovePlayer()
-        {
-            if (pController.CurrentPlayer.canMove)
-            {
-                pController.CurrentPlayer.transform.position += (Vector3)moveThisFrame;
-            }
-
-            pController.CurrentPlayer.Weapon.transform.position = pController.CurrentPlayer.transform.position + (Vector3)pController.CurrentPlayer.EquipPos;
-            pController.CurrentPlayer.Weapon.Emitter.transform.position = pController.CurrentPlayer.Weapon.transform.position;
         }
     }
 }

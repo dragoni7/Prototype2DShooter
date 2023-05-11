@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using static dragoni7.ScriptableEmitter;
 
@@ -6,7 +7,6 @@ namespace dragoni7
     public class BaseEmitter : MonoBehaviour
     {
         public BasePattern pattern;
-        public int emitTime;
         public ScriptableBullet Bullet { get; set; }
         public EmitterStats Stats { get; protected set; }
 
@@ -31,9 +31,15 @@ namespace dragoni7
             }
         }
 
+        public void UpdatePosition(Vector3 position, Quaternion rotation)
+        {
+            transform.position = position;
+            transform.rotation = rotation;
+        }
+
         public virtual void FixedUpdate()
         {
-            if (timer >= emitTime)
+            if (timer >= Stats.emitTime)
             {
                 canEmit = true;
                 timer = 0;

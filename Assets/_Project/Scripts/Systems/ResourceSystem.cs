@@ -28,21 +28,21 @@ namespace dragoni7
         {
             // Players
             ScriptablePlayers = Resources.LoadAll<ScriptablePlayer>("Players").ToList();
-            playersDict = ScriptablePlayers.ToDictionary(r => r.objectName, r => r);
+            playersDict = ScriptablePlayers.ToDictionary(r => r.displayName, r => r);
 
             // Enemies
 
             // Weapons
             ScriptableWeapons = Resources.LoadAll<ScriptableWeapon>("Weapons").ToList();
-            weaponsDict = ScriptableWeapons.ToDictionary(r => r.objectName, r => r);
+            weaponsDict = ScriptableWeapons.ToDictionary(r => r.displayName, r => r);
 
             // Bullets
             ScriptableBullets = Resources.LoadAll<ScriptableBullet>("Bullets").ToList();
-            bulletsDict = ScriptableBullets.ToDictionary(r => r.objectName, r => r);
+            bulletsDict = ScriptableBullets.ToDictionary(r => r.displayName, r => r);
 
             // Emitters
             ScriptableEmitters = Resources.LoadAll<ScriptableEmitter>("Emitters").ToList();
-            emittersDict = ScriptableEmitters.ToDictionary(r => r.objectName, r => r);
+            emittersDict = ScriptableEmitters.ToDictionary(r => r.displayName, r => r);
         }
 
         public ScriptablePlayer GetPlayer(string name) => playersDict[name];

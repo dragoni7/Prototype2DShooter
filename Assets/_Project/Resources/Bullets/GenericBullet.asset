@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GenericBullet
   m_EditorClassIdentifier: 
   type: 4
-  objectName: GenericBullet
+  displayName: GenericBullet
   description: Test bullet
   bulletPrefab: {fileID: 7907342162027068562, guid: 76f0764d48af0d640a3bb24246761de3, type: 3}
   stats:

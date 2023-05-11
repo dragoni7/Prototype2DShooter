@@ -26,14 +26,14 @@ namespace dragoni7
             var scriptableWeapon = ResourceSystem.Instance.GetWeapon(scriptablePlayer.scriptableWeapon.name);
             AbstractWeapon spawnedWeapon = Instantiate(scriptablePlayer.scriptableWeapon.weaponPrefab, pos, Quaternion.identity, transform);
 
-            // create weapon
+            // create weapon emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableWeapon.scriptableEmitter.name);
             BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, pos, Quaternion.identity, transform);
             spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
             spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
-            // set player weapon emitter
+            // set weapon emitter
             spawnedWeapon.Emitter = spawnedEmitter;
 
             // set player weapon

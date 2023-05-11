@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3d468d5b587d7543b06fd9031e01230, type: 3}
-  m_Name: TestEmitter
+  m_Name: EnemyEmitter
   m_EditorClassIdentifier: 
-  type: 0
-  displayName: TestEmitter
-  description: Emitter for testing
+  type: 5
+  displayName: EnemyEmitter
+  description: test enemy emitter
   emitterPrefab: {fileID: 3296497370567831315, guid: fdef32e4b2ebe314bbfd7a3b59f58921, type: 3}
   scriptableBullet: {fileID: 11400000, guid: 6e0c18fb6856b4844bc88fa047657aa8, type: 2}
-  patternPrefab: {fileID: 7766644300974218740, guid: 7720d37eb2094434092540a014c853c9, type: 3}
+  patternPrefab: {fileID: 4350883564881860334, guid: 698eea0ba3c4caa438ebf4b1cf37bfbe, type: 3}
   stats:
-    emitTime: 3
-    bulletForce: 10
+    emitTime: 40
+    bulletForce: 3
