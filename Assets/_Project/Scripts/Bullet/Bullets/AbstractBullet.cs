@@ -1,4 +1,5 @@
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using static dragoni7.ScriptableBullet;
 
@@ -24,18 +25,23 @@ namespace dragoni7
         public virtual void Update()
         {
             Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
-            Vector2 newPosition = currentPosition + Velocity * Time.deltaTime * BulletForce;
+            Vector2 newPosition = currentPosition + BulletForce * Time.deltaTime * Velocity;
 
             RaycastHit2D[] hits = Physics2D.LinecastAll(currentPosition, newPosition);
 
-            if (hits.Count() > 0)
+            for (int i = 0; i < hits.Count(); i++)
             {
-                gameObject.SetActive(false);
-            }
+                GameObject hitObject = hits[i].collider.gameObject;
 
-            foreach (RaycastHit2D hit in hits)
-            {
-                timer = 0;
+                if (!hitObject.CompareTag("Player"))
+                {
+                    // hit logic
+                    if (gameObject.activeSelf)
+                    {
+                        timer = 0;
+                        gameObject.SetActive(false);
+                    }
+                }
             }
 
             transform.position = newPosition;

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1333476410277265342}
-  - component: {fileID: 7389377051127765415}
   - component: {fileID: 1021003066942347298}
   - component: {fileID: 4295456574892165578}
   m_Layer: 0
@@ -27,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099416640520648690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0009, y: 0.0019, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7718707, y: 0.12050344, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -35,27 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &7389377051127765415
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1099416640520648690}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!212 &1021003066942347298
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -121,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   emitPoint: {fileID: 6672894196276800938}
+  canMove: 0
 --- !u!1 &5388726989822501910
 GameObject:
   m_ObjectHideFlags: 0
@@ -131,7 +110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6672894196276800938}
   m_Layer: 0
-  m_Name: BulletSpawnPoint
+  m_Name: BulletSpawnParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

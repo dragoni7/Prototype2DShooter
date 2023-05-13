@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static dragoni7.ScriptablePlayer;
 
 namespace dragoni7
 {
@@ -30,7 +27,8 @@ namespace dragoni7
                 case GameState.SpawningPlayers:
                     HandleSpawningPlayers();
                     break;
-                case GameState.Win:
+                case GameState.SpawningEnemies:
+                    HandleSpawningEnemies();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
@@ -47,6 +45,15 @@ namespace dragoni7
         private void HandleSpawningPlayers()
         {
             PlayerController.Instance.SpawnPlayer("Player1", Vector2.zero);
+            ChangeState(GameState.SpawningEnemies);
+        }
+
+        private void HandleSpawningEnemies()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                EnemyController.Instance.SpawnEnemy("Enemy1", UnityEngine.Random.insideUnitCircle * 2);
+            }
         }
 
         [Serializable]
@@ -54,7 +61,7 @@ namespace dragoni7
         {
             Starting = 0,
             SpawningPlayers = 1,
-            Win = 2,
+            SpawningEnemies = 2,
             // TODO: add more as needed
         }
     }

@@ -6,7 +6,7 @@ namespace dragoni7
     {
         public override void PerformAttack()
         {
-            Emitter.EmitBullets();
+            Emitter.TryEmitBullets();
         }
     }
 }

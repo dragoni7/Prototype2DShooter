@@ -18,27 +18,16 @@ namespace dragoni7
             {
                 _trailRenderer = subject.GetComponent<TrailRenderer>();
 
-                AbstractPlayer abstractPlayer = null;
-                if (subject is AbstractPlayer player)
-                {
-                    abstractPlayer = player;
-                }
-
-                abstractPlayer.ToggleWeaponVisible(false);
-
                 _canDash = false;
                 subject.canMove = false;
                 subject.canAttack = false;
 
-                Camera cam = FindAnyObjectByType<Camera>();
-                subject.rb.velocity = subject.MoveThisFrame.normalized * _dashingPower;
+                subject.rb.velocity = subject.rb.velocity.normalized * _dashingPower;
 
                 _trailRenderer.time = _dashingTime;
                 _trailRenderer.emitting = true;
 
                 yield return new WaitForSeconds(_dashingTime);
-
-                abstractPlayer.ToggleWeaponVisible(true);
 
                 subject.canMove = true;
                 subject.canAttack = true;

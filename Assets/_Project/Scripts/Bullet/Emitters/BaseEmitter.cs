@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using static dragoni7.ScriptableEmitter;
 
@@ -18,7 +17,7 @@ namespace dragoni7
             Stats = stats;
         }
 
-        public void EmitBullets()
+        public void TryEmitBullets()
         {
             if (canEmit)
             {
@@ -29,12 +28,6 @@ namespace dragoni7
 
                 canEmit = false;
             }
-        }
-
-        public void UpdatePosition(Vector3 position, Quaternion rotation)
-        {
-            transform.position = position;
-            transform.rotation = rotation;
         }
 
         public virtual void FixedUpdate()

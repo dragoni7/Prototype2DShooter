@@ -1,7 +1,5 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using static dragoni7.ScriptableWeapon;
 
 namespace dragoni7
 {
@@ -11,25 +9,14 @@ namespace dragoni7
 
         [SerializeField] protected Transform emitPoint;
 
+        public bool canMove;
         public abstract void PerformAttack();
 
-        public virtual void UpdatePosition(Vector3 position, Quaternion rotation)
+        public void Start()
         {
-            transform.position = position;
-            transform.rotation = rotation;
-
-            Vector3 emitterAngles = rotation.eulerAngles;
-
-            Emitter.UpdatePosition(emitPoint.position, Quaternion.Euler(emitterAngles.x, emitterAngles.y, emitterAngles.z - 90));
-        }
-        public virtual void Update()
-        {
-
-        }
-
-        public virtual void FixedUpdate()
-        {
-
+            Emitter.transform.SetParent(transform.GetChild(0));
+            Emitter.transform.localPosition = Vector3.zero;
+            Emitter.transform.localRotation = Quaternion.Euler(0,0,-90);
         }
     }
 }

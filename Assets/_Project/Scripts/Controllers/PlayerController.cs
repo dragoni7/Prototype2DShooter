@@ -1,12 +1,13 @@
-﻿using System.Collections;
+﻿using Cinemachine;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 namespace dragoni7
 {
     public class PlayerController : Singletone<PlayerController>
     {
         public AbstractPlayer CurrentPlayer { get; set; }
+
+        public CinemachineVirtualCamera playerCam;
         public void SpawnPlayer(string name, Vector2 pos)
         {
             // spawn player
@@ -20,7 +21,6 @@ namespace dragoni7
 
             spawnedPlayer.SetStats(playerStats);
             spawnedPlayer.Abilities = scriptablePlayer.Abilities;
-            spawnedPlayer.EquipPos = scriptablePlayer.equipPos;
 
             // create player's weapon
             var scriptableWeapon = ResourceSystem.Instance.GetWeapon(scriptablePlayer.scriptableWeapon.name);
@@ -41,6 +41,7 @@ namespace dragoni7
 
             // set current player
             CurrentPlayer = spawnedPlayer;
+            playerCam.Follow = CurrentPlayer.transform;
         }
 
         public void DamagePlayer(int damage)

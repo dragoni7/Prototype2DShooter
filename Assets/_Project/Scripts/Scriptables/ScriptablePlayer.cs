@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace dragoni7
 {
@@ -10,7 +8,5 @@ namespace dragoni7
         public AbstractPlayer playerPrefab;
 
         public ScriptableWeapon scriptableWeapon;
-
-        public Vector2 equipPos;
     }
 }
