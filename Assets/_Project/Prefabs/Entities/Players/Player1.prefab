@@ -60,6 +60,10 @@ PrefabInstance:
       value: Player1
       objectReference: {fileID: 0}
     - target: {fileID: 5840179395484891508, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840179395484891508, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -70,6 +74,10 @@ PrefabInstance:
     - target: {fileID: 6269419295036712364, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8145414736901951610, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
