@@ -11,11 +11,13 @@ namespace dragoni7
         public float BulletForce { get; set; }
         public BulletStats Stats { get; protected set; }
 
-        private int timer;
+        [SerializeField] private string _ignoreTag;
+
+        private int _timer;
 
         public virtual void Start()
         {
-            timer = 0;
+            _timer = 0;
         }
 
         public void SetStats(BulletStats stats)
@@ -33,12 +35,12 @@ namespace dragoni7
             {
                 GameObject hitObject = hits[i].collider.gameObject;
 
-                if (!hitObject.CompareTag("Player"))
+                if (!hitObject.CompareTag(_ignoreTag))
                 {
                     // hit logic
                     if (gameObject.activeSelf)
                     {
-                        timer = 0;
+                        _timer = 0;
                         gameObject.SetActive(false);
                     }
                 }
@@ -49,13 +51,13 @@ namespace dragoni7
 
         public virtual void FixedUpdate()
         {
-            if (timer >= Stats.duration)
+            if (_timer >= Stats.duration)
             {
-                timer = 0;
+                _timer = 0;
                 gameObject.SetActive(false);
             }
 
-            timer++;
+            _timer++;
         }
     }
 }

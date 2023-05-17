@@ -1,5 +1,6 @@
 ﻿using Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace dragoni7
 {
@@ -24,11 +25,13 @@ namespace dragoni7
 
             // create player's weapon
             var scriptableWeapon = ResourceSystem.Instance.GetWeapon(scriptablePlayer.scriptableWeapon.name);
-            AbstractWeapon spawnedWeapon = Instantiate(scriptablePlayer.scriptableWeapon.weaponPrefab, pos, Quaternion.identity, transform);
+            AbstractWeapon spawnedWeapon = Instantiate(scriptablePlayer.scriptableWeapon.weaponPrefab, pos, Quaternion.identity, spawnedPlayer.EquipParent);
 
             // create weapon emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableWeapon.scriptableEmitter.name);
-            BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, pos, Quaternion.identity, transform);
+            BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, pos, Quaternion.identity, spawnedWeapon.EmitPoint);
+            spawnedEmitter.transform.localPosition = Vector3.zero;
+            spawnedEmitter.transform.localRotation = Quaternion.Euler(0, 0, -90);
             spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
             spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;

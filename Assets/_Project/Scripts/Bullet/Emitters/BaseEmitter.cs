@@ -17,7 +17,7 @@ namespace dragoni7
             Stats = stats;
         }
 
-        public void TryEmitBullets()
+        public virtual void TryEmitBullets()
         {
             if (canEmit)
             {

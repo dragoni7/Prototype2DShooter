@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace dragoni7
 {
@@ -12,5 +7,6 @@ namespace dragoni7
     {
         public AbstractEnemy enemyPrefab;
         public ScriptableEmitter scriptableEmitter;
+        public AbstractBrain enemyAiPrefab;
     }
 }

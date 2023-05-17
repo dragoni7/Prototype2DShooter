@@ -19,7 +19,8 @@ MonoBehaviour:
   stats:
     health: 10
     damage: 0
-    speed: 3
+    speed: 2
     shootingSpeed: 3
   enemyPrefab: {fileID: -50919973708891284, guid: 62207754e51080d48b529e57021655e7, type: 3}
   scriptableEmitter: {fileID: 11400000, guid: 8dcead487c496434c840cf91c40c71b4, type: 2}
+  enemyAiPrefab: {fileID: 5580339338825623332, guid: 1ccf15cde2332ec4f9803c543fe8deea, type: 3}

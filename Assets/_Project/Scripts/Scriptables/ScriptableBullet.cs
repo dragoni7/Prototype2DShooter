@@ -10,6 +10,7 @@ namespace dragoni7
 
         [SerializeField] private BulletStats stats;
         public BulletStats BaseStats => stats;
+
         [Serializable]
         public struct BulletStats
         {

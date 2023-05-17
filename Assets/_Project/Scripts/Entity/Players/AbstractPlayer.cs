@@ -6,7 +6,21 @@ namespace dragoni7
 {
     public abstract class AbstractPlayer : BaseEntity
     {
-        public AbstractWeapon Weapon { get; set; }
+        private AbstractWeapon weapon;
+        public AbstractWeapon Weapon
+        {
+            get
+            {
+                return weapon;
+            }
+
+            set
+            {
+                weapon = value;
+                weapon.transform.SetParent(EquipParent);
+                weapon.transform.localPosition = Vector3.zero;
+            }
+        }
         public EntityStats Stats { get; private set; }
 
         protected float currentSpeed;
@@ -25,9 +39,6 @@ namespace dragoni7
 
         public virtual void Start()
         {
-            Weapon.transform.SetParent(transform.GetChild(0));
-            Weapon.transform.localPosition = Vector3.zero;
-
             CurrentSpeed = Stats.speed;
             canMove = true;
             canAttack = true;

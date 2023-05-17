@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace dragoni7
 {
-    public class TargetDetector : AbstractDetector
+    public class PlayerDetector : AbstractDetector
     {
-        [SerializeField] private float targetDetectionRange = 5;
+        [SerializeField] private float targetDetectionRange;
 
         [SerializeField] private LayerMask obstacleLayerMask, playerLayerMask;
 
@@ -21,8 +21,9 @@ namespace dragoni7
             if (playerCollider != null)
             {
                 // Check if can see player
-                Vector2 direction = (playerCollider.transform.position - transform.forward).normalized;
+                Vector2 direction = (playerCollider.transform.position - transform.position).normalized;
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, targetDetectionRange, obstacleLayerMask);
+                aIData.attackDirection = direction;
 
                 // Make sure that the collider we see is on Player layer
                 if (hit.collider != null && (playerLayerMask & (1 << hit.collider.gameObject.layer)) != 0)
@@ -33,12 +34,14 @@ namespace dragoni7
                 else
                 {
                     colliders = null;
+                    aIData.attackDirection = Vector3.zero;
                 }
             }
             else
             {
                 // Enemy doesnt see player
                 colliders = null;
+                aIData.attackDirection = Vector3.zero;
             }
             aIData.targets = colliders;
         }
