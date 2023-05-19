@@ -11,13 +11,11 @@ namespace dragoni7
         [SerializeField] private bool showGizmos = true;
 
         Collider2D[] colliders;
-
         public override void Detect(AIData aiData)
         {
             colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius, layerMask);
             aiData.obstacles = colliders;
         }
-
         private void OnDrawGizmos()
         {
             if (showGizmos == false)
