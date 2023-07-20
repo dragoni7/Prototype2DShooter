@@ -5,7 +5,7 @@ namespace dragoni7
 {
     public class HasTarget : Condition
     {
-        public HasTarget(string name) : base(name) { }
+        public HasTarget() : base("Has Target?") { }
 
         protected override void OnReset() { }
 
@@ -14,7 +14,7 @@ namespace dragoni7
             if (aiData == null)
             {
                 StatusReason = "aiData is null";
-                aiData.rb.velocity = Vector2.zero;
+                aiData.OnMove?.Invoke(Vector3.zero);
                 return NodeStatus.Failure;
             }
 
@@ -23,11 +23,11 @@ namespace dragoni7
                 if (aiData.GetTargetsCount() > 0)
                 {
                     aiData.currentTarget = aiData.targets[0];
-                    StatusReason = "Current target successfully set";
+                    StatusReason = "Current target set to next target";
                     return NodeStatus.Success;
                 }
 
-                aiData.rb.velocity = Vector2.zero;
+                aiData.OnMove?.Invoke(Vector3.zero);
                 StatusReason = "aiData has no targets";
                 return NodeStatus.Failure;
             }

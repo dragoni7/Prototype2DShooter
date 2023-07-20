@@ -1,4 +1,6 @@
-﻿namespace dragoni7
+﻿using System.Collections.Generic;
+
+namespace dragoni7
 {
     public class EnemyBrain : AbstractBrain
     {
@@ -10,24 +12,29 @@
             {
                 _behaviourTreeRoutine = StartCoroutine(RunBehaviourTree());
             }
-
-            InvokeRepeating("PerformDetection", 0, _detectionDelay);
         }
-        private void PerformDetection()
-        {
-            foreach (AbstractDetector detector in _detectors)
-            {
-                detector.Detect(_aiData);
-            }
-        }
-
         protected override void GenerateBehaviourTree()
         {
-            BehaviorTree = new Sequence("Chase Player",
-                new HasTarget("Has Target?"),
-                new Inverter("Inverter", new IsFollowingTarget("Is Following a Target?")),
-                new ChaseTarget()
-                );
+            ObstacleAvoidanceBehaviour obstacleAvoidanceBehaviour = new ObstacleAvoidanceBehaviour();
+            SeekBehaviour seekBehaviour = new SeekBehaviour();
+
+            BehaviorTree =
+                new Sequence("Get Obstacles",
+                    new DetectObstaclesTask(5f),
+                    new Selector("Determine Navigation",
+                        new Sequence("Pursue Player",
+                            new HasPlayerInRange(10f),
+                            new HasTarget(),
+                            new Selector("Attack or Pursue",
+                                new Sequence("Attack",
+                                    new IsTargetWithinRange(4),
+                                    new Timer(1, new AttackTask(), true)),
+                                new PursueTargetTask(new List<AbstractSteeringBehaviour> { obstacleAvoidanceBehaviour, seekBehaviour }))),
+                        new Sequence("Wander",
+                            new HasTarget(),
+                            //new WanderTask(),
+                            new PursueTargetTask(new List<AbstractSteeringBehaviour> { obstacleAvoidanceBehaviour, seekBehaviour })))
+                    );
         }
     }
 }

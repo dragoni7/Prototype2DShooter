@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4ba2ad5ff7368e43afcb712f85f1444, type: 3}
+  m_Script: {fileID: 11500000, guid: da76c9fc80768ec4f939e81d3326073a, type: 3}
   m_Name: TestWeapon
   m_EditorClassIdentifier: 
-  type: 2
+  type: 0
   displayName: TestWeapon
-  description: Weapon for testing
+  description: 
   weaponPrefab: {fileID: 4295456574892165578, guid: 35ff6232d3c23ec42912b1f8ad5bad32, type: 3}
   scriptableEmitter: {fileID: 11400000, guid: 56951ac7daa237a4791b165bb00be982, type: 2}

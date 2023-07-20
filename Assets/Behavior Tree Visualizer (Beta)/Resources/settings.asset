@@ -21,13 +21,13 @@ MonoBehaviour:
   FailureIcon: {fileID: 21300000, guid: a12f0f96f8cacf0408b24a9bb943d66b, type: 3}
   DefaultStyleProperties:
     Script: {fileID: 0}
-    TitleBarColor: {r: 0.09411765, g: 0.70980394, b: 0.9137255, a: 1}
+    TitleBarColor: {r: 0.37169808, g: 0.8436761, b: 1, a: 1}
     Icon: {fileID: 21300000, guid: b672344d83977ea4b92d823b96fa1425, type: 3}
     IsDecorator: 0
     InvertResult: 0
   MainStyleProperties:
   - Script: {fileID: 11500000, guid: c75e42c456d8a194ab94d783f4656d99, type: 3}
-    TitleBarColor: {r: 0.8584906, g: 0.75685287, b: 0.03563542, a: 1}
+    TitleBarColor: {r: 1, g: 0.89885, b: 0.1830188, a: 1}
     Icon: {fileID: 21300000, guid: 4b0d0df25c6b3e74b84791a68af268a5, type: 3}
     IsDecorator: 0
     InvertResult: 0
@@ -48,12 +48,12 @@ MonoBehaviour:
     IsDecorator: 1
     InvertResult: 1
   - Script: {fileID: 11500000, guid: 9c3641c1c6424894a88fbbf0ae168003, type: 3}
-    TitleBarColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    TitleBarColor: {r: 1, g: 0.3339622, b: 0.71813846, a: 1}
     Icon: {fileID: 21300000, guid: 8988c62742731474c966510270e6c45c, type: 3}
     IsDecorator: 0
     InvertResult: 0
   - Script: {fileID: 11500000, guid: e265a4c95f2e6ed48b69b69b99e104e5, type: 3}
-    TitleBarColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
+    TitleBarColor: {r: 0.5944698, g: 0.22684225, b: 0.6792453, a: 1}
     Icon: {fileID: 21300000, guid: 28fe4a2dbaf436c43afef5207096676c, type: 3}
     IsDecorator: 0
     InvertResult: 0

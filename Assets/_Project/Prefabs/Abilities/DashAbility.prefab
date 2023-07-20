@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23ae15c08da844b48a3e4f10e2d03d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dashingPower: 26
-  dashingTime: 0.2
-  dashingCooldown: 1
+  _dashingPower: 20
+  _dashingTime: 0.2
+  _dashingCooldown: 1

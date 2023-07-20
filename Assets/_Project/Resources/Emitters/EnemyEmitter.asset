@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3d468d5b587d7543b06fd9031e01230, type: 3}
+  m_Script: {fileID: 11500000, guid: 4495707444673504f9c971eaf994b823, type: 3}
   m_Name: EnemyEmitter
   m_EditorClassIdentifier: 
   type: 5
-  displayName: EnemyEmitter
-  description: test enemy emitter
-  emitterPrefab: {fileID: 3296497370567831315, guid: fdef32e4b2ebe314bbfd7a3b59f58921, type: 3}
-  scriptableBullet: {fileID: 11400000, guid: 4e5ace501b609fe4aad607fb312913bc, type: 2}
-  patternPrefab: {fileID: 7766644300974218740, guid: 7720d37eb2094434092540a014c853c9, type: 3}
+  displayName: 
+  description: 
+  emitterPrefab: {fileID: 0}
+  scriptableBullet: {fileID: 0}
+  patternPrefab: {fileID: 0}
   stats:
-    emitTime: 60
-    bulletForce: 6
+    emitTime: 0
+    bulletForce: 0

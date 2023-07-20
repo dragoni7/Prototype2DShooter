@@ -14,7 +14,7 @@ namespace dragoni7
             if (aiData == null)
             {
                 StatusReason = "aiData is null";
-                aiData.rb.velocity = Vector2.zero;
+                //aiData.rb.velocity = Vector2.zero;
                 return NodeStatus.Failure;
             }
 
@@ -23,7 +23,7 @@ namespace dragoni7
                 return NodeStatus.Success;
             }
 
-            aiData.rb.velocity = Vector2.zero;
+            //aiData.rb.velocity = Vector2.zero;
             return NodeStatus.Failure;
         }
     }

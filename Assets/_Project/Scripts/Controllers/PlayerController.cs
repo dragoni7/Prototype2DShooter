@@ -1,6 +1,7 @@
 ﻿using Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
+using Utils;
 
 namespace dragoni7
 {
@@ -44,6 +45,7 @@ namespace dragoni7
 
             // set current player
             CurrentPlayer = spawnedPlayer;
+            playerCam.LookAt = CurrentPlayer.transform;
             playerCam.Follow = CurrentPlayer.transform;
         }
 

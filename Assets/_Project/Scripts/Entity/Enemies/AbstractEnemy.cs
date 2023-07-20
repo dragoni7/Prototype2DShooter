@@ -7,11 +7,11 @@ namespace dragoni7
     {
         public EntityStats Stats { get; private set; }
         public BaseEmitter Emitter { get; set; }
-        public AbstractBrain EnemyAI { get; set; }
+        public AbstractBrain Brain { get; set; }
         public void Start()
         {
-            //EnemyAI.OnAttack += PerformAttack;
-            //EnemyAI.OnMove += Move;
+            Brain.AIData.OnAttack += PerformAttack;
+            Brain.AIData.OnMove += Move;
         }
         public virtual void PerformAttack(Vector3 direction)
         {

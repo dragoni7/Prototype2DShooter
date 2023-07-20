@@ -1,7 +1,7 @@
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using static dragoni7.ScriptableBullet;
+using static dragoni7.BulletData;
 
 namespace dragoni7
 {

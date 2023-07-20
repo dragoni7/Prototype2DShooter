@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using WUG.BehaviorTreeVisualizer;
@@ -10,8 +11,8 @@ namespace dragoni7
         public NodeBase BehaviorTree { get; set; }
 
         [SerializeField] protected float _detectionDelay = 0.05f, _aiUpdateDelay = 0.1f;
-        [SerializeField] protected List<AbstractDetector> _detectors;
         [SerializeField] protected AIData _aiData;
+        public AIData AIData => _aiData;
 
         protected Coroutine _behaviourTreeRoutine;
         protected YieldInstruction _waitTime;

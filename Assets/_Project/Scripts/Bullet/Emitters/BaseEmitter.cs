@@ -1,12 +1,12 @@
 using UnityEngine;
-using static dragoni7.ScriptableEmitter;
+using static dragoni7.EmitterData;
 
 namespace dragoni7
 {
     public class BaseEmitter : MonoBehaviour
     {
         public BasePattern pattern;
-        public ScriptableBullet Bullet { get; set; }
+        public BulletData Bullet { get; set; }
         public EmitterStats Stats { get; protected set; }
 
         protected int timer = 0;

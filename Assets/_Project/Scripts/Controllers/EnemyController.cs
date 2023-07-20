@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace dragoni7
 {
@@ -32,7 +32,7 @@ namespace dragoni7
 
             // create enemy ai
             AbstractBrain spawnedAI = Instantiate(scriptableEnemy.enemyAiPrefab, position, Quaternion.identity, spawnedEnemy.transform);
-            spawnedEnemy.EnemyAI = spawnedAI;
+            spawnedEnemy.Brain = spawnedAI;
 
             CurrentEnemies.Add(spawnedEnemy);
         }

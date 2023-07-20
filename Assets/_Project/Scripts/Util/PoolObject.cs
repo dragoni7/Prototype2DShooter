@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace dragoni7
+namespace Utils
 {
     public class PoolObject : MonoBehaviour, IPoolable<PoolObject>
     {

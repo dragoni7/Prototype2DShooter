@@ -1,4 +1,4 @@
-﻿namespace dragoni7
+﻿namespace Utils
 {
     public interface IPool<T>
     {
