@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 namespace dragoni7
 {
@@ -17,7 +18,7 @@ namespace dragoni7
             }
         }
 
-        public void SpawnBullet(ScriptableBullet scriptableBullet, Vector2 position, Quaternion rotation, Vector2 velocity, float force)
+        public void SpawnBullet(BulletData scriptableBullet, Vector2 position, Quaternion rotation, Vector2 velocity, float force)
         {
             bulletPools.TryGetValue(scriptableBullet.bulletPrefab.name, out var pool);
             GameObject bullet = pool.PullGameObject(position, rotation);

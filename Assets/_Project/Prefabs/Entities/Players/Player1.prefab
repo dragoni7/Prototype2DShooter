@@ -296,5 +296,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -6893947018463668974}
-  canMove: 0
-  canAttack: 0
+  equipParent: {fileID: 6088978903943812694}
+  canMove: 1
+  canAttack: 1
+--- !u!4 &6088978903943812694 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6269419295036712364, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
+  m_PrefabInstance: {fileID: 252506885453755386}
+  m_PrefabAsset: {fileID: 0}

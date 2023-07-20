@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace dragoni7
+namespace Utils
 {
     public interface IPoolable<T>
     {

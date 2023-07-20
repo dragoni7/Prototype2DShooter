@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d7e96772aff87d46921e8c26f6f7cbb, type: 3}
+  m_Script: {fileID: 11500000, guid: 94ca680a2f82cb548a5352bc580d0120, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
   type: 3
   displayName: Enemy1
-  description: test enemy
+  description: 
   abilities: []
   stats:
-    health: 10
+    health: 0
     damage: 0
-    speed: 3
-    shootingSpeed: 3
+    speed: 0
+    shootingSpeed: 0
   enemyPrefab: {fileID: -50919973708891284, guid: 62207754e51080d48b529e57021655e7, type: 3}
-  scriptableEmitter: {fileID: 11400000, guid: 8dcead487c496434c840cf91c40c71b4, type: 2}
+  scriptableEmitter: {fileID: 0}
+  enemyAiPrefab: {fileID: 0}

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace dragoni7
+namespace Utils
 {
     /// <summary>
     /// Similar to singleton, but overrides current instance rather than destroying new attempted instances.

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace dragoni7
+namespace Utils
 {
     public class ObjectPool<T> : IPool<T> where T : MonoBehaviour, IPoolable<T>
     {

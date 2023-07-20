@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using Utils;
 
 namespace dragoni7
 {
@@ -52,32 +53,35 @@ namespace dragoni7
         {
             AbstractPlayer player = pController.CurrentPlayer;
 
-            if (!player.canAttack && !player.canMove)
+            if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
-                return;
-            }
+                if (!player.canAttack && !player.canMove)
+                {
+                    return;
+                }
 
-            if (isAttacking && player.canAttack)
-            {
-                player.Weapon.PerformAttack();
-                player.CurrentSpeed = player.Stats.shootingSpeed;
-            }
-            else
-            {
-                player.CurrentSpeed = player.Stats.speed;
-            }
+                if (isAttacking && player.canAttack)
+                {
+                    player.Weapon.PerformAttack();
+                    player.CurrentSpeed = player.Stats.shootingSpeed;
+                }
+                else
+                {
+                    player.CurrentSpeed = player.Stats.speed;
+                }
 
-            if (player.canMove)
-            {
-                // Move player
-                player.rb.velocity = currentMove * player.CurrentSpeed;
+                if (player.canMove)
+                {
+                    // Move player
+                    player.rb.velocity = currentMove * player.CurrentSpeed;
 
-                // Rotate player's weapon
-                Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-                Vector3 lookDirection = mousePosition - player.Weapon.transform.position;
-                float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+                    // Rotate player's weapon
+                    Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+                    Vector3 lookDirection = mousePosition - player.Weapon.transform.position;
+                    float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
 
-                player.Weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+                    player.Weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+                }
             }
         }
     }

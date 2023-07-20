@@ -7,7 +7,9 @@ namespace dragoni7
     {
         public Rigidbody2D rb;
         public List<AbstractAbility> Abilities { get; set; }
-        public Transform EquipParent { get; protected set; }
+
+        [SerializeField]private Transform equipParent;
+        public Transform EquipParent => equipParent;
 
         public bool canMove;
         public bool canAttack;

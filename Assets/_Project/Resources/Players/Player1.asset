@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 108182979d261a2468cc435358e7641b, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c10f98751566ce48a3eece0c7dfe858, type: 3}
   m_Name: Player1
   m_EditorClassIdentifier: 
   type: 0
   displayName: Player1
-  description: For Testing
+  description: 
   abilities:
   - {fileID: 2385704455612521622, guid: c4980158e0cee4e42866916537fdcd72, type: 3}
   stats:
-    health: 5
+    health: 10
     damage: 0
-    speed: 4
-    shootingSpeed: 2
+    speed: 8
+    shootingSpeed: 6
   playerPrefab: {fileID: -5676312503209429653, guid: 6c60d8f925887e941bc9943aafacb945, type: 3}
   scriptableWeapon: {fileID: 11400000, guid: 236f17957f63b3d4eb78423038d2f281, type: 2}
-  equipPos: {x: 0.6, y: 0}

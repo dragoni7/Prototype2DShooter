@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+using Utils;
 
 namespace dragoni7
 {
@@ -20,15 +19,20 @@ namespace dragoni7
             // create enemy
             var scriptableEnemy = ResourceSystem.Instance.GetEnemy(name);
             AbstractEnemy spawnedEnemy = Instantiate(scriptableEnemy.enemyPrefab, position, Quaternion.identity, transform);
+            spawnedEnemy.SetStats(scriptableEnemy.BaseStats);
 
             // create enemie's emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);
-            BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, position, Quaternion.identity, transform);
+            BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, position, Quaternion.identity, spawnedEnemy.transform);
             spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
             spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
             spawnedEnemy.Emitter = spawnedEmitter;
+
+            // create enemy ai
+            AbstractBrain spawnedAI = Instantiate(scriptableEnemy.enemyAiPrefab, position, Quaternion.identity, spawnedEnemy.transform);
+            spawnedEnemy.Brain = spawnedAI;
 
             CurrentEnemies.Add(spawnedEnemy);
         }
@@ -37,7 +41,7 @@ namespace dragoni7
         {
             foreach (AbstractEnemy enemy in CurrentEnemies)
             {
-                enemy.PerformAttack();
+                //enemy.PerformAttack();
             }
         }
     }
