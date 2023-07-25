@@ -25,6 +25,9 @@ namespace dragoni7
         public List<GenerationData> ScriptableGenerationData { get; private set; }
         private Dictionary<string, GenerationData> _generationDict;
 
+        public List<LevelData> ScriptableLevelData { get; private set; }
+        private Dictionary<string, LevelData> _levelDict;
+
         protected override void Awake()
         {
             base.Awake();
@@ -54,8 +57,12 @@ namespace dragoni7
             _emittersDict = ScriptableEmitters.ToDictionary(r => r.name, r => r);
 
             // Generation
-            ScriptableGenerationData = Resources.LoadAll<GenerationData>("Level").ToList();
+            ScriptableGenerationData = Resources.LoadAll<GenerationData>("Generation").ToList();
             _generationDict = ScriptableGenerationData.ToDictionary(r => r.name, r => r);
+
+            // Level
+            ScriptableLevelData = Resources.LoadAll<LevelData>("Level").ToList();
+            _levelDict = ScriptableLevelData.ToDictionary(r => r.name, r => r);
         }
         public PlayerData GetPlayer(string name) => _playersDict[name];
         public EnemyData GetEnemy(string name) => _enemiesDict[name];
@@ -63,5 +70,6 @@ namespace dragoni7
         public BulletData GetBullet(string name) => _bulletsDict[name];
         public EmitterData GetEmitter(string name) => _emittersDict[name];
         public GenerationData GetGenerationData(string name) => _generationDict[name];
+        public LevelData GetLevelData(string name) => _levelDict[name];
     }
 }

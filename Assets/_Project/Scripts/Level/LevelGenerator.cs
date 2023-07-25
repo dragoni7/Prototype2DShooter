@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -21,16 +22,18 @@ namespace dragoni7
         private List<BoundsInt> mainRooms = new();
         private List<Vector2Int> roomCenters = new();
         private List<Vector2Int> mainRoomCenters = new();
-        private Graph<BoundsInt> levelGraph = new();
+        private Graph<Room> levelGraph = new();
         private HashSet<Vector2Int> floor = new();
         private bool simFinished = false;
         private bool generating;
         private GenerationData _generationParams;
+        private LevelData _levelData;
 
-        private List<Vertex<BoundsInt>> farthest = new();
-        public void GenerateLevel(GenerationData generatorParams)
+        private List<Vertex<Room>> farthest = new();
+        public void GenerateLevel(GenerationData generatorParams, LevelData levelData)
         {
             _generationParams = generatorParams;
+            _levelData = levelData;
 
             ClearGeneration();
 
@@ -110,7 +113,7 @@ namespace dragoni7
                     }
 
                     // create MST from delaunay triangle to determine level layout
-                    Graph<BoundsInt> mst = Graph<BoundsInt>.MST(levelGraph);
+                    Graph<Room> mst = Graph<Room>.MST(levelGraph);
                     // add additional loops
                     for (int i = 0; i < _generationParams.extraLoops; i++)
                     {
@@ -153,18 +156,16 @@ namespace dragoni7
                             }
                         }
                     }
-
-                    Level level = new(finalNonMainRooms, mainRooms, corridors);
-
+                    Level level = new(finalNonMainRooms, mainRooms, corridors, _levelData);
                     farthest = levelGraph.Leaves;
 
-                    farthest.Sort(delegate (Vertex<BoundsInt> v1, Vertex<BoundsInt> v2) {
-                        float distance_v1 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.center), v1.Position);
-                        float distance_v2 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.center), v2.Position);
+                    farthest.Sort(delegate (Vertex<Room> v1, Vertex<Room> v2) {
+                        float distance_v1 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.center), v1.Position);
+                        float distance_v2 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.center), v2.Position);
 
                         return distance_v2.CompareTo(distance_v1);
                     });
-                    
+
                     OnGenerationFinished?.Invoke(level);
 
                     tilemapVisualizer.PaintFloorTiles(floor);
@@ -219,11 +220,11 @@ namespace dragoni7
         {
             return rooms.Take((int)(percent * rooms.Count())).ToList();
         }
-        private HashSet<Vector2Int> ConnectRooms(Graph<BoundsInt> graph)
+        private HashSet<Vector2Int> ConnectRooms(Graph<Room> graph)
         {
             HashSet<Vector2Int> corridors = new();
 
-            foreach (Edge<BoundsInt> edge in graph.Edges)
+            foreach (var edge in graph.Edges)
             {
                 HashSet<Vector2Int> newCorridor = CreateCorridor(edge.From.Position, edge.To.Position, _generationParams.corridorSize);
                 corridors.UnionWith(newCorridor);
@@ -335,7 +336,7 @@ namespace dragoni7
             
             if (!generating)
             {
-                foreach (Edge<BoundsInt> edge in levelGraph.Edges)
+                foreach (var edge in levelGraph.Edges)
                 {
                     Gizmos.color = Color.magenta;
                     Gizmos.DrawLine(new Vector2(edge.From.Position.x, edge.From.Position.y), new Vector2(edge.To.Position.x, edge.To.Position.y));
@@ -344,7 +345,7 @@ namespace dragoni7
                 if (farthest != null)
                 {
                     Gizmos.color = Color.red;
-                    foreach (Vertex<BoundsInt> vertex in farthest)
+                    foreach (var vertex in farthest)
                     {
                         Gizmos.DrawSphere(new Vector3(vertex.Position.x, vertex.Position.y, 0), 2);
                     }

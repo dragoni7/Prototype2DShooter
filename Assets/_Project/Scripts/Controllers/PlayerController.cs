@@ -48,6 +48,11 @@ namespace dragoni7
             playerCam.Follow = CurrentPlayer.transform;
         }
 
+        public bool IsNearPlayer(Vector2 position)
+        {
+            return Vector2.Distance(position, CurrentPlayer.transform.position) < 40;
+        }
+
         public void DamagePlayer(int damage)
         {
             //CurrentPlayer.TakeDamage(damage);

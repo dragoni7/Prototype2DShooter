@@ -9,10 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441414e65d562c14597c283bb765dadb, type: 3}
-  m_Name: GenericLevel
+  m_Script: {fileID: 11500000, guid: de3d86b18f8ee0e4e9e67df1a818e0a4, type: 3}
+  m_Name: PlayerRoom
   m_EditorClassIdentifier: 
-  spawnRoomData:
-  - {fileID: 11400000, guid: 018420ad8296c5247b71ba1ed81792a7, type: 2}
-  enemyRoomData:
-  - {fileID: 11400000, guid: 8bbda7e7efb725c4394da9adb45a1374, type: 2}

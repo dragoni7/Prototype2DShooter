@@ -50,24 +50,18 @@ namespace dragoni7
 
         private void HandleGeneratingLevel()
         {
-            LevelController.Instance.InitLevel(ResourceSystem.Instance.GetGenerationData("GenericLevel"));
-        }
-
-        private void HandleSpawningPlayers()
-        {
-            PlayerController.Instance.SpawnPlayer("Player1", LevelController.Instance.Level.SpawnRoom.center);
-            ChangeState(GameState.SpawningEnemies);
+            LevelController.Instance.CreateLevel("GenericGeneration", "GenericLevel");
         }
 
         private void HandleSpawningEnemies()
         {
-            foreach (BoundsInt room in LevelController.Instance.Level.Rooms)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    EnemyController.Instance.SpawnEnemy("Enemy1", (Vector2)room.center + (UnityEngine.Random.insideUnitCircle * 2));
-                }
-            }
+            LevelController.Instance.FillRooms();
+            ChangeState(GameState.SpawningPlayers);
+        }
+
+        private void HandleSpawningPlayers()
+        {
+            PlayerController.Instance.SpawnPlayer("Player1", LevelController.Instance.PlayerSpawnPoint());
             ChangeState(GameState.PlayingLevel);
         }
 

@@ -9,10 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441414e65d562c14597c283bb765dadb, type: 3}
-  m_Name: GenericLevel
+  m_Script: {fileID: 11500000, guid: 4370820d1070cff48a752e6c28ae1f1d, type: 3}
+  m_Name: EnemySpawner
   m_EditorClassIdentifier: 
-  spawnRoomData:
-  - {fileID: 11400000, guid: 018420ad8296c5247b71ba1ed81792a7, type: 2}
-  enemyRoomData:
-  - {fileID: 11400000, guid: 8bbda7e7efb725c4394da9adb45a1374, type: 2}
+  _spawnLimit: 30
+  _spawnTime: 20
+  _spawnAmountMin: 1
+  _spawnAmountMax: 3
+  _spread: 4
+  _enemy: Enemy1

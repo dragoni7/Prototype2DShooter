@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ff592d697bc00478de9d9a7617d06e, type: 3}
+  m_Name: GenericGeneration
+  m_EditorClassIdentifier: 
+  rooms: 80
+  radius: 200
+  roomMeanX: 20
+  roomStdDevX: 10
+  roomMinX: 10
+  roomMaxX: 60
+  roomMeanY: 20
+  roomStdDevY: 10
+  roomMinY: 10
+  roomMaxY: 60
+  corridorSize: 5
+  extraLoops: 2
+  mainRoomPercent: 0.2
+  physicsColliderSize: 0.5
+  timeScale: 50
