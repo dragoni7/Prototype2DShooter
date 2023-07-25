@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using static dragoni7.BulletData;
 
@@ -11,7 +11,7 @@ namespace dragoni7
         public float BulletForce { get; set; }
         public BulletStats Stats { get; protected set; }
 
-        [SerializeField] private string _ignoreTag;
+        [SerializeField] private List<string> _ignoreTags;
 
         private int _timer;
 
@@ -35,13 +35,17 @@ namespace dragoni7
             {
                 GameObject hitObject = hits[i].collider.gameObject;
 
-                if (!hitObject.CompareTag(_ignoreTag))
+                foreach (string tag in _ignoreTags)
                 {
-                    // hit logic
-                    if (gameObject.activeSelf)
+                    if (!hitObject.CompareTag(tag))
                     {
-                        _timer = 0;
-                        gameObject.SetActive(false);
+                        // hit logic
+                        if (gameObject.activeSelf)
+                        {
+                            _timer = 0;
+                            gameObject.SetActive(false);
+                            hitObject.GetComponent<IDestructable>()?.TakeDamage(Stats.damage);
+                        }
                     }
                 }
             }

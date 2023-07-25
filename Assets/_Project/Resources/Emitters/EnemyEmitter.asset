@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: EnemyEmitter
   m_EditorClassIdentifier: 
   type: 5
-  displayName: 
+  displayName: EnemyEmitter
   description: 
-  emitterPrefab: {fileID: 0}
-  scriptableBullet: {fileID: 0}
-  patternPrefab: {fileID: 0}
+  emitterPrefab: {fileID: 3296497370567831315, guid: fdef32e4b2ebe314bbfd7a3b59f58921, type: 3}
+  scriptableBullet: {fileID: 11400000, guid: 4e5ace501b609fe4aad607fb312913bc, type: 2}
+  patternPrefab: {fileID: 7766644300974218740, guid: 7720d37eb2094434092540a014c853c9, type: 3}
   stats:
-    emitTime: 0
-    bulletForce: 0
+    emitTime: 80
+    bulletForce: 10

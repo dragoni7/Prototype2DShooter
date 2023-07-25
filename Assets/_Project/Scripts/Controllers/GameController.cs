@@ -61,11 +61,13 @@ namespace dragoni7
 
         private void HandleSpawningEnemies()
         {
-            /*for (int i = 0; i < 5; i++)
+            foreach (BoundsInt room in LevelController.Instance.Level.Rooms)
             {
-                EnemyController.Instance.SpawnEnemy("Enemy1", UnityEngine.Random.insideUnitCircle * 2);
-            }*/
-
+                for (int i = 0; i < 3; i++)
+                {
+                    EnemyController.Instance.SpawnEnemy("Enemy1", (Vector2)room.center + (UnityEngine.Random.insideUnitCircle * 2));
+                }
+            }
             ChangeState(GameState.PlayingLevel);
         }
 

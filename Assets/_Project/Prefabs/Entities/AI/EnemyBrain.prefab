@@ -48,9 +48,11 @@ MonoBehaviour:
   targets: []
   obstacles: []
   currentTarget: {fileID: 0}
+  origin: {x: 0, y: 0}
   movementInput: {x: 0, y: 0}
   attackDirection: {x: 0, y: 0, z: 0}
   following: 0
+  behaviours: []
 --- !u!114 &5580339338825623332
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace dragoni7
         private HashSet<Vector2Int> _corridors;
 
         public BoundsInt SpawnRoom => _spawnRoom;
+        public List<BoundsInt> Rooms => _rooms;
 
         public Level(List<BoundsInt> rooms, List<BoundsInt> mainRooms, HashSet<Vector2Int> corridors)
         {

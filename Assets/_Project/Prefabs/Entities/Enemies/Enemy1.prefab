@@ -73,7 +73,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5840179395484891508, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
       propertyPath: m_TagString
-      value: Enemy
+      value: Enemies
       objectReference: {fileID: 0}
     - target: {fileID: 8145414736901951610, guid: 37c5d21fd6a07b64fa8df94faa45cf6a, type: 3}
       propertyPath: m_Layer
@@ -136,8 +136,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 1.1, y: 1.1}
+  m_EdgeRadius: 0.1
 --- !u!212 &-4971744432481145432
 SpriteRenderer:
   m_ObjectHideFlags: 0

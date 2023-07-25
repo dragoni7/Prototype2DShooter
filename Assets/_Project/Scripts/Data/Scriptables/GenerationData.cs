@@ -19,12 +19,13 @@ namespace dragoni7
 
         [Header("Corridor Settings")]
         public int corridorSize = 4;
+        public int extraLoops = 1;
 
-        [Range(0.1f, 1.0f)]
+        [Range(0.01f, 1.0f)]
         public float mainRoomPercent = 0.3f;
 
         [Header("Physics Sim Settings")]
-        [Range(0.1f, 1.0f)]
+        [Range(0.0f, 1.0f)]
         public float physicsColliderSize = 0.1f;
         [Range(1f, 100f)]
         public float timeScale = 50f;

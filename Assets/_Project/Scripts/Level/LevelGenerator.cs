@@ -17,24 +17,22 @@ namespace dragoni7
         public event Action<Level> OnGenerationFinished;
 
         private List<GameObject> tempObjects = new();
-        List<BoundsInt> rooms = new();
-        List<BoundsInt> mainRooms = new();
-        List<Vector2Int> roomCenters = new();
-        List<Vector2Int> mainRoomCenters = new();
-        Graph<BoundsInt> levelGraph = new();
-        HashSet<Vector2Int> floor = new();
-        Delaunator delaunator;
+        private List<BoundsInt> rooms = new();
+        private List<BoundsInt> mainRooms = new();
+        private List<Vector2Int> roomCenters = new();
+        private List<Vector2Int> mainRoomCenters = new();
+        private Graph<BoundsInt> levelGraph = new();
+        private HashSet<Vector2Int> floor = new();
         private bool simFinished = false;
         private bool generating;
         private GenerationData _generationParams;
 
         private List<Vertex<BoundsInt>> farthest = new();
-
         public void GenerateLevel(GenerationData generatorParams)
         {
             _generationParams = generatorParams;
 
-            tilemapVisualizer.Clear();
+            ClearGeneration();
 
             Time.timeScale = _generationParams.timeScale;
             generating = true;
@@ -47,7 +45,8 @@ namespace dragoni7
                     Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanY, _generationParams.roomStdDevY, _generationParams.roomMinY, _generationParams.roomMaxY)),
                     0));
 
-                var obj = new GameObject();
+                // create new temp game object for each room
+                GameObject obj = new();
                 obj.transform.position = roomBounds.center;
                 obj.transform.localScale = roomBounds.size;
                 obj.AddComponent<Rigidbody2D>();
@@ -65,28 +64,27 @@ namespace dragoni7
         {
             if (generating)
             {
+                // continue simulating until all room objects are sleeping
                 if (!simFinished)
                 {
                     foreach (var room in tempObjects)
                     {
-                        // continue simulating until all room objects are sleeping
-                        simFinished = room.GetComponent<Rigidbody2D>().IsSleeping();
+                        Rigidbody2D roomRigidBody = room.GetComponent<Rigidbody2D>();
+                        if (roomRigidBody.velocity == Vector2.zero)
+                        {
+                            simFinished = true;
+                        }
                     }
                 }
+                // create a room where each temp object is located
                 else
                 {
-                    // create a room bounds where each room object is located
                     foreach (var room in tempObjects)
                     {
                         rooms.Add(new BoundsInt(Vector3Int.RoundToInt(room.transform.position), Vector3Int.RoundToInt(room.transform.localScale)));
                     }
 
-                    // collect room center points
-                    foreach (var room in rooms)
-                    {
-                        roomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
-                    }
-
+                    // determine main rooms for gameplay purposes
                     SortRoomsByArea(rooms);
                     mainRooms = TakeTopPercentOf(rooms, _generationParams.mainRoomPercent);
                     List<BoundsInt> nonMainRooms = rooms.Except(mainRooms).ToList();
@@ -97,9 +95,9 @@ namespace dragoni7
                         mainRoomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
                     }
 
-                    delaunator = new(DelaunatorExtensions.ToPoints(mainRoomCenters));
-
+                    // use delaunator to determine non overlapping path between each main room
                     IPoint[] points = DelaunatorExtensions.ToPoints(mainRoomCenters);
+                    Delaunator delaunator = new(points);
 
                     for (int e = 0; e < delaunator.Triangles.Length; e++)
                     {
@@ -111,8 +109,14 @@ namespace dragoni7
                         }
                     }
 
+                    // create MST from delaunay triangle to determine level layout
                     Graph<BoundsInt> mst = Graph<BoundsInt>.MST(levelGraph);
-                    mst.AddEdge(levelGraph.Edges.Find(e => !mst.Edges.Contains(e)));
+                    // add additional loops
+                    for (int i = 0; i < _generationParams.extraLoops; i++)
+                    {
+                        mst.AddEdge(levelGraph.Edges.Find(e => !mst.Edges.Contains(e)));
+                    }
+                    
                     levelGraph = mst;
 
                     generating = false;
@@ -124,11 +128,17 @@ namespace dragoni7
                     floor.UnionWith(corridors);
 
                     List<BoundsInt> finalNonMainRooms = new();
-
+                    bool added;
                     foreach (BoundsInt room in nonMainRooms)
                     {
+                        added = false;
                         for (int column = 0; column < room.size.x; column++)
                         {
+                            if (added)
+                            {
+                                break;
+                            }
+
                             for (int row = 0; row < room.size.y; row++)
                             {
                                 Vector2Int position = (Vector2Int)room.min + new Vector2Int(column, row);
@@ -137,6 +147,7 @@ namespace dragoni7
                                 {
                                     AddRoom(floor, room);
                                     finalNonMainRooms.Add(room);
+                                    added = true;
                                     break;
                                 }
                             }
@@ -158,10 +169,43 @@ namespace dragoni7
 
                     tilemapVisualizer.PaintFloorTiles(floor);
                     WallGenerator.CreateWalls(floor, tilemapVisualizer);
+                    //tilemapVisualizer.PaintBackground(floor);
                 }
             }
         }
 
+        private Vector2 ComputeSeparation(GameObject roomObj)
+        {
+            Vector2 v = Vector2.zero;
+            int neighborCount = 0;
+
+            foreach (GameObject obj in tempObjects)
+            {
+                if (obj != roomObj)
+                {
+                    if (Vector2.Distance(roomObj.transform.position, obj.transform.position) < 20)
+                    {
+                        Rigidbody2D objRigidBody = obj.GetComponent<Rigidbody2D>();
+                        v.x += obj.transform.position.x - roomObj.transform.position.x;
+                        v.y += obj.transform.position.y - roomObj.transform.position.y;
+                        neighborCount++;
+                    }
+                }
+            }
+
+            if (neighborCount == 0)
+            {
+                return v;
+            }
+
+            v.x /= neighborCount;
+            v.y /= neighborCount;
+            v.x *= -1;
+            v.y *= -1;
+            v = new Vector2(v.x - roomObj.transform.position.x, v.y - roomObj.transform.position.y);
+            v.Normalize();
+            return v;
+        }
         private void SortRoomsByArea(List<BoundsInt> rooms)
         {
             rooms.Sort(delegate(BoundsInt a, BoundsInt b) {
@@ -268,6 +312,17 @@ namespace dragoni7
 
             tempObjects.Clear();
         }
+        private void ClearGeneration()
+        {
+            tilemapVisualizer.Clear();
+            tempObjects = new();
+            rooms = new();
+            mainRooms = new();
+            roomCenters = new();
+            mainRoomCenters = new();
+            levelGraph = new();
+            floor = new();
+    }
         public void OnDrawGizmos()
         {
             if (!simFinished)

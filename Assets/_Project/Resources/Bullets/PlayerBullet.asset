@@ -18,4 +18,4 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7907342162027068562, guid: 76f0764d48af0d640a3bb24246761de3, type: 3}
   stats:
     damage: 1
-    duration: 50
+    duration: 20

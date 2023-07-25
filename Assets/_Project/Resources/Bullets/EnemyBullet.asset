@@ -15,7 +15,7 @@ MonoBehaviour:
   type: 4
   displayName: 
   description: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 7907342162027068562, guid: 6c2d36477a0904b4da0687dd97525f8d, type: 3}
   stats:
-    damage: 0
-    duration: 0
+    damage: 1
+    duration: 100

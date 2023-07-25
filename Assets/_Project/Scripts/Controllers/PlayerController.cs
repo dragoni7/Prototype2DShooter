@@ -19,7 +19,6 @@ namespace dragoni7
 
             // modify stats if needed
             var playerStats = scriptablePlayer.BaseStats;
-            playerStats.health += 10;
 
             spawnedPlayer.SetStats(playerStats);
             spawnedPlayer.Abilities = scriptablePlayer.Abilities;
@@ -51,7 +50,7 @@ namespace dragoni7
 
         public void DamagePlayer(int damage)
         {
-            CurrentPlayer.TakeDamage(damage);
+            //CurrentPlayer.TakeDamage(damage);
         }
     }
 }

@@ -1,16 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using UnityEngine.WSA;
 
 namespace dragoni7
 {
     public class TilemapVisualizer : MonoBehaviour
     {
-        [SerializeField] private Tilemap floorTilemap, wallTilemap;
+        [SerializeField] private Tilemap floorTilemap, wallTilemap, backgroundTilemap;
 
-        [SerializeField] private TileBase floorTile, wallTop;
+        [SerializeField] private TileBase floorTile, wallTop, backgroundTile;
 
         public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
         {
@@ -34,6 +37,21 @@ namespace dragoni7
         public void PaintSingleBasicWall(Vector2Int wallPosition)
         {
             PaintSingleTile(wallTilemap, wallTop, wallPosition);
+        }
+
+        public void PaintBackground(IEnumerable<Vector2Int> floorPositions)
+        {
+            for (int x = -300; x < 300; x++)
+            {
+                for (int y = -300; y < 300; y++)
+                {
+                    Vector2Int position = new Vector2Int(x, y);
+                    if (!floorPositions.Contains(position))
+                    {
+                        PaintSingleTile(backgroundTilemap, backgroundTile, position);
+                    }
+                }
+            }
         }
 
         public void Clear()
