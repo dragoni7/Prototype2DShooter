@@ -1,20 +1,38 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Utils;
+using Random = UnityEngine.Random;
 
 namespace dragoni7
 {
     public static class WallGenerator
     {
-        public static void CreateWalls(HashSet<Vector2Int> floorPositions, TilemapVisualizer tilemapVisualizer)
+        public static void CreateWalls(HashSet<Vector2Int> roomFloor, HashSet<Vector2Int> corridorFloor, TilemapVisualizer tilemapVisualizer)
         {
-            var basicWallPositions = FindWallsInDirections(floorPositions, DirectionHelper.cardinalDirections);
+            HashSet<Vector2Int> wallPositions = FindWallsInDirections(roomFloor, DirectionHelper.cardinalDirections);
 
-            foreach (var wallPosition in basicWallPositions)
+            foreach (Vector2Int position in corridorFloor)
             {
-                tilemapVisualizer.PaintSingleBasicWall(wallPosition);
+                if (Random.Range(0, 30) == 0)
+                {
+                    for (int i = 0; i < 5; i++)
+                    {
+                        Vector2Int v = position;
+                        v.y -= i;
+                        wallPositions.Add(v);
+                    }
+                }
+            }
+
+            foreach (Vector2Int wallPosition in wallPositions)
+            {
+                if (!roomFloor.Contains(wallPosition))
+                {
+                    tilemapVisualizer.PaintSingleBasicWall(wallPosition);
+                }
             }
         }
 

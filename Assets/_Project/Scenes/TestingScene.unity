@@ -995,7 +995,7 @@ MonoBehaviour:
   floorTilemap: {fileID: 705484532}
   wallTilemap: {fileID: 1495876050}
   backgroundTilemap: {fileID: 1698412255}
-  floorTile: {fileID: 11400000, guid: 471853985ed4b5242ad12af71ace0cf6, type: 2}
+  floorTile: {fileID: 11400000, guid: ad969e692a2ee2548b08959de59a9879, type: 2}
   wallTop: {fileID: 11400000, guid: 22c9f328675568942a63b2770a6a63dc, type: 2}
   backgroundTile: {fileID: 11400000, guid: 035db49c0ce55dd4daca5ff92e3a5b37, type: 2}
 --- !u!1 &1145652002

@@ -90,6 +90,13 @@ namespace Utils
 
             return (v1, v2);
         }
+
+        public void Clear()
+        {
+            _vertices.Clear();
+            _edges.Clear();
+            Leaves.Clear();
+        }
         public static Graph<T> MST(Graph<T> graph)
         {
             Graph<T> mst = new();

@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 018420ad8296c5247b71ba1ed81792a7, type: 2}
   enemyRoomData:
   - {fileID: 11400000, guid: 8bbda7e7efb725c4394da9adb45a1374, type: 2}
+  generationData: {fileID: 11400000, guid: 0ebb60240f972fe4880fef33dc97ffa7, type: 2}

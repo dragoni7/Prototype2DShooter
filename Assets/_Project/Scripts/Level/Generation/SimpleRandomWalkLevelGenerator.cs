@@ -13,7 +13,7 @@ namespace dragoni7
             HashSet<Vector2Int> floorPositions = RunRandomWalk(randomWalkParams, startPosition);
             tilemapVisualizer.Clear();
             tilemapVisualizer.PaintFloorTiles(floorPositions); // paint floor
-            WallGenerator.CreateWalls(floorPositions, tilemapVisualizer); // paint walls
+            //WallGenerator.CreateWalls(floorPositions, tilemapVisualizer); // paint walls
         }
 
         protected HashSet<Vector2Int> RunRandomWalk(SimpleRandomWalkData parameters, Vector2Int position)

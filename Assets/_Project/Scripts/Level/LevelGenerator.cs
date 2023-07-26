@@ -18,10 +18,6 @@ namespace dragoni7
         public event Action<Level> OnGenerationFinished;
 
         private List<GameObject> tempObjects = new();
-        private List<BoundsInt> rooms = new();
-        private List<BoundsInt> mainRooms = new();
-        private List<Vector2Int> roomCenters = new();
-        private List<Vector2Int> mainRoomCenters = new();
         private Graph<Room> levelGraph = new();
         private HashSet<Vector2Int> floor = new();
         private bool simFinished = false;
@@ -30,10 +26,10 @@ namespace dragoni7
         private LevelData _levelData;
 
         private List<Vertex<Room>> farthest = new();
-        public void GenerateLevel(GenerationData generatorParams, LevelData levelData)
+        public void GenerateLevel(LevelData levelData)
         {
-            _generationParams = generatorParams;
             _levelData = levelData;
+            _generationParams = _levelData.generationData;
 
             ClearGeneration();
 
@@ -70,18 +66,13 @@ namespace dragoni7
                 // continue simulating until all room objects are sleeping
                 if (!simFinished)
                 {
-                    foreach (var room in tempObjects)
-                    {
-                        Rigidbody2D roomRigidBody = room.GetComponent<Rigidbody2D>();
-                        if (roomRigidBody.velocity == Vector2.zero)
-                        {
-                            simFinished = true;
-                        }
-                    }
+                    simFinished = tempObjects.All(o => o.GetComponent<Rigidbody2D>().IsSleeping());
                 }
                 // create a room where each temp object is located
                 else
                 {
+                    List<BoundsInt> rooms = new();
+
                     foreach (var room in tempObjects)
                     {
                         rooms.Add(new BoundsInt(Vector3Int.RoundToInt(room.transform.position), Vector3Int.RoundToInt(room.transform.localScale)));
@@ -89,9 +80,11 @@ namespace dragoni7
 
                     // determine main rooms for gameplay purposes
                     SortRoomsByArea(rooms);
-                    mainRooms = TakeTopPercentOf(rooms, _generationParams.mainRoomPercent);
+
+                    List<BoundsInt> mainRooms = TakeTopPercentOf(rooms, _generationParams.mainRoomPercent);
                     List<BoundsInt> nonMainRooms = rooms.Except(mainRooms).ToList();
 
+                    List<Vector2Int> mainRoomCenters = new();
                     // collect main room center points
                     foreach (var room in mainRooms)
                     {
@@ -128,7 +121,6 @@ namespace dragoni7
 
                     floor = CreateSimpleRooms(mainRooms);
                     HashSet<Vector2Int> corridors = ConnectRooms(levelGraph);
-                    floor.UnionWith(corridors);
 
                     List<BoundsInt> finalNonMainRooms = new();
                     bool added;
@@ -156,6 +148,7 @@ namespace dragoni7
                             }
                         }
                     }
+
                     Level level = new(finalNonMainRooms, mainRooms, corridors, _levelData);
                     farthest = levelGraph.Leaves;
 
@@ -168,44 +161,12 @@ namespace dragoni7
 
                     OnGenerationFinished?.Invoke(level);
 
+                    // paint tiles
+                    floor.UnionWith(corridors);
+                    WallGenerator.CreateWalls(floor, corridors, tilemapVisualizer);
                     tilemapVisualizer.PaintFloorTiles(floor);
-                    WallGenerator.CreateWalls(floor, tilemapVisualizer);
-                    //tilemapVisualizer.PaintBackground(floor);
                 }
             }
-        }
-
-        private Vector2 ComputeSeparation(GameObject roomObj)
-        {
-            Vector2 v = Vector2.zero;
-            int neighborCount = 0;
-
-            foreach (GameObject obj in tempObjects)
-            {
-                if (obj != roomObj)
-                {
-                    if (Vector2.Distance(roomObj.transform.position, obj.transform.position) < 20)
-                    {
-                        Rigidbody2D objRigidBody = obj.GetComponent<Rigidbody2D>();
-                        v.x += obj.transform.position.x - roomObj.transform.position.x;
-                        v.y += obj.transform.position.y - roomObj.transform.position.y;
-                        neighborCount++;
-                    }
-                }
-            }
-
-            if (neighborCount == 0)
-            {
-                return v;
-            }
-
-            v.x /= neighborCount;
-            v.y /= neighborCount;
-            v.x *= -1;
-            v.y *= -1;
-            v = new Vector2(v.x - roomObj.transform.position.x, v.y - roomObj.transform.position.y);
-            v.Normalize();
-            return v;
         }
         private void SortRoomsByArea(List<BoundsInt> rooms)
         {
@@ -316,13 +277,9 @@ namespace dragoni7
         private void ClearGeneration()
         {
             tilemapVisualizer.Clear();
-            tempObjects = new();
-            rooms = new();
-            mainRooms = new();
-            roomCenters = new();
-            mainRoomCenters = new();
-            levelGraph = new();
-            floor = new();
+            tempObjects.Clear();
+            levelGraph.Clear();
+            floor.Clear();
     }
         public void OnDrawGizmos()
         {

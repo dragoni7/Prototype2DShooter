@@ -42,7 +42,7 @@ namespace dragoni7
             }
 
             tilemapVisualizer.PaintFloorTiles(floorPositions);
-            WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
+            //WallGenerator.CreateWalls(floorPositions, tilemapVisualizer);
         }
 
         private List<Vector2Int> IncreaseCorridorBrush3by3(List<Vector2Int> corridor)

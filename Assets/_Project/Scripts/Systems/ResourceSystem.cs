@@ -22,9 +22,6 @@ namespace dragoni7
         public List<EmitterData> ScriptableEmitters { get; private set; }
         private Dictionary<string, EmitterData> _emittersDict;
 
-        public List<GenerationData> ScriptableGenerationData { get; private set; }
-        private Dictionary<string, GenerationData> _generationDict;
-
         public List<LevelData> ScriptableLevelData { get; private set; }
         private Dictionary<string, LevelData> _levelDict;
 
@@ -56,10 +53,6 @@ namespace dragoni7
             ScriptableEmitters = Resources.LoadAll<EmitterData>("Emitters").ToList();
             _emittersDict = ScriptableEmitters.ToDictionary(r => r.name, r => r);
 
-            // Generation
-            ScriptableGenerationData = Resources.LoadAll<GenerationData>("Generation").ToList();
-            _generationDict = ScriptableGenerationData.ToDictionary(r => r.name, r => r);
-
             // Level
             ScriptableLevelData = Resources.LoadAll<LevelData>("Level").ToList();
             _levelDict = ScriptableLevelData.ToDictionary(r => r.name, r => r);
@@ -69,7 +62,6 @@ namespace dragoni7
         public WeaponData GetWeapon(string name) => _weaponsDict[name];
         public BulletData GetBullet(string name) => _bulletsDict[name];
         public EmitterData GetEmitter(string name) => _emittersDict[name];
-        public GenerationData GetGenerationData(string name) => _generationDict[name];
         public LevelData GetLevelData(string name) => _levelDict[name];
     }
 }

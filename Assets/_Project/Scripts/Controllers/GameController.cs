@@ -30,9 +30,6 @@ namespace dragoni7
                 case GameState.SpawningPlayers:
                     HandleSpawningPlayers();
                     break;
-                case GameState.SpawningEnemies:
-                    HandleSpawningEnemies();
-                    break;
                 case GameState.PlayingLevel:
                     HandlePlayingLevel();
                     break;
@@ -50,13 +47,7 @@ namespace dragoni7
 
         private void HandleGeneratingLevel()
         {
-            LevelController.Instance.CreateLevel("GenericGeneration", "GenericLevel");
-        }
-
-        private void HandleSpawningEnemies()
-        {
-            LevelController.Instance.FillRooms();
-            ChangeState(GameState.SpawningPlayers);
+            LevelController.Instance.CreateLevel("GenericLevel");
         }
 
         private void HandleSpawningPlayers()
@@ -67,7 +58,7 @@ namespace dragoni7
 
         private void HandlePlayingLevel()
         {
-            
+            LevelController.Instance.StartSpawners();
         }
 
         [Serializable]
@@ -76,8 +67,7 @@ namespace dragoni7
             Starting = 0,
             GeneratingLevel = 1,
             SpawningPlayers = 2,
-            SpawningEnemies = 3,
-            PlayingLevel = 4
+            PlayingLevel = 3
             // TODO: add more as needed
         }
     }

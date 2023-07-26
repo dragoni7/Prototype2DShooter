@@ -47,7 +47,7 @@ namespace dragoni7
             floor.UnionWith(corridors);
 
             tilemapVisualizer.PaintFloorTiles(floor);
-            WallGenerator.CreateWalls(floor, tilemapVisualizer);
+            //WallGenerator.CreateWalls(floor, tilemapVisualizer);
         }
 
         private HashSet<Vector2Int> CreateRoomsRandomly(List<BoundsInt> roomsList)

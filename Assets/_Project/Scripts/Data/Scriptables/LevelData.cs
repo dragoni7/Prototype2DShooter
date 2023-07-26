@@ -12,5 +12,7 @@ namespace dragoni7
     {
         public List<RoomData> spawnRoomData;
         public List<RoomData> enemyRoomData;
+
+        public GenerationData generationData;
     }
 }

@@ -21,26 +21,23 @@ namespace dragoni7
 
         public Vector2 PlayerSpawnPoint() => _level.SpawnRoom.Bounds.center;
 
-        public void FillRooms()
+        public void StartSpawners()
         {
             InvokeRepeating(nameof(UpdateSpawners), 0, 1.0f);
         }
-        public void CreateLevel(string generationData, string levelData)
+        public void CreateLevel(string levelData)
         {
-            ResourceSystem resourceSystem = ResourceSystem.Instance;
-            generator.GenerateLevel(resourceSystem.GetGenerationData(generationData), resourceSystem.GetLevelData(levelData));
+            generator.GenerateLevel(ResourceSystem.Instance.GetLevelData(levelData));
         }
 
         private void GetGeneratedLevel(Level level)
         {
             _level = level;
-            GameController.Instance.ChangeState(GameController.GameState.SpawningEnemies);
+            GameController.Instance.ChangeState(GameController.GameState.SpawningPlayers);
         }
 
         private void UpdateSpawners()
-        {
-            print(_level.Rooms.Count);
-
+        { 
             if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
                 foreach (Room room in _level.Rooms)

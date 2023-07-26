@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ff592d697bc00478de9d9a7617d06e, type: 3}
   m_Name: GenericGeneration
   m_EditorClassIdentifier: 
-  rooms: 80
-  radius: 200
+  rooms: 100
+  radius: 40
   roomMeanX: 20
   roomStdDevX: 10
   roomMinX: 10
@@ -22,8 +22,8 @@ MonoBehaviour:
   roomStdDevY: 10
   roomMinY: 10
   roomMaxY: 60
-  corridorSize: 5
+  corridorSize: 4
   extraLoops: 2
-  mainRoomPercent: 0.2
-  physicsColliderSize: 0.5
+  mainRoomPercent: 0.1
+  physicsColliderSize: 0.1
   timeScale: 50
