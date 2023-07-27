@@ -23,7 +23,7 @@ MonoBehaviour:
   roomMinY: 10
   roomMaxY: 60
   corridorSize: 4
-  extraLoops: 2
+  extraLoops: 3
   mainRoomPercent: 0.1
   physicsColliderSize: 0.1
   timeScale: 50

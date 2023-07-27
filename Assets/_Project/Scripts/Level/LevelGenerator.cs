@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -58,7 +57,6 @@ namespace dragoni7
                 tempObjects.Add(obj);
             }
         }
-
         private void Update()
         {
             if (generating)
@@ -211,13 +209,7 @@ namespace dragoni7
                 }
 
                 corridor.Add(position);
-                var extraWidth = position;
-
-                for (int i = 1; i <= width; i++)
-                {
-                    corridor.Add((extraWidth + Vector2Int.right * i));
-                    corridor.Add((extraWidth + Vector2Int.left * i));
-                }
+                AddCorridorWidth(corridor, position, width, false);
             }
 
             while (position.x != destination.x)
@@ -232,16 +224,42 @@ namespace dragoni7
                 }
 
                 corridor.Add(position);
-                var extraWidth = position;
-
-                for (int i = 1; i <= width; i++)
-                {
-                    corridor.Add((extraWidth + Vector2Int.up * i));
-                    corridor.Add((extraWidth + Vector2Int.down * i));
-                }
+                AddCorridorWidth(corridor, position, width, true);
             }
 
             return corridor;
+        }
+        private void AddCorridorWidth(HashSet<Vector2Int> corridor, Vector2Int position, int width, bool vertical)
+        {
+            Vector2Int direction;
+
+            for (int i = 1; i <= width; i++)
+            {
+                if (vertical)
+                {
+                    if (i % 2 == 0)
+                    {
+                        direction = Vector2Int.up;
+                    }
+                    else
+                    {
+                        direction = Vector2Int.down;
+                    }
+                }
+                else
+                {
+                    if (i % 2 == 0)
+                    {
+                        direction = Vector2Int.right;
+                    }
+                    else
+                    {
+                        direction = Vector2Int.left;
+                    }
+                }
+
+                corridor.Add(position + (direction * (Mathf.CeilToInt(i / 2))));
+            }
         }
         private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
         {

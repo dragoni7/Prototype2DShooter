@@ -14,19 +14,6 @@ namespace dragoni7
         {
             HashSet<Vector2Int> wallPositions = FindWallsInDirections(roomFloor, DirectionHelper.cardinalDirections);
 
-            foreach (Vector2Int position in corridorFloor)
-            {
-                if (Random.Range(0, 30) == 0)
-                {
-                    for (int i = 0; i < 5; i++)
-                    {
-                        Vector2Int v = position;
-                        v.y -= i;
-                        wallPositions.Add(v);
-                    }
-                }
-            }
-
             foreach (Vector2Int wallPosition in wallPositions)
             {
                 if (!roomFloor.Contains(wallPosition))
@@ -34,6 +21,11 @@ namespace dragoni7
                     tilemapVisualizer.PaintSingleBasicWall(wallPosition);
                 }
             }
+        }
+
+        public static void CreateDoors(List<Room> rooms, float chance)
+        {
+
         }
 
         private static HashSet<Vector2Int> FindWallsInDirections(HashSet<Vector2Int> floorPositions, List<Vector2Int> directions)
