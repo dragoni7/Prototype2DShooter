@@ -1871,7 +1871,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843452995}
   - component: {fileID: 1843452996}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LevelGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Util;
 
 namespace dragoni7
 {
@@ -16,7 +17,7 @@ namespace dragoni7
         public Room SpawnRoom => _spawnRoom;
         public List<Room> Rooms => _rooms;
         public LevelData LevelData => _levelData;
-        public Level(List<BoundsInt> rooms, List<BoundsInt> mainRooms, HashSet<Vector2Int> corridors, LevelData levelData)
+        public Level(List<IBounds> rooms, List<IBounds> mainRooms, HashSet<Vector2Int> corridors, LevelData levelData)
         {
             _rooms = new();
             _mainRooms = new();
@@ -24,12 +25,12 @@ namespace dragoni7
             _levelData = levelData;
             int index;
 
-            foreach (BoundsInt room in rooms)
+            foreach (IBounds room in rooms)
             {
                 index = Random.Range(0, _levelData.enemyRoomData.Count);
                 _rooms.Add(new Room(room, Room.Type.EnemyRoom, _levelData.enemyRoomData[index]));
             }
-            foreach (BoundsInt room in mainRooms)
+            foreach (IBounds room in mainRooms)
             {
                 index = Random.Range(0, _levelData.enemyRoomData.Count);
                 _mainRooms.Add(new Room(room, Room.Type.EnemyRoom, _levelData.enemyRoomData[index]));

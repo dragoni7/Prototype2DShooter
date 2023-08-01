@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 using static dragoni7.ScriptableEntity;
 
 namespace dragoni7

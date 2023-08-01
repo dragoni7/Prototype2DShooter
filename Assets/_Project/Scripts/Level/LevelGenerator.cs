@@ -3,7 +3,10 @@ using DelaunatorSharp.Unity.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor.U2D.Path;
 using UnityEngine;
+using Util;
 using Utils;
 using Random = UnityEngine.Random;
 
@@ -37,24 +40,12 @@ namespace dragoni7
 
             for (int i = 0; i < _generationParams.rooms; i++)
             {
-                BoundsInt roomBounds = new((Vector3Int)ShapeHelper.GetRandomPointInCircle(_generationParams.radius), 
-                    new Vector3Int(
+                RectangleBounds roomBounds = new(ShapeHelper.GetRandomPointInCircle(_generationParams.radius), new Vector2Int(
                     Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanX, _generationParams.roomStdDevX, _generationParams.roomMinX, _generationParams.roomMaxX)),
-                    Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanY, _generationParams.roomStdDevY, _generationParams.roomMinY, _generationParams.roomMaxY)),
-                    0));
+                    Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanY, _generationParams.roomStdDevY, _generationParams.roomMinY, _generationParams.roomMaxY))));
 
                 // create new temp game object for each room
-                GameObject obj = new();
-                obj.transform.position = roomBounds.center;
-                obj.transform.localScale = roomBounds.size;
-                obj.AddComponent<Rigidbody2D>();
-                obj.AddComponent<BoxCollider2D>();
-                Rigidbody2D objRigidBody = obj.GetComponent<Rigidbody2D>();
-                BoxCollider2D collider = obj.GetComponent<BoxCollider2D>();
-                collider.size += new Vector2(_generationParams.physicsColliderSize, _generationParams.physicsColliderSize);
-                objRigidBody.freezeRotation = true;
-                objRigidBody.gravityScale = 0.0f;
-                tempObjects.Add(obj);
+                CreateSimulationObject(roomBounds);
             }
         }
         private void Update()
@@ -69,24 +60,24 @@ namespace dragoni7
                 // create a room where each temp object is located
                 else
                 {
-                    List<BoundsInt> rooms = new();
+                    List<IBounds> rooms = new();
 
                     foreach (var room in tempObjects)
                     {
-                        rooms.Add(new BoundsInt(Vector3Int.RoundToInt(room.transform.position), Vector3Int.RoundToInt(room.transform.localScale)));
+                        rooms.Add(new RectangleBounds(room.transform.position, room.transform.localScale));
                     }
 
                     // determine main rooms for gameplay purposes
                     SortRoomsByArea(rooms);
 
-                    List<BoundsInt> mainRooms = TakeTopPercentOf(rooms, _generationParams.mainRoomPercent);
-                    List<BoundsInt> nonMainRooms = rooms.Except(mainRooms).ToList();
+                    List<IBounds> mainRooms = TakeTopPercentOf(rooms, _generationParams.mainRoomPercent);
+                    List<IBounds> nonMainRooms = rooms.Except(mainRooms).ToList();
 
                     List<Vector2Int> mainRoomCenters = new();
                     // collect main room center points
-                    foreach (var room in mainRooms)
+                    foreach (IBounds room in mainRooms)
                     {
-                        mainRoomCenters.Add((Vector2Int)Vector3Int.RoundToInt(room.center));
+                        mainRoomCenters.Add(room.Center());
                     }
 
                     // use delaunator to determine non overlapping path between each main room
@@ -117,24 +108,27 @@ namespace dragoni7
                     Time.timeScale = 1f;
                     ClearTempObjects();
 
+                    // determine floor locations
                     floor = CreateSimpleRooms(mainRooms);
+                    // connect rooms with corridors
                     HashSet<Vector2Int> corridors = ConnectRooms(levelGraph);
 
-                    List<BoundsInt> finalNonMainRooms = new();
+                    // add back any non main room that intersects corridors
+                    List<IBounds> finalNonMainRooms = new();
                     bool added;
-                    foreach (BoundsInt room in nonMainRooms)
+                    foreach (IBounds room in nonMainRooms)
                     {
                         added = false;
-                        for (int column = 0; column < room.size.x; column++)
+                        for (int column = 0; column < room.Scale().x; column++)
                         {
                             if (added)
                             {
                                 break;
                             }
 
-                            for (int row = 0; row < room.size.y; row++)
+                            for (int row = 0; row < room.Scale().y; row++)
                             {
-                                Vector2Int position = (Vector2Int)room.min + new Vector2Int(column, row);
+                                Vector2Int position = room.Min() + new Vector2Int(column, row);
                                 
                                 if (corridors.Contains(position))
                                 {
@@ -147,35 +141,54 @@ namespace dragoni7
                         }
                     }
 
+                    // gather data into level object
+                    // TODO: determine farthest main rooms for gameplay purposes and store in level
                     Level level = new(finalNonMainRooms, mainRooms, corridors, _levelData);
                     farthest = levelGraph.Leaves;
 
                     farthest.Sort(delegate (Vertex<Room> v1, Vertex<Room> v2) {
-                        float distance_v1 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.center), v1.Position);
-                        float distance_v2 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.center), v2.Position);
+                        float distance_v1 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.Center()), v1.Position);
+                        float distance_v2 = Vector2Int.Distance(Vector2Int.RoundToInt(level.SpawnRoom.Bounds.Center()), v2.Position);
 
                         return distance_v2.CompareTo(distance_v1);
                     });
 
                     OnGenerationFinished?.Invoke(level);
 
+                    // TODO: door generation, improve wall generation
                     // paint tiles
+                    WallGenerator.CreateRoomWalls(finalNonMainRooms, tilemapVisualizer);
+                    WallGenerator.CreateRoomWalls(mainRooms, tilemapVisualizer);
                     floor.UnionWith(corridors);
-                    WallGenerator.CreateWalls(floor, corridors, tilemapVisualizer);
+                    //WallGenerator.CreateDoors(level.Rooms, corridors, 1.0f, tilemapVisualizer);
                     tilemapVisualizer.PaintFloorTiles(floor);
                 }
             }
         }
-        private void SortRoomsByArea(List<BoundsInt> rooms)
+        private void CreateSimulationObject(IBounds room)
         {
-            rooms.Sort(delegate(BoundsInt a, BoundsInt b) {
-                int aArea = a.size.x * a.size.y;
-                int bArea = b.size.x * b.size.y;
-
-                return bArea.CompareTo(aArea);
+            GameObject obj = new();
+            obj.name = "simulated_room";
+            obj.layer = LayerMask.NameToLayer("Room");
+            obj.transform.position = new Vector2(room.Center().x, room.Center().y);
+            obj.transform.localScale = new Vector2(room.Scale().x, room.Scale().y);
+            obj.AddComponent<Rigidbody2D>();
+            obj.AddComponent<PolygonCollider2D>();
+            Rigidbody2D objRigidBody = obj.GetComponent<Rigidbody2D>();
+            PolygonCollider2D collider = obj.GetComponent<PolygonCollider2D>();
+            collider.points = room.Corners().Select(c => (Vector2)(room.Center() - c) / (Vector2)room.Scale()).ToArray();
+            objRigidBody.freezeRotation = true;
+            objRigidBody.gravityScale = 0.0f;
+            obj.transform.parent = this.transform;
+            tempObjects.Add(obj);
+        }
+        private void SortRoomsByArea(List<IBounds> rooms)
+        {
+            rooms.Sort(delegate(IBounds a, IBounds b) {
+                return b.Area().CompareTo(a.Area());
             });
         }
-        private List<BoundsInt> TakeTopPercentOf(List<BoundsInt> rooms, float percent)
+        private List<IBounds> TakeTopPercentOf(List<IBounds> rooms, float percent)
         {
             return rooms.Take((int)(percent * rooms.Count())).ToList();
         }
@@ -261,27 +274,20 @@ namespace dragoni7
                 corridor.Add(position + (direction * (Mathf.CeilToInt(i / 2))));
             }
         }
-        private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+        private HashSet<Vector2Int> CreateSimpleRooms(List<IBounds> roomsList)
         {
             HashSet<Vector2Int> floor = new();
 
-            foreach (var room in roomsList)
+            foreach (IBounds room in roomsList)
             {
                 AddRoom(floor, room);
             }
 
             return floor;
         }
-        private void AddRoom(HashSet<Vector2Int> floor, BoundsInt room)
+        private void AddRoom(HashSet<Vector2Int> floor, IBounds room)
         {
-            for (int column = 0; column < room.size.x; column++)
-            {
-                for (int row = 0; row < room.size.y; row++)
-                {
-                    Vector2Int position = (Vector2Int)room.min + new Vector2Int(column, row);
-                    floor.Add(position);
-                }
-            }
+            floor.AddRange(room.PositionsWithin());
         }
         private void ClearTempObjects()
         {
@@ -295,17 +301,18 @@ namespace dragoni7
         private void ClearGeneration()
         {
             tilemapVisualizer.Clear();
-            tempObjects.Clear();
+            ClearTempObjects();
             levelGraph.Clear();
             floor.Clear();
     }
         public void OnDrawGizmos()
         {
-            if (!simFinished)
+            if (generating)
             {
                 foreach (var room in tempObjects)
                 {
-                    Gizmos.DrawCube(room.transform.position, room.transform.localScale);
+                    RectangleBounds x = new RectangleBounds(room.transform.position, room.transform.localScale);
+                    Gizmos.DrawCube(new Vector2(x.Center().x, x.Center().y), new Vector2(x.Scale().x, x.Scale().y));
                 }
             }
             

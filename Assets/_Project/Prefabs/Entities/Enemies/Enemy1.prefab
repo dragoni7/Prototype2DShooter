@@ -206,3 +206,8 @@ MonoBehaviour:
   equipParent: {fileID: 7541382696441749681}
   canMove: 1
   canAttack: 1
+  _stats:
+    health: 0
+    damage: 0
+    speed: 0
+    shootingSpeed: 0

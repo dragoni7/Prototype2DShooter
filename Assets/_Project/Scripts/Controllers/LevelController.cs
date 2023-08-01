@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem.XR;
-using UnityEngine.InputSystem;
 using Utils;
 
 namespace dragoni7
@@ -19,7 +17,7 @@ namespace dragoni7
             generator.OnGenerationFinished += GetGeneratedLevel;
         }
 
-        public Vector2 PlayerSpawnPoint() => _level.SpawnRoom.Bounds.center;
+        public Vector2 PlayerSpawnPoint() => _level.SpawnRoom.Bounds.Center();
 
         public void StartSpawners()
         {

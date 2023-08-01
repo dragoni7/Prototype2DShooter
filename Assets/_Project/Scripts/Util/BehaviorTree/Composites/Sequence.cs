@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using WUG.BehaviorTreeVisualizer;
 
 namespace dragoni7

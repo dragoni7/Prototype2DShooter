@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace dragoni7
 {
     public class Room
     {
-        private BoundsInt _bounds;
+        private IBounds _bounds;
         private Type _type;
         private RoomData _roomData;
         private List<Spawner> _spawners;
-        public BoundsInt Bounds => _bounds;
+        public IBounds Bounds => _bounds;
         public Type RoomType => _type;
         public RoomData RoomData => _roomData;
         public List<Spawner> Spawners => _spawners;
 
-        public Room(BoundsInt bounds, Type type, RoomData roomData)
+        public Room(IBounds bounds, Type type, RoomData roomData)
         {
             _roomData = roomData;
             _bounds = bounds;
@@ -28,7 +25,7 @@ namespace dragoni7
 
             foreach (SpawnerData spawnData in _roomData.spawnerData)
             {
-                _spawners.Add(new Spawner(_bounds.center, spawnData));
+                _spawners.Add(new Spawner(_bounds.Center(), spawnData));
             }
         }
 
