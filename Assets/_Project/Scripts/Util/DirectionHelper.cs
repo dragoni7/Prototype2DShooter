@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utils
+namespace Util
 {
     public static class DirectionHelper
     {

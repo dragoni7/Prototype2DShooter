@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.U2D.Path;
 using UnityEngine;
 using Util;
 using Utils;
@@ -157,8 +156,9 @@ namespace dragoni7
 
                     // TODO: door generation, improve wall generation
                     // paint tiles
-                    WallGenerator.CreateRoomWalls(finalNonMainRooms, tilemapVisualizer);
-                    WallGenerator.CreateRoomWalls(mainRooms, tilemapVisualizer);
+                    WallGenerator.CreateCorridorWalls(corridors, floor, tilemapVisualizer);
+                    WallGenerator.CreateRoomWallsAndDoors(finalNonMainRooms, corridors, tilemapVisualizer);
+                    WallGenerator.CreateRoomWallsAndDoors(mainRooms, corridors, tilemapVisualizer);
                     floor.UnionWith(corridors);
                     //WallGenerator.CreateDoors(level.Rooms, corridors, 1.0f, tilemapVisualizer);
                     tilemapVisualizer.PaintFloorTiles(floor);
@@ -176,7 +176,7 @@ namespace dragoni7
             obj.AddComponent<PolygonCollider2D>();
             Rigidbody2D objRigidBody = obj.GetComponent<Rigidbody2D>();
             PolygonCollider2D collider = obj.GetComponent<PolygonCollider2D>();
-            collider.points = room.Corners().Select(c => (Vector2)(room.Center() - c) / (Vector2)room.Scale()).ToArray();
+            collider.points = room.Corners().Select(c => (Vector2)(room.Center() - c) / (Vector2)(room.Scale() - (Vector2Int.one * _generationParams.roomBuffer))).ToArray();
             objRigidBody.freezeRotation = true;
             objRigidBody.gravityScale = 0.0f;
             obj.transform.parent = this.transform;

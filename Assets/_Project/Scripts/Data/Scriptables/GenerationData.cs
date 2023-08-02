@@ -16,6 +16,8 @@ namespace dragoni7
         public int roomStdDevY = 6;
         public int roomMinY = 5;
         public int roomMaxY = 40;
+        [Range(0f, 10f)]
+        public int roomBuffer = 2;
 
         [Header("Corridor Settings")]
         public int corridorSize = 4;
@@ -25,8 +27,6 @@ namespace dragoni7
         public float mainRoomPercent = 0.3f;
 
         [Header("Physics Sim Settings")]
-        [Range(0.0f, 1.0f)]
-        public float physicsColliderSize = 0.1f;
         [Range(1f, 100f)]
         public float timeScale = 50f;
     }

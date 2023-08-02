@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {

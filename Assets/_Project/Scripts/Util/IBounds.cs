@@ -12,5 +12,6 @@ namespace Util
         public Vector2Int Max();
         public List<Vector2Int> Corners();
         public List<Vector2Int> PositionsWithin();
+        public List<Vector2Int> EdgePositions();
     }
 }

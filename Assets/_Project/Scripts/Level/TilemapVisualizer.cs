@@ -8,9 +8,9 @@ namespace dragoni7
 {
     public class TilemapVisualizer : MonoBehaviour
     {
-        [SerializeField] private Tilemap floorTilemap, wallTilemap, backgroundTilemap;
+        [SerializeField] private Tilemap floorTilemap, wallTilemap, doorTilemap;
 
-        [SerializeField] private TileBase floorTile, wallTop, backgroundTile;
+        [SerializeField] private TileBase floorTile, wallTop, doorTile;
 
         public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
         {
@@ -35,20 +35,9 @@ namespace dragoni7
         {
             PaintSingleTile(wallTilemap, wallTop, wallPosition);
         }
-
-        public void PaintBackground(IEnumerable<Vector2Int> floorPositions)
+        public void PaintSingleBasicDoor(Vector2Int wallPosition)
         {
-            for (int x = -300; x < 300; x++)
-            {
-                for (int y = -300; y < 300; y++)
-                {
-                    Vector2Int position = new Vector2Int(x, y);
-                    if (!floorPositions.Contains(position))
-                    {
-                        PaintSingleTile(backgroundTilemap, backgroundTile, position);
-                    }
-                }
-            }
+            PaintSingleTile(doorTilemap, doorTile, wallPosition);
         }
 
         public void Clear()

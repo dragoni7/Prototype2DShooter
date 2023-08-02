@@ -1,90 +1,89 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Util;
-using Utils;
 
 namespace dragoni7
 {
     public static class WallGenerator
     {
-        public static void CreateWalls(HashSet<Vector2Int> roomFloor, TilemapVisualizer tilemapVisualizer)
+        public static void CreateCorridorWalls(HashSet<Vector2Int> corridorFloor, HashSet<Vector2Int> roomFloor, TilemapVisualizer tilemapVisualizer)
         {
-            HashSet<Vector2Int> wallPositions = FindWallsInDirections(roomFloor, DirectionHelper.cardinalDirections);
-
-            foreach (Vector2Int wallPosition in wallPositions)
+            foreach (Vector2Int position in corridorFloor)
             {
-                tilemapVisualizer.PaintSingleBasicWall(wallPosition);
-            }
-        }
-
-        public static void CreateRoomWalls(List<IBounds> rooms, TilemapVisualizer tilemapVisualizer)
-        {
-            foreach (IBounds room in rooms)
-            {
-                Vector2Int position = (Vector2Int)room.Min();
-
-                for (int i = 0; i < room.Scale().x; i++)
+                foreach (Vector2Int direction in DirectionHelper.cardinalDirections)
                 {
-                    tilemapVisualizer.PaintSingleBasicWall(position + (Vector2Int.right * i));
-                }
+                    Vector2Int neighbourPosition = position + direction;
 
-                for (int i = 0; i < room.Scale().y; i++)
-                {
-                    tilemapVisualizer.PaintSingleBasicWall(position + (Vector2Int.up * i));
-                }
-
-                position = (Vector2Int)room.Max();
-
-                for (int i = 0; i < room.Scale().x; i++)
-                {
-                    tilemapVisualizer.PaintSingleBasicWall(position + (Vector2Int.left * i));
-                }
-
-                for (int i = 0; i < room.Scale().y; i++)
-                {
-                    tilemapVisualizer.PaintSingleBasicWall(position + (Vector2Int.down * i));
-                }
-            }
-        }
-
-        public static void CreateDoors(List<Room> rooms, HashSet<Vector2Int> corridorFloor, float chance, TilemapVisualizer tilemapVisualizer)
-        {
-            foreach (Room room in rooms)
-            {
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int x = 0; x < room.Bounds.Scale().x; x++)
+                    if (!corridorFloor.Contains(neighbourPosition))
                     {
-                        Vector2Int position = (Vector2Int)room.Bounds.Min() + (Vector2Int.right * x) + Vector2Int.down;
-
-                        if (corridorFloor.Contains(position))
+                        if (!roomFloor.Contains(neighbourPosition))
                         {
-                            // place door here
-                            tilemapVisualizer.PaintSingleBasicWall(position);
+                            tilemapVisualizer.PaintSingleBasicWall(neighbourPosition);
                         }
                     }
                 }
             }
         }
-
-        private static HashSet<Vector2Int> FindWallsInDirections(HashSet<Vector2Int> floorPositions, List<Vector2Int> directions)
+        public static void CreateRoomWallsAndDoors(List<IBounds> rooms, HashSet<Vector2Int> corridor, TilemapVisualizer tilemapVisualizer)
         {
             HashSet<Vector2Int> wallPositions = new();
 
-            foreach (Vector2Int position in floorPositions)
+            foreach (IBounds room in rooms)
             {
-                foreach (Vector2Int direction in directions)
+                int addedDoors = 0;
+                List<Vector2Int> doorPositions = new();
+                foreach (Vector2Int position in room.EdgePositions())
                 {
-                    Vector2Int neighbourPosition = position + direction;
-
-                    if (!floorPositions.Contains(neighbourPosition))
+                    // if position is not contained in corridors, create wall
+                    if (!corridor.Contains(position))
                     {
                         wallPositions.Add(position);
                     }
+                    // otherwise, create walls with a door
+                    else if (addedDoors < room.Corners().Count)
+                    {
+                        if (doorPositions.Any(p => p.x == position.x || p.y == position.y))
+                        {
+                            wallPositions.Add(position);
+                        }
+                        // vertical doorway
+                        else if ((room.PositionsWithin().Contains(position + Vector2Int.up) && !room.EdgePositions().Contains(position + Vector2Int.up) && corridor.Contains(position + Vector2Int.down)) ||
+                            (room.PositionsWithin().Contains(position + Vector2Int.down) && !room.EdgePositions().Contains(position + Vector2Int.down) && corridor.Contains(position + Vector2Int.up)) &&
+                            (room.EdgePositions().Contains(position + Vector2Int.left) && room.EdgePositions().Contains(position + Vector2Int.right)))
+                        {
+                            doorPositions.Add(position);
+                            addedDoors++;
+                        }
+                        // horizontal doorway
+                        else if ((room.PositionsWithin().Contains(position + Vector2Int.left) && !room.EdgePositions().Contains(position + Vector2Int.left) && corridor.Contains(position + Vector2Int.right)) ||
+                            (room.PositionsWithin().Contains(position + Vector2Int.right) && !room.EdgePositions().Contains(position + Vector2Int.right) && corridor.Contains(position + Vector2Int.left)) &&
+                            (room.EdgePositions().Contains(position + Vector2Int.up) && room.EdgePositions().Contains(position + Vector2Int.down)))
+                        {
+                            doorPositions.Add(position);
+                            addedDoors++;
+                        }
+                        else
+                        {
+                            wallPositions.Add(position);
+                        }
+                    }
+                    else
+                    {
+                        tilemapVisualizer.PaintSingleBasicWall(position);
+                    }
+                }
+
+                foreach (Vector2Int doorPosition in doorPositions)
+                {
+                    tilemapVisualizer.PaintSingleBasicDoor(doorPosition);
                 }
             }
 
-            return wallPositions;
+            foreach(Vector2Int wallPosition in wallPositions)
+            {
+                tilemapVisualizer.PaintSingleBasicWall(wallPosition);
+            }
         }
     }
 }
