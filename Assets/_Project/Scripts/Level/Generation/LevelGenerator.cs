@@ -39,7 +39,7 @@ namespace dragoni7
 
             for (int i = 0; i < _generationParams.rooms; i++)
             {
-                RectangleBounds roomBounds = new(ShapeHelper.GetRandomPointInCircle(_generationParams.radius), new Vector2Int(
+                RectangleBounds roomBounds = new(ShapeHelper.GetRandomPointInEllipse(_generationParams.radiusX, _generationParams.radiusY), new Vector2Int(
                     Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanX, _generationParams.roomStdDevX, _generationParams.roomMinX, _generationParams.roomMaxX)),
                     Mathf.RoundToInt(MathHelper.NextGaussian(_generationParams.roomMeanY, _generationParams.roomStdDevY, _generationParams.roomMinY, _generationParams.roomMaxY))));
 

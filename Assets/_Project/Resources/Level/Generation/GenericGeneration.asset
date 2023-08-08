@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GenericGeneration
   m_EditorClassIdentifier: 
   rooms: 64
-  radius: 32
+  radiusX: 32
+  radiusY: 16
   roomMeanX: 30
   roomStdDevX: 30
   roomMinX: 12
@@ -22,6 +23,7 @@ MonoBehaviour:
   roomStdDevY: 30
   roomMinY: 12
   roomMaxY: 70
+  openRoomChance: 0.5
   roomBuffer: 3
   corridorSize: 10
   extraLoops: 4

@@ -7,7 +7,8 @@ namespace dragoni7
     {
         [Header("Room Settings")]
         public int rooms = 100;
-        public int radius = 70;
+        public int radiusX = 70;
+        public int radiusY = 70;
         public int roomMeanX = 6;
         public int roomStdDevX = 6;
         public int roomMinX = 5;
