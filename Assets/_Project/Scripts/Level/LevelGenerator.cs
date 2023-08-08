@@ -154,13 +154,13 @@ namespace dragoni7
 
                     OnGenerationFinished?.Invoke(level);
 
-                    // TODO: door generation, improve wall generation
-                    // paint tiles
+                    // corridor walls
                     WallGenerator.CreateCorridorWalls(corridors, floor, tilemapVisualizer);
-                    WallGenerator.CreateRoomWallsAndDoors(finalNonMainRooms, corridors, tilemapVisualizer);
-                    WallGenerator.CreateRoomWallsAndDoors(mainRooms, corridors, tilemapVisualizer);
+                    // room walls
+                    WallGenerator.CreateRoomWalls(finalNonMainRooms, corridors, tilemapVisualizer, _generationParams.corridorSize, _generationParams.openRoomChance);
+                    // main rooms always have doors
+                    WallGenerator.CreateRoomWalls(mainRooms, corridors, tilemapVisualizer, _generationParams.corridorSize, 1.0f);
                     floor.UnionWith(corridors);
-                    //WallGenerator.CreateDoors(level.Rooms, corridors, 1.0f, tilemapVisualizer);
                     tilemapVisualizer.PaintFloorTiles(floor);
                 }
             }

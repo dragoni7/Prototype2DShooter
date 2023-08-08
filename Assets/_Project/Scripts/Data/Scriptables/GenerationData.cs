@@ -16,6 +16,8 @@ namespace dragoni7
         public int roomStdDevY = 6;
         public int roomMinY = 5;
         public int roomMaxY = 40;
+        [Range(0f, 1f)]
+        public float openRoomChance = 0.5f;
         [Range(0f, 10f)]
         public int roomBuffer = 2;
 
