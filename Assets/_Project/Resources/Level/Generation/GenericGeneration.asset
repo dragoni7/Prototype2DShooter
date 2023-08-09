@@ -18,14 +18,14 @@ MonoBehaviour:
   roomMeanX: 30
   roomStdDevX: 30
   roomMinX: 12
-  roomMaxX: 70
+  roomMaxX: 50
   roomMeanY: 30
   roomStdDevY: 30
   roomMinY: 12
-  roomMaxY: 70
+  roomMaxY: 50
   openRoomChance: 0.5
-  roomBuffer: 3
+  roomBuffer: 5
   corridorSize: 10
-  extraLoops: 4
+  extraLoops: 3
   mainRoomPercent: 0.1
   timeScale: 50

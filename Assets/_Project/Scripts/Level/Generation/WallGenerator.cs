@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Util;
 using WUG.BehaviorTreeVisualizer;
@@ -16,14 +15,11 @@ namespace dragoni7
             {
                 foreach (Vector2Int direction in DirectionHelper.cardinalDirections)
                 {
-                    Vector2Int neighbourPosition = position + direction;
+                    Vector2Int neighborPosition = position + direction;
 
-                    if (!corridorFloor.Contains(neighbourPosition))
+                    if (!corridorFloor.Contains(neighborPosition) && !roomFloor.Contains(neighborPosition))
                     {
-                        if (!roomFloor.Contains(neighbourPosition))
-                        {
-                            tilemapVisualizer.PaintSingleBasicWall(neighbourPosition);
-                        }
+                        tilemapVisualizer.PaintSingleBasicWall(neighborPosition);
                     }
                 }
             }
@@ -45,7 +41,7 @@ namespace dragoni7
                 {
                     HashSet<Vector2Int> roomWalls;
                     List<Vector2Int> roomDoors;
-                    (roomWalls, roomDoors) = GetWallAndDoorPositions(room, corridor, corridorSize);
+                    (roomWalls, roomDoors) = GetWallAndDoorPositions(room, corridor, corridorSize + 2);
 
                     walls.UnionWith(roomWalls);
                     doors.AddRange(roomDoors);
@@ -83,37 +79,40 @@ namespace dragoni7
             List<Vector2Int> potentialDoorways = new();
             List<Vector2Int> doorways = new();
 
-            foreach (Vector2Int position in room.EdgePositions())
+            wallPositions.AddRange(room.Corners());
+
+            foreach (Vector2Int position in room.EdgePositions().Except(room.Corners()))
             {
                 // if position is not contained in corridors, create wall
                 if (!corridor.Contains(position))
                 {
                     wallPositions.Add(position);
                 }
-                // otherwise, add position to potential door positions
-                // vertical doorway
-                else if ((room.PositionsWithin().Contains(position + Vector2Int.up) && !room.EdgePositions().Contains(position + Vector2Int.up) && corridor.Contains(position + Vector2Int.down)) ||
-                        (room.PositionsWithin().Contains(position + Vector2Int.down) && !room.EdgePositions().Contains(position + Vector2Int.down) && corridor.Contains(position + Vector2Int.up)) &&
-                        (room.EdgePositions().Contains(position + Vector2Int.left) && room.EdgePositions().Contains(position + Vector2Int.right)))
-                {
-                    potentialDoorways.Add(position);
-                }
-                // horizontal doorway
-                else if ((room.PositionsWithin().Contains(position + Vector2Int.left) && !room.EdgePositions().Contains(position + Vector2Int.left) && corridor.Contains(position + Vector2Int.right)) ||
-                    (room.PositionsWithin().Contains(position + Vector2Int.right) && !room.EdgePositions().Contains(position + Vector2Int.right) && corridor.Contains(position + Vector2Int.left)) &&
-                    (room.EdgePositions().Contains(position + Vector2Int.up) && room.EdgePositions().Contains(position + Vector2Int.down)))
-                {
-                    potentialDoorways.Add(position);
-                }
+                // otherwise it is a potential door location
                 else
                 {
-                    wallPositions.Add(position);
+                    bool doorway = true;
+
+                    foreach (Vector2Int direction in DirectionHelper.cardinalDirections)
+                    {
+                        if (!corridor.Contains(position + direction) && !room.PositionsWithin().Contains(position + direction))
+                        {
+                            wallPositions.Add(position);
+                            doorway = false;
+                            break;
+                        }
+                    }
+
+                    if (doorway)
+                    {
+                        potentialDoorways.Add(position);
+                    }
                 }
             }
 
             potentialDoorways.Shuffle();
 
-            // only select doorways at different edges
+            // only select doorways at different edges or within corridor distance
             potentialDoorways.ForEach(pos => {
                 if (doorways.TrueForAll(p => (p.x != pos.x && p.y != pos.y) || Vector2Int.Distance(p, pos) >= corridorSize))
                 {

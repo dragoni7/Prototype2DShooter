@@ -196,7 +196,7 @@ namespace dragoni7
         {
             HashSet<Vector2Int> corridors = new();
 
-            foreach (var edge in graph.Edges)
+            foreach (Edge<Room> edge in graph.Edges)
             {
                 HashSet<Vector2Int> newCorridor = CreateCorridor(edge.From.Position, edge.To.Position, _generationParams.corridorSize);
                 corridors.UnionWith(newCorridor);
@@ -204,40 +204,40 @@ namespace dragoni7
 
             return corridors;
         }
-        private HashSet<Vector2Int> CreateCorridor(Vector2Int currentRoomCenter, Vector2Int destination, int width)
+        private HashSet<Vector2Int> CreateCorridor(Vector2Int fromRoomCenter, Vector2Int toRoomCenter, int width)
         {
             HashSet<Vector2Int> corridor = new();
-            var position = currentRoomCenter;
+            Vector2Int position = fromRoomCenter;
             corridor.Add(position);
 
-            while (position.y != destination.y)
+            while (position.x != toRoomCenter.x)
             {
-                if (destination.y >= position.y)
-                {
-                    position += Vector2Int.up;
-                }
-                else if (destination.y <= position.y)
-                {
-                    position += Vector2Int.down;
-                }
-
-                corridor.Add(position);
-                AddCorridorWidth(corridor, position, width, false);
-            }
-
-            while (position.x != destination.x)
-            {
-                if (destination.x >= position.x)
+                if (toRoomCenter.x >= position.x)
                 {
                     position += Vector2Int.right;
                 }
-                else if (destination.x <= position.x)
+                else if (toRoomCenter.x <= position.x)
                 {
                     position += Vector2Int.left;
                 }
 
                 corridor.Add(position);
                 AddCorridorWidth(corridor, position, width, true);
+            }
+
+            while (position.y != toRoomCenter.y)
+            {
+                if (toRoomCenter.y >= position.y)
+                {
+                    position += Vector2Int.up;
+                }
+                else if (toRoomCenter.y <= position.y)
+                {
+                    position += Vector2Int.down;
+                }
+
+                corridor.Add(position);
+                AddCorridorWidth(corridor, position, width, false);
             }
 
             return corridor;
