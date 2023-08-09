@@ -1,6 +1,6 @@
 using System.Linq;
 using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {

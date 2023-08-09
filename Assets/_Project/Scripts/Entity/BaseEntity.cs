@@ -13,9 +13,9 @@ namespace dragoni7
 
         public bool canMove;
         public bool canAttack;
-        public virtual void TakeDamage(int damage)
+        public void OnCollisionEnter(Collision collision)
         {
-
+            
         }
 
         public virtual void Move(Vector3 moveThisFrame)

@@ -19,5 +19,5 @@ MonoBehaviour:
   scriptableBullet: {fileID: 11400000, guid: 6e0c18fb6856b4844bc88fa047657aa8, type: 2}
   patternPrefab: {fileID: 7766644300974218740, guid: 7720d37eb2094434092540a014c853c9, type: 3}
   stats:
-    emitTime: 10
-    bulletForce: 10
+    emitTime: 15
+    bulletForce: 30

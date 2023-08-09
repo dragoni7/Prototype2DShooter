@@ -1,18 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using Util;
 
 namespace dragoni7
 {
     public class Room
     {
-        private BoundsInt _bounds;
+        private IBounds _bounds;
         private Type _type;
-        public BoundsInt Bounds => _bounds;
+        private RoomData _roomData;
+        private List<Spawner> _spawners;
+        public IBounds Bounds => _bounds;
         public Type RoomType => _type;
+        public RoomData RoomData => _roomData;
+        public List<Spawner> Spawners => _spawners;
+
+        public Room(IBounds bounds, Type type, RoomData roomData)
+        {
+            _roomData = roomData;
+            _bounds = bounds;
+            _type = type;
+
+            _spawners = new();
+
+            foreach (SpawnerData spawnData in _roomData.spawnerData)
+            {
+                _spawners.Add(new Spawner(_bounds.Center(), spawnData));
+            }
+        }
 
         public enum Type
         {

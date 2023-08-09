@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using Utils;
 
 namespace dragoni7
@@ -30,9 +29,6 @@ namespace dragoni7
                 case GameState.SpawningPlayers:
                     HandleSpawningPlayers();
                     break;
-                case GameState.SpawningEnemies:
-                    HandleSpawningEnemies();
-                    break;
                 case GameState.PlayingLevel:
                     HandlePlayingLevel();
                     break;
@@ -50,28 +46,18 @@ namespace dragoni7
 
         private void HandleGeneratingLevel()
         {
-            LevelController.Instance.InitLevel(ResourceSystem.Instance.GetGenerationData("GenericLevel"));
+            LevelController.Instance.CreateLevel("GenericLevel");
         }
 
         private void HandleSpawningPlayers()
         {
-            PlayerController.Instance.SpawnPlayer("Player1", LevelController.Instance.Level.SpawnRoom.center);
-            ChangeState(GameState.SpawningEnemies);
-        }
-
-        private void HandleSpawningEnemies()
-        {
-            /*for (int i = 0; i < 5; i++)
-            {
-                EnemyController.Instance.SpawnEnemy("Enemy1", UnityEngine.Random.insideUnitCircle * 2);
-            }*/
-
+            PlayerController.Instance.SpawnPlayer("Player1", LevelController.Instance.PlayerSpawnPoint());
             ChangeState(GameState.PlayingLevel);
         }
 
         private void HandlePlayingLevel()
         {
-            
+            LevelController.Instance.StartSpawners();
         }
 
         [Serializable]
@@ -80,8 +66,7 @@ namespace dragoni7
             Starting = 0,
             GeneratingLevel = 1,
             SpawningPlayers = 2,
-            SpawningEnemies = 3,
-            PlayingLevel = 4
+            PlayingLevel = 3
             // TODO: add more as needed
         }
     }

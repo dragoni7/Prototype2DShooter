@@ -19,7 +19,6 @@ namespace dragoni7
         public Action<Vector3> OnMove;
         public Action<Vector3> OnAttack;
         public int GetTargetsCount() => targets == null ? 0 : targets.Count;
-
         public void Start()
         {
             

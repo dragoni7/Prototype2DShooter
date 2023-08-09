@@ -7,7 +7,8 @@ namespace dragoni7
     {
         [Header("Room Settings")]
         public int rooms = 100;
-        public int radius = 70;
+        public int radiusX = 70;
+        public int radiusY = 70;
         public int roomMeanX = 6;
         public int roomStdDevX = 6;
         public int roomMinX = 5;
@@ -16,16 +17,19 @@ namespace dragoni7
         public int roomStdDevY = 6;
         public int roomMinY = 5;
         public int roomMaxY = 40;
+        [Range(0f, 1f)]
+        public float openRoomChance = 0.5f;
+        [Range(0f, 10f)]
+        public int roomBuffer = 2;
 
         [Header("Corridor Settings")]
         public int corridorSize = 4;
+        public int extraLoops = 1;
 
-        [Range(0.1f, 1.0f)]
+        [Range(0.01f, 1.0f)]
         public float mainRoomPercent = 0.3f;
 
         [Header("Physics Sim Settings")]
-        [Range(0.1f, 1.0f)]
-        public float physicsColliderSize = 0.1f;
         [Range(1f, 100f)]
         public float timeScale = 50f;
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Util;
@@ -89,6 +88,13 @@ namespace Utils
             v2.Degree++;
 
             return (v1, v2);
+        }
+
+        public void Clear()
+        {
+            _vertices.Clear();
+            _edges.Clear();
+            Leaves.Clear();
         }
         public static Graph<T> MST(Graph<T> graph)
         {

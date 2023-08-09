@@ -9,20 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4ff592d697bc00478de9d9a7617d06e, type: 3}
+  m_Script: {fileID: 11500000, guid: 441414e65d562c14597c283bb765dadb, type: 3}
   m_Name: GenericLevel
   m_EditorClassIdentifier: 
-  rooms: 80
-  radius: 30
-  roomMeanX: 30
-  roomStdDevX: 10
-  roomMinX: 10
-  roomMaxX: 60
-  roomMeanY: 30
-  roomStdDevY: 10
-  roomMinY: 10
-  roomMaxY: 60
-  corridorSize: 4
-  mainRoomPercent: 0.15
-  physicsColliderSize: 0.1
-  timeScale: 50
+  spawnRoomData:
+  - {fileID: 11400000, guid: 018420ad8296c5247b71ba1ed81792a7, type: 2}
+  enemyRoomData:
+  - {fileID: 11400000, guid: 8bbda7e7efb725c4394da9adb45a1374, type: 2}
+  generationData: {fileID: 11400000, guid: 0ebb60240f972fe4880fef33dc97ffa7, type: 2}

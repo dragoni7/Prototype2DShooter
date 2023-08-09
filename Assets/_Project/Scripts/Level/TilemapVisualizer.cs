@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,9 +6,9 @@ namespace dragoni7
 {
     public class TilemapVisualizer : MonoBehaviour
     {
-        [SerializeField] private Tilemap floorTilemap, wallTilemap;
+        [SerializeField] private Tilemap floorTilemap, wallTilemap, doorTilemap;
 
-        [SerializeField] private TileBase floorTile, wallTop;
+        [SerializeField] private TileBase floorTile, wallTop, doorTile;
 
         public void PaintFloorTiles(IEnumerable<Vector2Int> floorPositions)
         {
@@ -34,6 +32,10 @@ namespace dragoni7
         public void PaintSingleBasicWall(Vector2Int wallPosition)
         {
             PaintSingleTile(wallTilemap, wallTop, wallPosition);
+        }
+        public void PaintSingleBasicDoor(Vector2Int wallPosition)
+        {
+            PaintSingleTile(doorTilemap, doorTile, wallPosition);
         }
 
         public void Clear()

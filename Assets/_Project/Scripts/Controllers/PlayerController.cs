@@ -1,6 +1,5 @@
 ﻿using Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering;
 using Utils;
 
 namespace dragoni7
@@ -19,7 +18,6 @@ namespace dragoni7
 
             // modify stats if needed
             var playerStats = scriptablePlayer.BaseStats;
-            playerStats.health += 10;
 
             spawnedPlayer.SetStats(playerStats);
             spawnedPlayer.Abilities = scriptablePlayer.Abilities;
@@ -49,9 +47,14 @@ namespace dragoni7
             playerCam.Follow = CurrentPlayer.transform;
         }
 
+        public bool IsNearPlayer(Vector2 position)
+        {
+            return Vector2.Distance(position, CurrentPlayer.transform.position) < 40;
+        }
+
         public void DamagePlayer(int damage)
         {
-            CurrentPlayer.TakeDamage(damage);
+            //CurrentPlayer.TakeDamage(damage);
         }
     }
 }

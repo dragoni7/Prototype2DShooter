@@ -39,10 +39,7 @@ namespace dragoni7
 
         public void FixedUpdate()
         {
-            foreach (AbstractEnemy enemy in CurrentEnemies)
-            {
-                //enemy.PerformAttack();
-            }
+
         }
     }
 }
