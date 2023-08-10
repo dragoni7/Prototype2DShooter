@@ -44,7 +44,11 @@ namespace dragoni7
                         {
                             _timer = 0;
                             gameObject.SetActive(false);
-                            hitObject.GetComponent<IDestructable>()?.TakeDamage(Stats.damage);
+
+                            if (hitObject.TryGetComponent(out IDestructable target))
+                            {
+                                EventSystem.Instance.TriggerEvent(EventSystem.Events.OnTakeDamage, new Dictionary<string, object> { { "damage", Stats.damage }, { "target", target }, { "source", gameObject } });
+                            }
                         }
                     }
                 }
@@ -52,7 +56,6 @@ namespace dragoni7
 
             transform.position = newPosition;
         }
-
         public virtual void FixedUpdate()
         {
             if (_timer >= Stats.duration)

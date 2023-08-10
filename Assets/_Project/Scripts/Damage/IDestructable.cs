@@ -1,4 +1,7 @@
-﻿namespace dragoni7
+﻿using System;
+using System.Collections.Generic;
+
+namespace dragoni7
 {
     public interface IDestructable
     {

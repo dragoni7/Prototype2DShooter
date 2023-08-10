@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using static dragoni7.ScriptableEntity;
 
 namespace dragoni7
@@ -60,7 +61,7 @@ namespace dragoni7
         {
             if (gameObject.activeSelf)
             {
-                _stats.health -= 1;
+                _stats.health -= damage;
 
                 if (_stats.health <= 0)
                 {

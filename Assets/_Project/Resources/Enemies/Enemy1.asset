@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   abilities: []
   stats:
-    health: 2
+    health: 3
     damage: 1
     speed: 6
     shootingSpeed: 0
