@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -20,7 +19,7 @@ namespace dragoni7
             // create enemy
             var scriptableEnemy = ResourceSystem.Instance.GetEnemy(name);
             AbstractEnemy spawnedEnemy = Instantiate(scriptableEnemy.enemyPrefab, position, Quaternion.identity, transform);
-            spawnedEnemy.SetStats(scriptableEnemy.BaseStats);
+            spawnedEnemy.SetAttributes(scriptableEnemy.BaseAttributes);
 
             // create enemie's emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);

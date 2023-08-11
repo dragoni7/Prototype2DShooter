@@ -10,6 +10,6 @@ namespace dragoni7
         public Transform EmitPoint => emitPoint;
 
         public bool canMove;
-        public abstract void PerformAttack();
+        public abstract void PerformAttack(DamageModifiers damageModifier);
     }
 }

@@ -69,7 +69,7 @@ namespace dragoni7
         /// </summary>
         public enum Events
         {
-            OnTakeDamage = 0
+            OnEntityDamaged = 0
         }
     }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyBullet
   m_EditorClassIdentifier: 
   type: 4
-  displayName: 
+  displayName: EnemyBullet
   description: 
   bulletPrefab: {fileID: 7907342162027068562, guid: 6c2d36477a0904b4da0687dd97525f8d, type: 3}
-  stats:
-    damage: 1
-    duration: 100
+  _baseAttributes:
+    baseDamageType: 0
+    duration: 50

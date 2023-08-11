@@ -1,15 +1,17 @@
+using dragoni;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static dragoni7.BulletData;
 
 namespace dragoni7
 {
-    public class AbstractBullet : MonoBehaviour
+    public class Bullet : MonoBehaviour
     {
         public Vector2 Velocity { get; set; }
         public float BulletForce { get; set; }
-        public BulletStats Stats { get; protected set; }
+        public DamageModifiers CurrentDamageModifier { get; set; }
+        public BulletAttributes Attributes { get; protected set; }
+        public IDamage DamageType { get; set; }
 
         [SerializeField] private List<string> _ignoreTags;
 
@@ -20,9 +22,11 @@ namespace dragoni7
             _timer = 0;
         }
 
-        public void SetStats(BulletStats stats)
+        public void SetAttributes(BulletAttributes attributes)
         {
-            Stats = stats;
+            DamageType = DamageFactory.GetDamage(attributes.baseDamageType);
+            GetComponent<SpriteRenderer>().color = DamageType.GetColor();
+            Attributes = attributes;
         }
         public virtual void Update()
         {
@@ -45,9 +49,9 @@ namespace dragoni7
                             _timer = 0;
                             gameObject.SetActive(false);
 
-                            if (hitObject.TryGetComponent(out IDestructable target))
+                            if (hitObject.TryGetComponent(out Entity target))
                             {
-                                EventSystem.Instance.TriggerEvent(EventSystem.Events.OnTakeDamage, new Dictionary<string, object> { { "damage", Stats.damage }, { "target", target }, { "source", gameObject } });
+                                EventSystem.Instance.TriggerEvent(EventSystem.Events.OnEntityDamaged, new Dictionary<string, object> { { "damage", DamageType }, { "damageModifier", CurrentDamageModifier }, { "target", target }, { "source", gameObject } });
                             }
                         }
                     }
@@ -58,7 +62,7 @@ namespace dragoni7
         }
         public virtual void FixedUpdate()
         {
-            if (_timer >= Stats.duration)
+            if (_timer >= Attributes.duration)
             {
                 _timer = 0;
                 gameObject.SetActive(false);

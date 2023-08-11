@@ -15,12 +15,17 @@ MonoBehaviour:
   type: 0
   displayName: Player1
   description: 
-  abilities:
+  _abilities:
   - {fileID: 2385704455612521622, guid: c4980158e0cee4e42866916537fdcd72, type: 3}
-  stats:
+  _baseAttributes:
+    damageModifiers:
+      genericModifier: 0
+      fireModifier: 0
+    damageResistances:
+      genericResistance: 0
+      fireResistance: 0
     health: 3
-    damage: 0
-    speed: 11
-    shootingSpeed: 4
-  playerPrefab: {fileID: -5676312503209429653, guid: 6c60d8f925887e941bc9943aafacb945, type: 3}
+    speed: 12
+    shootingSpeed: 8
+  playerPrefab: {fileID: 3499843795311515925, guid: c4442fa501265294d9a92798a53082d5, type: 3}
   scriptableWeapon: {fileID: 11400000, guid: 236f17957f63b3d4eb78423038d2f281, type: 2}

@@ -55,22 +55,22 @@ namespace dragoni7
 
             if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
-                if (!player.canAttack && !player.canMove)
+                if (!player.CanAttack && !player.CanMove)
                 {
                     return;
                 }
 
-                if (isAttacking && player.canAttack)
+                if (isAttacking && player.CanAttack)
                 {
-                    player.Weapon.PerformAttack();
-                    player.CurrentSpeed = player.Stats.shootingSpeed;
+                    player.Weapon.PerformAttack(player.Attributes.damageModifiers);
+                    player.CurrentSpeed = player.Attributes.shootingSpeed;
                 }
                 else
                 {
-                    player.CurrentSpeed = player.Stats.speed;
+                    player.CurrentSpeed = player.Attributes.speed;
                 }
 
-                if (player.canMove)
+                if (player.CanMove)
                 {
                     // Move player
                     player.rb.velocity = currentMove * player.CurrentSpeed;

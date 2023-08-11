@@ -1,18 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
-using static dragoni7.ScriptableEntity;
 
 namespace dragoni7
 {
-    public abstract class AbstractEnemy : BaseEntity, IDestructable
+    public abstract class AbstractEnemy : Entity
     {
-        [SerializeField]
-        private EntityStats _stats;
-        public EntityStats Stats => _stats;
         public BaseEmitter Emitter { get; set; }
         public AbstractBrain Brain { get; set; }
         public void Start()
         {
+            CanMove = true;
+            CanAttack = true;
             Brain.AIData.OnAttack += PerformAttack;
             Brain.AIData.OnMove += Move;
         }
@@ -20,25 +17,19 @@ namespace dragoni7
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f;
             Emitter.transform.rotation = Quaternion.Euler(0, 0, angle);
-            Emitter.TryEmitBullets();
+            Emitter.TryEmitBullets(Attributes.damageModifiers);
         }
-        public void SetStats(EntityStats stats)
+        public void Move(Vector3 moveThisFrame)
         {
-            _stats = stats;
+            rb.velocity = moveThisFrame * Attributes.speed;
         }
-
-        public override void Move(Vector3 moveThisFrame)
-        {
-            rb.velocity = moveThisFrame * Stats.speed;
-        }
-
-        public void TakeDamage(int damage)
+        public override void TakeDamage(float damage)
         {
             if (gameObject.activeSelf)
             {
-                _stats.health -= damage;
+                _attributes.health -= damage;
                 
-                if (_stats.health <= 0)
+                if (Attributes.health <= 0)
                 {
                     gameObject.SetActive(false);
                 }

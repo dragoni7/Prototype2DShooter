@@ -17,9 +17,9 @@ namespace dragoni7
             AbstractPlayer spawnedPlayer = Instantiate(scriptablePlayer.playerPrefab, pos, Quaternion.identity, transform);
 
             // modify stats if needed
-            var playerStats = scriptablePlayer.BaseStats;
+            var playerStats = scriptablePlayer.BaseAttributes;
 
-            spawnedPlayer.SetStats(playerStats);
+            spawnedPlayer.SetAttributes(playerStats);
             spawnedPlayer.Abilities = scriptablePlayer.Abilities;
 
             // create player's weapon

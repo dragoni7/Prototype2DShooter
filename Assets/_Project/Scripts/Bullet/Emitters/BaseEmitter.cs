@@ -17,13 +17,13 @@ namespace dragoni7
             Stats = stats;
         }
 
-        public virtual void TryEmitBullets()
+        public virtual void TryEmitBullets(DamageModifiers damageModifier)
         {
             if (canEmit)
             {
                 foreach (Vector2 point in pattern.points)
                 {
-                    BulletController.Instance.SpawnBullet(Bullet, transform.position + (Vector3)point, transform.rotation, transform.up, Stats.bulletForce);
+                    BulletController.Instance.SpawnBullet(Bullet, transform.position + (Vector3)point, transform.rotation, transform.up, Stats.bulletForce, damageModifier);
                 }
 
                 canEmit = false;

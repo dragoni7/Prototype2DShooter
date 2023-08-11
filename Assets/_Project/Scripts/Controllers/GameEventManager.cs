@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -14,14 +13,16 @@ namespace dragoni7
 
         public void Start()
         {
-            EventSystem.Instance.StartListening(EventSystem.Events.OnTakeDamage, OnDestructableDamaged);
+            EventSystem.Instance.StartListening(EventSystem.Events.OnEntityDamaged, OnEntityDamaged);
         }
-        private void OnDestructableDamaged(Dictionary<string, object> eventArgs)
+        private void OnEntityDamaged(Dictionary<string, object> eventArgs)
         {
             GameObject source = (GameObject)eventArgs["source"];
-            IDestructable target = (IDestructable)eventArgs["target"];
-            int damage = (int)eventArgs["damage"];
-            target.TakeDamage(damage);
+            Entity target = (Entity)eventArgs["target"];
+            IDamage damage = (IDamage)eventArgs["damage"];
+            DamageModifiers damageModifier = (DamageModifiers)eventArgs["damageModifier"];
+
+            damage.PerformDamage(damageModifier, target);
         }
     }
 }

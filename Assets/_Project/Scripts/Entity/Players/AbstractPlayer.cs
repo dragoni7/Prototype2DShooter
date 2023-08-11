@@ -1,30 +1,24 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using static dragoni7.ScriptableEntity;
+﻿using UnityEngine;
 
 namespace dragoni7
 {
-    public abstract class AbstractPlayer : BaseEntity, IDestructable
+    public abstract class AbstractPlayer : Entity
     {
-        private AbstractWeapon weapon;
+        private AbstractWeapon _weapon;
         public AbstractWeapon Weapon
         {
             get
             {
-                return weapon;
+                return _weapon;
             }
 
             set
             {
-                weapon = value;
-                weapon.transform.SetParent(EquipParent);
-                weapon.transform.localPosition = Vector3.zero;
+                _weapon = value;
+                _weapon.transform.SetParent(EquipParent);
+                _weapon.transform.localPosition = Vector3.zero;
             }
         }
-
-        [SerializeField]
-        private EntityStats _stats;
-        public EntityStats Stats => _stats;
 
         protected float currentSpeed;
         public float CurrentSpeed
@@ -39,31 +33,23 @@ namespace dragoni7
                 return;
             }
         }
-
         public virtual void Start()
         {
-            CurrentSpeed = Stats.speed;
-            canMove = true;
-            canAttack = true;
+            CurrentSpeed = _attributes.speed;
+            CanMove = true;
+            CanAttack = true;
         }
-
         public virtual void ToggleWeaponVisible(bool value)
         {
             Weapon.gameObject.SetActive(value);
         }
-
-        public void SetStats(EntityStats stats)
-        {
-            _stats = stats;
-        }
-
-        public void TakeDamage(int damage)
+        public override void TakeDamage(float damage)
         {
             if (gameObject.activeSelf)
             {
-                _stats.health -= damage;
+                _attributes.health -= damage;
 
-                if (_stats.health <= 0)
+                if (_attributes.health <= 0)
                 {
                     gameObject.SetActive(false);
                 }

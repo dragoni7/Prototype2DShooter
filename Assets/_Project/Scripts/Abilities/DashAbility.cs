@@ -12,15 +12,15 @@ namespace dragoni7
         [SerializeField] private float _dashingPower = 14f;
         [SerializeField] private float _dashingTime = 0.5f;
         [SerializeField] private float _dashingCooldown = 1f;
-        public override IEnumerator Execute(BaseEntity subject)
+        public override IEnumerator Execute(Entity subject)
         {
             if (_canDash)
             {
                 _trailRenderer = subject.GetComponent<TrailRenderer>();
 
                 _canDash = false;
-                subject.canMove = false;
-                subject.canAttack = false;
+                subject.CanMove = false;
+                subject.CanAttack = false;
 
                 subject.rb.velocity = subject.rb.velocity.normalized * _dashingPower;
 
@@ -29,8 +29,8 @@ namespace dragoni7
 
                 yield return new WaitForSeconds(_dashingTime);
 
-                subject.canMove = true;
-                subject.canAttack = true;
+                subject.CanMove = true;
+                subject.CanAttack = true;
                 subject.rb.velocity = Vector2.zero;
                 _trailRenderer.emitting = false;
 

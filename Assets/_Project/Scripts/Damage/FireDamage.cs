@@ -1,10 +1,19 @@
-﻿namespace dragoni7
+﻿using UnityEngine;
+
+namespace dragoni7
 {
-    public class FireDamage : IDamageType
+    public class FireDamage : IDamage
     {
-        public void PerformDamage(int damage)
+        public Color Color => Color.red;
+
+        public Color GetColor() => Color;
+        public void PerformDamage(DamageModifiers damageModifier, Entity target)
         {
-            // reduce health of target + do fire stuff
+            // do fire stuff
+            float fireDamage = 1 + damageModifier.fireModifier;
+            float damageAfterResist = fireDamage - (target.Attributes.damageResistances.fireResistance * fireDamage);
+
+            target.TakeDamage(damageAfterResist);
         }
     }
 }

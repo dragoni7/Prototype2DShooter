@@ -15,12 +15,17 @@ MonoBehaviour:
   type: 3
   displayName: Enemy1
   description: 
-  abilities: []
-  stats:
+  _abilities: []
+  _baseAttributes:
+    damageModifiers:
+      genericModifier: 0
+      fireModifier: 0
+    damageResistances:
+      genericResistance: 0
+      fireResistance: 0.5
     health: 3
-    damage: 1
     speed: 6
-    shootingSpeed: 0
-  enemyPrefab: {fileID: -50919973708891284, guid: 62207754e51080d48b529e57021655e7, type: 3}
+    shootingSpeed: 5
+  enemyPrefab: {fileID: 1743018561713434615, guid: b2aa68368c033e94790505039f832049, type: 3}
   scriptableEmitter: {fileID: 11400000, guid: 8dcead487c496434c840cf91c40c71b4, type: 2}
   enemyAiPrefab: {fileID: 5580339338825623332, guid: 1ccf15cde2332ec4f9803c543fe8deea, type: 3}

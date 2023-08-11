@@ -1,4 +1,4 @@
-﻿using System;
+﻿using dragoni;
 using UnityEngine;
 
 namespace dragoni7
@@ -6,16 +6,9 @@ namespace dragoni7
     [CreateAssetMenu(fileName = "New Scriptable Bullet")]
     public class BulletData : AbstractData
     {
-        public AbstractBullet bulletPrefab;
+        public Bullet bulletPrefab;
 
-        [SerializeField] private BulletStats stats;
-        public BulletStats BaseStats => stats;
-
-        [Serializable]
-        public struct BulletStats
-        {
-            public int damage;
-            public int duration;
-        }
+        [SerializeField] private BulletAttributes _baseAttributes;
+        public BulletAttributes BaseAttributes => _baseAttributes;
     }
 }

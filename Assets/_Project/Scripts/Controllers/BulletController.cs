@@ -18,14 +18,14 @@ namespace dragoni7
             }
         }
 
-        public void SpawnBullet(BulletData scriptableBullet, Vector2 position, Quaternion rotation, Vector2 velocity, float force)
+        public void SpawnBullet(BulletData scriptableBullet, Vector2 position, Quaternion rotation, Vector2 velocity, float force, DamageModifiers damageModifier)
         {
             bulletPools.TryGetValue(scriptableBullet.bulletPrefab.name, out var pool);
             GameObject bullet = pool.PullGameObject(position, rotation);
-            bullet.GetComponent<AbstractBullet>().SetStats(scriptableBullet.BaseStats);
-            bullet.GetComponent<AbstractBullet>().Velocity = velocity;
-            bullet.GetComponent<AbstractBullet>().BulletForce = force;
-            //bullet.GetComponent<SpriteRenderer>().color = Random.ColorHSV();
+            bullet.GetComponent<Bullet>().SetAttributes(scriptableBullet.BaseAttributes);
+            bullet.GetComponent<Bullet>().Velocity = velocity;
+            bullet.GetComponent<Bullet>().BulletForce = force;
+            bullet.GetComponent<Bullet>().CurrentDamageModifier = damageModifier;
         }
     }
 }
