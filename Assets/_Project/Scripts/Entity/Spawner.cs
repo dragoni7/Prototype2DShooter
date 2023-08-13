@@ -33,7 +33,7 @@ namespace dragoni7
 
                     for (int i = 0; i < spawnAmount; i++)
                     {
-                        EnemyController.Instance.SpawnEnemy(_spawnData.Enemy, _position + (Random.insideUnitCircle * _spawnData.Spread));
+                        EntityController.Instance.SpawnEnemy(_spawnData.Enemy, _position + (Random.insideUnitCircle * _spawnData.Spread));
                         _spawnCount++;
                     }
                 }

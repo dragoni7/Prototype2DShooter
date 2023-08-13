@@ -4,7 +4,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class EventSystem : Singletone<EventSystem>
+    public class EventSystem : Singleton<EventSystem>
     {
         private Dictionary<Events, Action<Dictionary<string, object>>> _eventDictionary;
         protected override void Awake()
@@ -62,14 +62,6 @@ namespace dragoni7
             {
                 thisEvent.Invoke(message);
             }
-        }
-
-        /// <summary>
-        /// Event Ids
-        /// </summary>
-        public enum Events
-        {
-            OnEntityDamaged = 0
         }
     }
 }

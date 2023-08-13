@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using Utils;
 
 namespace dragoni7
 {
-    public class PlayerInputController : Singletone<PlayerInputController>
+    public class PlayerInputController : Singleton<PlayerInputController>
     {
         private bool isAttacking = false;
         private Vector2 currentMove;
@@ -48,7 +49,6 @@ namespace dragoni7
                 StartCoroutine(pController.CurrentPlayer.Abilities[2].Execute(pController.CurrentPlayer));
             }
         }
-
         public void FixedUpdate()
         {
             AbstractPlayer player = pController.CurrentPlayer;
@@ -62,8 +62,7 @@ namespace dragoni7
 
                 if (isAttacking && player.CanAttack)
                 {
-                    player.Weapon.PerformAttack(player.Attributes.damageModifiers);
-                    player.CurrentSpeed = player.Attributes.shootingSpeed;
+                    EventSystem.Instance.TriggerEvent(Events.OnPlayerAttack, null);
                 }
                 else
                 {

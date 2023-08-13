@@ -51,7 +51,7 @@ namespace dragoni7
 
                             if (hitObject.TryGetComponent(out Entity target))
                             {
-                                EventSystem.Instance.TriggerEvent(EventSystem.Events.OnEntityDamaged, new Dictionary<string, object> { { "damage", DamageType }, { "damageModifier", CurrentDamageModifier }, { "target", target }, { "source", gameObject } });
+                                EventSystem.Instance.TriggerEvent(Events.OnEntityDamaged, new Dictionary<string, object> { { "damage", DamageType }, { "damageModifier", CurrentDamageModifier }, { "target", target }, { "source", gameObject } });
                             }
                         }
                     }

@@ -4,7 +4,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class BulletController : Singletone<BulletController>
+    public class BulletController : Singleton<BulletController>
     {
         [SerializeField] List<GameObject> bulletPrefabs;
         private Dictionary<string, ObjectPool<PoolObject>> bulletPools = new();

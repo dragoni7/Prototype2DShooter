@@ -21,10 +21,9 @@ namespace dragoni7
             }
             else
             {
-                aiData.movementInput = _directionSolver.GetDirectionToMove(aiData);
+                aiData.MovementInput = _directionSolver.GetDirectionToMove(aiData);
             }
 
-            aiData.OnMove?.Invoke(aiData.movementInput);
             return NodeStatus.Success;
         }
     }

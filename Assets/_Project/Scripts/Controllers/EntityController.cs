@@ -4,16 +4,14 @@ using Utils;
 
 namespace dragoni7
 {
-    public class EnemyController : Singletone<EnemyController>
+    public class EntityController : Singleton<EntityController>
     {
         public List<AbstractEnemy> CurrentEnemies { get; set; }
-
         protected override void Awake()
         {
             CurrentEnemies = new();
             base.Awake();
         }
-
         public void SpawnEnemy(string name, Vector2 position)
         {
             // create enemy
@@ -34,6 +32,10 @@ namespace dragoni7
             AbstractBrain spawnedAI = Instantiate(scriptableEnemy.enemyAiPrefab, position, Quaternion.identity, spawnedEnemy.transform);
             spawnedEnemy.Brain = spawnedAI;
             CurrentEnemies.Add(spawnedEnemy);
+        }
+        public void MoveEntity(Entity entity, Vector2 moveThisFrame)
+        {
+            entity.rb.velocity = moveThisFrame * entity.Attributes.speed;
         }
     }
 }

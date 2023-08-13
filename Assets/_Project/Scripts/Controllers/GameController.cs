@@ -3,7 +3,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class GameController : Singletone<GameController>
+    public class GameController : Singleton<GameController>
     {
         public static event Action<GameState> OnBeforeStateChanged;
         public static event Action<GameState> OnAfterStateChanged;

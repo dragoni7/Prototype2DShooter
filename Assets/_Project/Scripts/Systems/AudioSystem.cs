@@ -3,7 +3,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class AudioSystem : Singletone<AudioSystem>
+    public class AudioSystem : Singleton<AudioSystem>
     {
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private AudioSource soundsSource;

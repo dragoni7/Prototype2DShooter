@@ -3,7 +3,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class LevelController : Singletone<LevelController>
+    public class LevelController : Singleton<LevelController>
     {
         private Level _level;
         public Level Level => _level;

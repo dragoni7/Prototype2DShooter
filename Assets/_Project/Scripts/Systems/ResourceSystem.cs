@@ -5,7 +5,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class ResourceSystem : Singletone<ResourceSystem>
+    public class ResourceSystem : Singleton<ResourceSystem>
     {
         public List<PlayerData> ScriptablePlayers { get; private set; }
         private Dictionary<string, PlayerData> _playersDict;

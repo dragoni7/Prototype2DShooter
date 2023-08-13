@@ -25,7 +25,7 @@ namespace Utils
     /// <summary>
     /// Singleton class. Only allows one static instance of a class.
     /// </summary>
-    public abstract class Singletone<T> : StaticInstance<T> where T : MonoBehaviour
+    public abstract class Singleton<T> : StaticInstance<T> where T : MonoBehaviour
     {
         protected override void Awake()
         {
@@ -41,7 +41,7 @@ namespace Utils
     /// <summary>
     /// Persistant version of singleton. Survives through scene loads.
     /// </summary>
-    public abstract class PersistantSingleton<T> : Singletone<T> where T : MonoBehaviour
+    public abstract class PersistantSingleton<T> : Singleton<T> where T : MonoBehaviour
     {
         protected override void Awake()
         {

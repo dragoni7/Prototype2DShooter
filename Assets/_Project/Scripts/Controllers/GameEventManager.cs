@@ -4,16 +4,18 @@ using Utils;
 
 namespace dragoni7
 {
-    public class GameEventManager : Singletone<GameEventManager>
+    public class GameEventManager : Singleton<GameEventManager>
     {
         protected override void Awake()
         {
             base.Awake();
         }
-
         public void Start()
         {
-            EventSystem.Instance.StartListening(EventSystem.Events.OnEntityDamaged, OnEntityDamaged);
+            EventSystem.Instance.StartListening(Events.OnEntityDamaged, OnEntityDamaged);
+            EventSystem.Instance.StartListening(Events.OnEntityMove, OnEntityMove);
+            EventSystem.Instance.StartListening(Events.OnEntityAttack, OnEntityAttack);
+            EventSystem.Instance.StartListening(Events.OnPlayerAttack, OnPlayerAttack);
         }
         private void OnEntityDamaged(Dictionary<string, object> eventArgs)
         {
@@ -23,6 +25,23 @@ namespace dragoni7
             DamageModifiers damageModifier = (DamageModifiers)eventArgs["damageModifier"];
 
             damage.PerformDamage(damageModifier, target);
+        }
+        private void OnEntityMove(Dictionary<string, object> eventArgs)
+        {
+            Entity entity = (Entity)eventArgs["entity"];
+            Vector3 moveThisFrame = (Vector2)eventArgs["moveThisFrame"];
+
+            EntityController.Instance.MoveEntity(entity, moveThisFrame);
+        }
+        private void OnEntityAttack(Dictionary<string, object> eventArgs)
+        {
+            Entity entity = (Entity)eventArgs["entity"];
+            entity.PerformAttack();
+        }
+        private void OnPlayerAttack(Dictionary<string, object> eventArgs)
+        {
+            CameraShake.Instance.ShakeCamera(1f, 0.08f);
+            PlayerController.Instance.PlayerAttack();
         }
     }
 }

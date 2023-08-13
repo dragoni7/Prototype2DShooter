@@ -14,7 +14,7 @@ namespace dragoni7
             if (aiData == null)
             {
                 StatusReason = "aiData is null";
-                aiData.OnMove?.Invoke(Vector3.zero);
+                aiData.MovementInput = Vector2.zero;
                 return NodeStatus.Failure;
             }
 
@@ -27,7 +27,7 @@ namespace dragoni7
                     return NodeStatus.Success;
                 }
 
-                aiData.OnMove?.Invoke(Vector3.zero);
+                aiData.MovementInput = Vector2.zero;
                 StatusReason = "aiData has no targets";
                 return NodeStatus.Failure;
             }

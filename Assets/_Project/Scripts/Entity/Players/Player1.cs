@@ -2,6 +2,9 @@
 {
     public class Player1 : AbstractPlayer
     {
-
+        public override void PerformAttack()
+        {
+            Weapon.PerformAttack(Attributes.damageModifiers);
+        }
     }
 }

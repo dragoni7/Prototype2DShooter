@@ -48,7 +48,7 @@ namespace dragoni7
                 aiData.attackDirection = Vector3.zero;
             }
 
-            aiData.targets = _colliders;
+           aiData.targets = _colliders;
 
             if (_colliders == null)
             {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using WUG.BehaviorTreeVisualizer;
 
 namespace dragoni7
@@ -9,8 +10,8 @@ namespace dragoni7
 
         protected override NodeStatus OnRun(AIData aiData)
         {
-            aiData.OnMove?.Invoke(Vector3.zero);
-            aiData.OnAttack?.Invoke(aiData.attackDirection);
+            aiData.MovementInput = Vector2.zero;
+            EventSystem.Instance.TriggerEvent(Events.OnEntityAttack, new Dictionary<string, object> { { "entity", aiData.entity } });
             return NodeStatus.Running;
         }
     }

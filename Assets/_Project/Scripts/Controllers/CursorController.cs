@@ -3,7 +3,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class CursorController : Singletone<CursorController>
+    public class CursorController : Singleton<CursorController>
     {
         [SerializeField] private Texture2D _cursorTexture;
 

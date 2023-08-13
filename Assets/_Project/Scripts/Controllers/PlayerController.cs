@@ -4,7 +4,7 @@ using Utils;
 
 namespace dragoni7
 {
-    public class PlayerController : Singletone<PlayerController>
+    public class PlayerController : Singleton<PlayerController>
     {
         public AbstractPlayer CurrentPlayer { get; set; }
 
@@ -46,15 +46,14 @@ namespace dragoni7
             playerCam.LookAt = CurrentPlayer.transform;
             playerCam.Follow = CurrentPlayer.transform;
         }
-
         public bool IsNearPlayer(Vector2 position)
         {
             return Vector2.Distance(position, CurrentPlayer.transform.position) < 40;
         }
-
-        public void DamagePlayer(int damage)
+        public void PlayerAttack()
         {
-            //CurrentPlayer.TakeDamage(damage);
+            CurrentPlayer.CurrentSpeed = CurrentPlayer.Attributes.shootingSpeed;
+            CurrentPlayer.PerformAttack();
         }
     }
 }

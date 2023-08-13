@@ -19,16 +19,15 @@ namespace dragoni7
             if (aiData.currentTarget == null)
             {
                 // stop logic
-                aiData.movementInput = Vector2.zero;
+                aiData.MovementInput = Vector2.zero;
                 aiData.following = false;
                 return NodeStatus.Failure;
             }
             else
             {
-                aiData.movementInput = _directionSolver.GetDirectionToMove(aiData);
+                aiData.MovementInput = _directionSolver.GetDirectionToMove(aiData);
             }
 
-            aiData.OnMove?.Invoke(aiData.movementInput);
             return NodeStatus.Success;
         }
     }

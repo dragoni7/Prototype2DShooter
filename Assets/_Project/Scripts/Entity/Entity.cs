@@ -20,9 +20,7 @@ namespace dragoni7
         {
             _attributes = stats;
         }
-        public virtual void TakeDamage(float damage)
-        {
-
-        }
+        public abstract void PerformAttack();
+        public abstract void TakeDamage(float damage);
     }
 }
