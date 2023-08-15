@@ -22,8 +22,8 @@ namespace dragoni7
             // create enemy's emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);
             BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, position, Quaternion.identity, spawnedEnemy.transform);
-            spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
-            spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
+            spawnedEmitter.SetAttributes(scriptableEmitter.BaseAttributes);
+            spawnedEmitter.Pattern = Instantiate(scriptableEmitter.patternPrefab, spawnedEmitter.transform.position, Quaternion.identity, spawnedEmitter.transform);
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
             spawnedEnemy.Emitter = spawnedEmitter;

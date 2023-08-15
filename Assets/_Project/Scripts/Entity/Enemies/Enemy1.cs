@@ -20,8 +20,6 @@ namespace dragoni7
 
                 if (Attributes.health <= 0)
                 {
-                    //gameObject.SetActive(false);
-                    //HealthBar.gameObject.SetActive(false);
                     Destroy(gameObject);
                     Destroy(HealthBar.gameObject);
                 }

@@ -31,9 +31,8 @@ namespace dragoni7
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableWeapon.scriptableEmitter.name);
             BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, pos, Quaternion.identity, spawnedWeapon.EmitPoint);
             spawnedEmitter.transform.localPosition = Vector3.zero;
-            spawnedEmitter.transform.localRotation = Quaternion.Euler(0, 0, -90);
-            spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
-            spawnedEmitter.pattern = scriptableEmitter.patternPrefab;
+            spawnedEmitter.SetAttributes(scriptableEmitter.BaseAttributes);
+            spawnedEmitter.Pattern = Instantiate(scriptableEmitter.patternPrefab, spawnedEmitter.transform.position, Quaternion.identity, spawnedEmitter.transform);
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
             // set weapon emitter

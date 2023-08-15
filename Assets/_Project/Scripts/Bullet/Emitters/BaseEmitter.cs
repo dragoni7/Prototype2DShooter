@@ -5,25 +5,34 @@ namespace dragoni7
 {
     public class BaseEmitter : MonoBehaviour
     {
-        public BasePattern pattern;
+        private BasePattern _pattern;
+        public BasePattern Pattern
+        {
+            get { return _pattern; }
+            set
+            {
+                _pattern = value;
+                _pattern.transform.SetParent(transform);
+            }
+        }
         public BulletData Bullet { get; set; }
-        public EmitterStats Stats { get; protected set; }
+        public EmitterAttributes attributes { get; protected set; }
 
         protected int timer = 0;
         protected bool canEmit = true;
 
-        public void SetStats(EmitterStats stats)
+        public void SetAttributes(EmitterAttributes attributes)
         {
-            Stats = stats;
+            this.attributes = attributes;
         }
 
         public virtual void TryEmitBullets(DamageModifiers damageModifier)
         {
             if (canEmit)
             {
-                foreach (Vector2 point in pattern.points)
+                foreach (Transform point in Pattern.points)
                 {
-                    BulletController.Instance.SpawnBullet(Bullet, transform.position + (Vector3)point, transform.rotation, transform.up, Stats.bulletForce, damageModifier);
+                    BulletController.Instance.SpawnBullet(Bullet, point.position, point.rotation, point.up, attributes.bulletForce, damageModifier);
                 }
 
                 canEmit = false;
@@ -32,7 +41,7 @@ namespace dragoni7
 
         public virtual void FixedUpdate()
         {
-            if (timer >= Stats.emitTime)
+            if (timer >= attributes.emitTime)
             {
                 canEmit = true;
                 timer = 0;

@@ -10,11 +10,11 @@ namespace dragoni7
         public BulletData scriptableBullet;
         public BasePattern patternPrefab;
 
-        [SerializeField] private EmitterStats stats;
-        public EmitterStats BaseStats => stats;
+        [SerializeField] private EmitterAttributes attributes;
+        public EmitterAttributes BaseAttributes => attributes;
 
         [Serializable]
-        public struct EmitterStats
+        public struct EmitterAttributes
         {
             public int emitTime;
             public float bulletForce;

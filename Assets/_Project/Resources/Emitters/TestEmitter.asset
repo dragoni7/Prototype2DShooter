@@ -17,7 +17,7 @@ MonoBehaviour:
   description: 
   emitterPrefab: {fileID: 3296497370567831315, guid: fdef32e4b2ebe314bbfd7a3b59f58921, type: 3}
   scriptableBullet: {fileID: 11400000, guid: 6e0c18fb6856b4844bc88fa047657aa8, type: 2}
-  patternPrefab: {fileID: 4586585468446253257, guid: b30c868612d1d2a4ea691297d355b55d, type: 3}
-  stats:
+  patternPrefab: {fileID: 7360804957590273788, guid: 70525ea8e476dff4fbe2b94b8075582b, type: 3}
+  attributes:
     emitTime: 15
     bulletForce: 30

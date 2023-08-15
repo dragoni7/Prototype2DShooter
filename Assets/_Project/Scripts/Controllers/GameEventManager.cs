@@ -27,12 +27,17 @@ namespace dragoni7
             IDamage damage = (IDamage)eventArgs["damage"];
             DamageModifiers damageModifier = (DamageModifiers)eventArgs["damageModifier"];
 
-            damage.PerformDamage(damageModifier, target);
+            Vector3 targetPosition = target.transform.position;
+            float damageTaken = damage.PerformDamage(damageModifier, target);
 
+            UIController uiController = UIController.Instance;
             if (target is AbstractPlayer)
             {
-                UIController.Instance.UpdatePlayerHealthBar(target.Attributes.health);
+                uiController.UpdatePlayerHealthBar(target.Attributes.health);
             }
+
+            uiController.SendFloatingMessage(targetPosition + Random.insideUnitSphere, damageTaken.ToString(), damage.GetColor());
+
         }
         private void OnEntityMove(Dictionary<string, object> eventArgs)
         {
@@ -47,7 +52,7 @@ namespace dragoni7
 
             if (entity is AbstractPlayer)
             {
-                CameraShake.Instance.ShakeCamera(1f, 0.08f);
+                UIController.Instance.ShakePlayerCamera(1f, 0.08f);
                 PlayerController.Instance.PlayerAttack();
             }
             else

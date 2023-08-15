@@ -866,7 +866,6 @@ GameObject:
   m_Component:
   - component: {fileID: 826844714}
   - component: {fileID: 826844715}
-  - component: {fileID: 826844716}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -901,20 +900,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66eabe0b4158ebd478416d44bad6ae0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &826844716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 826844713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c06a35a23e5178d45a6485017b4f8385, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 1657023195}
-  sensitivity: 10
 --- !u!1 &907251210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1236,9 +1221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ac7e0f9fe543549ae8c8d17b24ed18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _canvas: {fileID: 1540728828}
-  _uiCanvas: {fileID: 930435628}
+  _worldCanvas: {fileID: 1540728828}
+  _playerCanvas: {fileID: 930435628}
   _playerHealthBar: {fileID: 5396633341536012669}
+  _floatingText: {fileID: 5393357673790150920, guid: b59d9c4b7d5c9fa46a85c1732bb8c2e8, type: 3}
+  _playerCam: {fileID: 1657023195}
+  _zoomSensitivity: 10
+  playerCamZoom: 0
 --- !u!1 &1188870298
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,7 +1676,7 @@ GameObject:
   - component: {fileID: 1540728827}
   - component: {fileID: 1540728826}
   m_Layer: 5
-  m_Name: HealthBarCanvas
+  m_Name: WorldUICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1750,8 +1739,8 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: -1062855031
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1540728829
@@ -1962,7 +1951,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1657023196}
   - component: {fileID: 1657023195}
-  - component: {fileID: 1657023197}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -2024,18 +2012,6 @@ Transform:
   m_Father: {fileID: 1573090935}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1657023197
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1657023194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dddf36c251f9f9b4db37523593e1d472, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1754253018
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,12 +49,24 @@ namespace dragoni7
                 StartCoroutine(pController.CurrentPlayer.Abilities[2].Execute(pController.CurrentPlayer));
             }
         }
+
+        public void Update()
+        {
+            if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
+            {
+                if (Input.GetAxis("Mouse ScrollWheel") != 0)
+                {
+                    UIController.Instance.ZoomPlayerCamera(Input.GetAxis("Mouse ScrollWheel"));
+                }
+            }
+        }
         public void FixedUpdate()
         {
             AbstractPlayer player = pController.CurrentPlayer;
 
             if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
+
                 if (!player.CanAttack && !player.CanMove)
                 {
                     return;
@@ -77,9 +89,9 @@ namespace dragoni7
                     // Rotate player's weapon
                     Vector3 mousePosition = MainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
                     Vector3 lookDirection = mousePosition - player.Weapon.transform.position;
-                    float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg;
+                    float aimAngle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
 
-                    player.Weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+                    player.Weapon.transform.rotation = Quaternion.Euler(0, 0, aimAngle);
                 }
             }
         }

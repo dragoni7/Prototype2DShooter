@@ -23,9 +23,9 @@ MonoBehaviour:
   roomStdDevY: 30
   roomMinY: 12
   roomMaxY: 50
-  openRoomChance: 0.5
+  openRoomChance: 0.25
   roomBuffer: 5
   corridorSize: 10
   extraLoops: 3
-  mainRoomPercent: 0.1
+  mainRoomPercent: 0.25
   timeScale: 50
