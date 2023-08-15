@@ -18,4 +18,4 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7907342162027068562, guid: 6c2d36477a0904b4da0687dd97525f8d, type: 3}
   _baseAttributes:
     baseDamageType: 0
-    duration: 50
+    duration: 70

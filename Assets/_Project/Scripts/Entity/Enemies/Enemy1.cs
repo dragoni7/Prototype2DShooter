@@ -16,10 +16,14 @@ namespace dragoni7
             if (gameObject.activeSelf)
             {
                 _attributes.health -= damage;
+                HealthBar.SetHealth(Attributes.health);
 
                 if (Attributes.health <= 0)
                 {
-                    gameObject.SetActive(false);
+                    //gameObject.SetActive(false);
+                    //HealthBar.gameObject.SetActive(false);
+                    Destroy(gameObject);
+                    Destroy(HealthBar.gameObject);
                 }
             }
         }

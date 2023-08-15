@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
 using Utils;
 
@@ -45,6 +46,8 @@ namespace dragoni7
             CurrentPlayer = spawnedPlayer;
             playerCam.LookAt = CurrentPlayer.transform;
             playerCam.Follow = CurrentPlayer.transform;
+
+            EventSystem.Instance.TriggerEvent(Events.OnPlayerSpawned, new Dictionary<string, object> { { "Player", CurrentPlayer } });
         }
         public bool IsNearPlayer(Vector2 position)
         {

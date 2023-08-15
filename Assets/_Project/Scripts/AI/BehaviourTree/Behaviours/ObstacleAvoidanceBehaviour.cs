@@ -15,25 +15,28 @@ namespace dragoni7
         {
             foreach(Collider2D obstacleCollider in aiData.obstacles)
             {
-                Vector2 directionToObstacle = obstacleCollider.ClosestPoint(aiData.transform.position) - (Vector2)aiData.transform.position;
-                float distanceToObstacle = directionToObstacle.magnitude;
-
-                // calculate weight based on distance between subject and obstacle
-                float weight = distanceToObstacle <= subjectColliderSize ? 1 : (radius - distanceToObstacle) / radius;
-
-                Vector2 directionToObstacleNormalize = directionToObstacle.normalized;
-
-                // add obstacle parameters to the danger array
-                for (int i = 0; i < DirectionHelper.amount; i++)
+                if (obstacleCollider != null)
                 {
-                    float result = Vector2.Dot(directionToObstacleNormalize, DirectionHelper.directions16[i]);
-                    //weight = 1.0f - Mathf.Abs(result - 0.65f);
-                    float valueToPutIn = result * weight;
+                    Vector2 directionToObstacle = obstacleCollider.ClosestPoint(aiData.transform.position) - (Vector2)aiData.transform.position;
+                    float distanceToObstacle = directionToObstacle.magnitude;
 
-                    // override value only if it is higher than the current one stored in the array
-                    if (valueToPutIn > danger[i])
+                    // calculate weight based on distance between subject and obstacle
+                    float weight = distanceToObstacle <= subjectColliderSize ? 1 : (radius - distanceToObstacle) / radius;
+
+                    Vector2 directionToObstacleNormalize = directionToObstacle.normalized;
+
+                    // add obstacle parameters to the danger array
+                    for (int i = 0; i < DirectionHelper.amount; i++)
                     {
-                        danger[i] = valueToPutIn;
+                        float result = Vector2.Dot(directionToObstacleNormalize, DirectionHelper.directions16[i]);
+                        //weight = 1.0f - Mathf.Abs(result - 0.65f);
+                        float valueToPutIn = result * weight;
+
+                        // override value only if it is higher than the current one stored in the array
+                        if (valueToPutIn > danger[i])
+                        {
+                            danger[i] = valueToPutIn;
+                        }
                     }
                 }
             }

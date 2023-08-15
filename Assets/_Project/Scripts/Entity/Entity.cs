@@ -6,6 +6,10 @@ namespace dragoni7
     public abstract class Entity : MonoBehaviour
     {
         public Rigidbody2D rb;
+
+        [SerializeField]
+        protected HealthBar _healthBar;
+        public HealthBar HealthBar => _healthBar;
         public List<AbstractAbility> Abilities { get; set; }
 
         protected EntityAttributes _attributes;
@@ -19,6 +23,12 @@ namespace dragoni7
         public void SetAttributes(EntityAttributes stats)
         {
             _attributes = stats;
+
+            if (HealthBar != null)
+            {
+                HealthBar.SetMaxHealth(stats.health);
+                HealthBar.SetHealth(stats.health);
+            }
         }
         public abstract void PerformAttack();
         public abstract void TakeDamage(float damage);

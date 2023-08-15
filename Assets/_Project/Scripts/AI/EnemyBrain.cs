@@ -28,7 +28,7 @@ namespace dragoni7
                             new Selector("Attack or Pursue",
                                 new Sequence("Attack",
                                     new IsTargetWithinRange(10),
-                                    new Timer(1, new AttackTask(), true)),
+                                    new Timer(0.1f, new AttackTask(), true)),
                                 new PursueTargetTask(new List<AbstractSteeringBehaviour> { obstacleAvoidanceBehaviour, seekBehaviour }))),
                         new Sequence("Wander",
                             new HasTarget(),

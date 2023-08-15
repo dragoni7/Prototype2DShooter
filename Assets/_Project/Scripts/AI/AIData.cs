@@ -17,13 +17,10 @@ namespace dragoni7
         public Vector2 MovementInput
         {
             get { return _movementInput; }
-            set { 
-                    if (value != _movementInput)
-                    {
-                        _movementInput = value;
-                        EventSystem.Instance.TriggerEvent(Events.OnEntityMove, new Dictionary<string, object> { { "entity", entity }, { "moveThisFrame", _movementInput } });
-                    } 
-                }
+            set {
+                _movementInput = value;
+                EventSystem.Instance.TriggerEvent(Events.OnEntityMove, new Dictionary<string, object> { { "entity", entity }, { "moveThisFrame", _movementInput } });
+            }
         }
 
         public Vector3 attackDirection;

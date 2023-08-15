@@ -15,11 +15,11 @@ namespace dragoni7
         public void SpawnEnemy(string name, Vector2 position)
         {
             // create enemy
-            var scriptableEnemy = ResourceSystem.Instance.GetEnemy(name);
+            EnemyData scriptableEnemy = ResourceSystem.Instance.GetEnemy(name);
             AbstractEnemy spawnedEnemy = Instantiate(scriptableEnemy.enemyPrefab, position, Quaternion.identity, transform);
             spawnedEnemy.SetAttributes(scriptableEnemy.BaseAttributes);
 
-            // create enemie's emitter
+            // create enemy's emitter
             var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);
             BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, position, Quaternion.identity, spawnedEnemy.transform);
             spawnedEmitter.SetStats(scriptableEmitter.BaseStats);
@@ -27,6 +27,9 @@ namespace dragoni7
             spawnedEmitter.Bullet = scriptableEmitter.scriptableBullet;
 
             spawnedEnemy.Emitter = spawnedEmitter;
+
+            // add enemy hp bar to canvas
+            EventSystem.Instance.TriggerEvent(Events.OnEnemySpawned, new Dictionary<string, object> { { "Enemy", spawnedEnemy} });
 
             // create enemy ai
             AbstractBrain spawnedAI = Instantiate(scriptableEnemy.enemyAiPrefab, position, Quaternion.identity, spawnedEnemy.transform);
@@ -36,6 +39,7 @@ namespace dragoni7
         public void MoveEntity(Entity entity, Vector2 moveThisFrame)
         {
             entity.rb.velocity = moveThisFrame * entity.Attributes.speed;
+            entity.HealthBar.transform.position = entity.transform.position + (Vector3.up * 0.5f);
         }
     }
 }

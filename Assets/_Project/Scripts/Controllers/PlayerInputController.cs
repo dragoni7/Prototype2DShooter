@@ -62,7 +62,7 @@ namespace dragoni7
 
                 if (isAttacking && player.CanAttack)
                 {
-                    EventSystem.Instance.TriggerEvent(Events.OnPlayerAttack, null);
+                    EventSystem.Instance.TriggerEvent(Events.OnEntityAttack, new Dictionary<string, object> { { "Entity", player} });
                 }
                 else
                 {
