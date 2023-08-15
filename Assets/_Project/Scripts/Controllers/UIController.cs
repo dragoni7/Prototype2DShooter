@@ -1,5 +1,7 @@
 ﻿using Cinemachine;
+using System.Collections.Generic;
 using UnityEngine;
+using Util;
 using Utils;
 
 namespace dragoni7
@@ -19,19 +21,24 @@ namespace dragoni7
         private FloatingText _floatingText;
 
         [SerializeField]
-        private CinemachineVirtualCamera _playerCam;
-
-        [SerializeField]
         private float _zoomSensitivity = 10f;
 
-        public float playerCamZoom;
-        private float shakeTimer;
-        private float shakerTimeTotal;
-        private float startingIntensity;
-        protected override void Awake()
+        private List<ITask> uiTasks = new();
+
+        private float _shakerTimeTotal;
+        private float _startingIntensity;
+        public float ShakerTimeTotal => _shakerTimeTotal;
+        public float StartingIntensity => _startingIntensity;
+        public float PlayerCamZoom { get; set; }
+        public float ShakeTimer { get; set; }
+
+        public CinemachineVirtualCamera playerCam;
+        public Camera mainCamera;
+
+        private void Start()
         {
-            base.Awake();
-            playerCamZoom = _playerCam.m_Lens.OrthographicSize;
+            PlayerCamZoom = playerCam.m_Lens.OrthographicSize;
+            uiTasks.Add(new CameraShakeTask());
         }
         public void UpdatePlayerHealthBar(float value)
         {
@@ -54,37 +61,37 @@ namespace dragoni7
         {
             var messageObj = Instantiate(_floatingText, position, Quaternion.identity, _worldCanvas.transform);
             var floatingText = messageObj.GetComponent<FloatingText>();
-            floatingText.SetText(value, color, playerCamZoom);
+            floatingText.SetText(value, color, PlayerCamZoom);
         }
         public void ZoomPlayerCamera(float axisValue)
         {
             float _orthoSize = axisValue * _zoomSensitivity;
 
-            float newSize = _orthoSize + _playerCam.m_Lens.OrthographicSize;
+            float newSize = _orthoSize + playerCam.m_Lens.OrthographicSize;
 
             if (newSize > 3 && newSize < 18)
             {
-                _playerCam.m_Lens.OrthographicSize = newSize;
-                playerCamZoom = newSize;
+                playerCam.m_Lens.OrthographicSize = newSize;
+                PlayerCamZoom = newSize;
             }
         }
-
         public void ShakePlayerCamera(float intensity, float time)
         {
-            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+            CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
             cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = intensity;
-            startingIntensity = intensity;
-            shakerTimeTotal = time;
-            shakeTimer = time;
+            _startingIntensity = intensity;
+            _shakerTimeTotal = time;
+            ShakeTimer = time;
         }
         private void Update()
         {
-            if (shakeTimer > 0)
+            if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
-                shakeTimer -= Time.deltaTime;
-                CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = _playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-                cinemachineBasicMultiChannelPerlin.m_AmplitudeGain = Mathf.Lerp(startingIntensity, 0f, 1 - (shakeTimer / shakerTimeTotal));
+                foreach (ITask task in uiTasks)
+                {
+                    task.Execute();
+                }
             }
         }
     }

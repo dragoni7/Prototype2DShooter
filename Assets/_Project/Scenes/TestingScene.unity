@@ -1225,9 +1225,9 @@ MonoBehaviour:
   _playerCanvas: {fileID: 930435628}
   _playerHealthBar: {fileID: 5396633341536012669}
   _floatingText: {fileID: 5393357673790150920, guid: b59d9c4b7d5c9fa46a85c1732bb8c2e8, type: 3}
-  _playerCam: {fileID: 1657023195}
   _zoomSensitivity: 10
-  playerCamZoom: 0
+  playerCam: {fileID: 1657023195}
+  mainCamera: {fileID: 519420031}
 --- !u!1 &1188870298
 GameObject:
   m_ObjectHideFlags: 0
