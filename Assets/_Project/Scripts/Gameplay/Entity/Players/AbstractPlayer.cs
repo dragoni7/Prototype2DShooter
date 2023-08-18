@@ -51,9 +51,19 @@ namespace dragoni7
 
                 if (_attributes.health <= 0)
                 {
-                    gameObject.SetActive(false);
+                    Die();
                 }
             }
+        }
+
+        public virtual void Heal(float amount)
+        {
+            _attributes.health += amount;
+        }
+        public override void Die()
+        {
+            base.Die();
+            Destroy(gameObject);
         }
     }
 }

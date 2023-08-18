@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbbd0aae416e288498013192e6ac9e97, type: 3}
+  m_Name: HealthPot
+  m_EditorClassIdentifier: 
+  itemName: HealthPot
+  prefab: {fileID: -2412212799335663590, guid: ef351e18912104f4c95c246f6d2a1602, type: 3}
+  sprite: {fileID: -3679828817949995438, guid: a0d3fbbc155eb404a87f827b40a48dfe, type: 3}

@@ -9,6 +9,7 @@ namespace dragoni7
         OnEntityMove,
         OnEntityAttack,
         OnEnemySpawned,
-        OnPlayerSpawned
+        OnPlayerSpawned,
+        OnEntityDie
     }
 }

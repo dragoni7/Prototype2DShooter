@@ -12,7 +12,7 @@ namespace dragoni7
         private Vector2 _currentMove;
         private PlayerController _pController;
 
-        private List<ITask> playerInputTasks = new();
+        private List<ITask> _playerInputTasks = new();
         public Vector2 CurrentMove => _currentMove;
         public bool IsAttacking => _isAttacking;
 
@@ -20,8 +20,8 @@ namespace dragoni7
         {
             _pController = PlayerController.Instance;
             _currentMove = Vector2.zero;
-            playerInputTasks.Add(new PlayerAttackTask());
-            playerInputTasks.Add(new MovePlayerTask());
+            _playerInputTasks.Add(new PlayerAttackTask());
+            _playerInputTasks.Add(new MovePlayerTask());
         }
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -72,7 +72,7 @@ namespace dragoni7
 
             if ((GameController.Instance.CurrentState == GameController.GameState.PlayingLevel) && !(!player.CanAttack && !player.CanMove))
             {
-                foreach (ITask task in playerInputTasks)
+                foreach (ITask task in _playerInputTasks)
                 {
                     task.Execute();
                 }

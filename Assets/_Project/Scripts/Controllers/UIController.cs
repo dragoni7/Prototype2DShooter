@@ -23,7 +23,7 @@ namespace dragoni7
         [SerializeField]
         private float _zoomSensitivity = 10f;
 
-        private List<ITask> uiTasks = new();
+        private List<ITask> _uiTasks = new();
 
         private float _shakerTimeTotal;
         private float _startingIntensity;
@@ -38,7 +38,7 @@ namespace dragoni7
         private void Start()
         {
             PlayerCamZoom = playerCam.m_Lens.OrthographicSize;
-            uiTasks.Add(new CameraShakeTask());
+            _uiTasks.Add(new CameraShakeTask());
         }
         public void UpdatePlayerHealthBar(float value)
         {
@@ -88,7 +88,7 @@ namespace dragoni7
         {
             if (GameController.Instance.CurrentState == GameController.GameState.PlayingLevel)
             {
-                foreach (ITask task in uiTasks)
+                foreach (ITask task in _uiTasks)
                 {
                     task.Execute();
                 }

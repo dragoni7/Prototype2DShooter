@@ -19,6 +19,7 @@ namespace dragoni7
             eventSystem.StartListening(Events.OnEntityAttack, OnEntityAttack);
             eventSystem.StartListening(Events.OnEnemySpawned, OnEnemySpawned);
             eventSystem.StartListening(Events.OnPlayerSpawned, OnPlayerSpawned);
+            eventSystem.StartListening(Events.OnEntityDie, OnEntityDie);
         }
         private void OnEntityDamaged(Dictionary<string, object> eventArgs)
         {
@@ -73,6 +74,25 @@ namespace dragoni7
 
             UIController.Instance.UpdatePlayerHealthBarMaxHP(health);
             UIController.Instance.UpdatePlayerHealthBar(health);
+        }
+        private void OnEntityDie(Dictionary<string, object> eventArgs)
+        {
+            Entity killedEntity = (Entity)eventArgs["Entity"];
+
+            if (killedEntity is AbstractPlayer)
+            {
+                // reset logic
+            }
+            else if (killedEntity is AbstractEnemy)
+            {
+                // drop stuff, increase score ect
+
+                // get loot table for entity and instantiate drop item
+                // TODO: move to a controller class
+                ItemData itemData = ResourceSystem.Instance.GetLootTableData(killedEntity.name.Split("(Clone)")[0]).GetDrop();
+                Item item = Instantiate(itemData.prefab, killedEntity.transform.position + Random.insideUnitSphere, Quaternion.identity);
+                item.GetComponent<SpriteRenderer>().sprite = itemData.sprite;
+            }
         }
     }
 }

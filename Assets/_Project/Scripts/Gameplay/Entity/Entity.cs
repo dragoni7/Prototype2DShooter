@@ -32,5 +32,9 @@ namespace dragoni7
         }
         public abstract void PerformAttack();
         public abstract void TakeDamage(float damage);
+        public virtual void Die()
+        {
+            EventSystem.Instance.TriggerEvent(Events.OnEntityDie, new Dictionary<string, object> { { "Entity", this } });
+        }
     }
 }

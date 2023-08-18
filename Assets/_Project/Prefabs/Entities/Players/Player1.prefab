@@ -247,6 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2448719114809522540}
+  lootTable: {fileID: 0}
   _healthBar: {fileID: 0}
   _equipParent: {fileID: 6136216840832629288}
 --- !u!1 &8296501985825804286

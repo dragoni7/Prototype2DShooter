@@ -28,7 +28,7 @@ namespace dragoni7
         {
             _damageValue.SetText(value);
             _damageValue.color = color;
-            _damageValue.fontSize = (0.08f * size);
+            _damageValue.fontSize = (0.05f * size);
         }
     }
 }

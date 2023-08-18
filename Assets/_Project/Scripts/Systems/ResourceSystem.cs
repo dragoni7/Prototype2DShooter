@@ -24,6 +24,8 @@ namespace dragoni7
 
         public List<LevelData> ScriptableLevelData { get; private set; }
         private Dictionary<string, LevelData> _levelDict;
+        public List<LootTableData> ScriptableLootTableData { get; private set; }
+        private Dictionary<string, LootTableData> _lootTableDict;
 
         protected override void Awake()
         {
@@ -56,6 +58,10 @@ namespace dragoni7
             // Level
             ScriptableLevelData = Resources.LoadAll<LevelData>("Level").ToList();
             _levelDict = ScriptableLevelData.ToDictionary(r => r.name, r => r);
+
+            // Loot Tables
+            ScriptableLootTableData = Resources.LoadAll<LootTableData>("LootTables").ToList();
+            _lootTableDict = ScriptableLootTableData.ToDictionary(r => r.name, r => r);
         }
         public PlayerData GetPlayer(string name) => _playersDict[name];
         public EnemyData GetEnemy(string name) => _enemiesDict[name];
@@ -63,5 +69,6 @@ namespace dragoni7
         public BulletData GetBullet(string name) => _bulletsDict[name];
         public EmitterData GetEmitter(string name) => _emittersDict[name];
         public LevelData GetLevelData(string name) => _levelDict[name];
+        public LootTableData GetLootTableData(string name) => _lootTableDict[name];
     }
 }
