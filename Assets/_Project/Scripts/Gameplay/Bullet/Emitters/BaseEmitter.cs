@@ -16,23 +16,23 @@ namespace dragoni7
             }
         }
         public BulletData Bullet { get; set; }
-        public EmitterAttributes attributes { get; protected set; }
+        public EmitterAttributes Attributes { get; protected set; }
 
         protected int timer = 0;
         protected bool canEmit = true;
 
         public void SetAttributes(EmitterAttributes attributes)
         {
-            this.attributes = attributes;
+            this.Attributes = attributes;
         }
 
-        public virtual void TryEmitBullets(DamageModifiers damageModifier)
+        public virtual void TryEmitBullets(Attributes attributes)
         {
             if (canEmit)
             {
                 foreach (Transform point in Pattern.points)
                 {
-                    BulletController.Instance.SpawnBullet(Bullet, point.position, point.rotation, point.up, attributes.bulletForce, damageModifier);
+                    BulletController.Instance.SpawnBullet(Bullet, point.position, point.rotation, point.up, Attributes.bulletForce, attributes);
                 }
 
                 canEmit = false;
@@ -41,7 +41,7 @@ namespace dragoni7
 
         public virtual void FixedUpdate()
         {
-            if (timer >= attributes.emitTime)
+            if (timer >= Attributes.emitTime)
             {
                 canEmit = true;
                 timer = 0;

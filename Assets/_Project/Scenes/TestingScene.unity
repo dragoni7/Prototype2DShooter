@@ -1127,7 +1127,7 @@ MonoBehaviour:
   floorTilemap: {fileID: 705484532}
   wallTilemap: {fileID: 1495876050}
   doorTilemap: {fileID: 1645300916}
-  floorTile: {fileID: 11400000, guid: 129e16804dc4f7c4390a3cd010cc2fa0, type: 2}
+  floorTile: {fileID: 11400000, guid: ad969e692a2ee2548b08959de59a9879, type: 2}
   wallTop: {fileID: 11400000, guid: 22c9f328675568942a63b2770a6a63dc, type: 2}
   doorTile: {fileID: 11400000, guid: b6d231c35c5eb85489e780f434b23eca, type: 2}
 --- !u!1 &1145652002

@@ -12,20 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94ca680a2f82cb548a5352bc580d0120, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  type: 3
-  displayName: Enemy1
-  description: 
   _abilities: []
   _baseAttributes:
-    damageModifiers:
-      genericModifier: 0
-      fireModifier: 0
-    damageResistances:
-      genericResistance: 0
-      fireResistance: 0.5
-    health: 3
-    speed: 8
-    shootingSpeed: 5
+    _attributeInfo:
+    - attributeType: 0
+      attributeValue: 3
+    - attributeType: 1
+      attributeValue: 8
+    - attributeType: 9
+      attributeValue: 0.5
   enemyPrefab: {fileID: 1743018561713434615, guid: b2aa68368c033e94790505039f832049, type: 3}
   scriptableEmitter: {fileID: 11400000, guid: 8dcead487c496434c840cf91c40c71b4, type: 2}
   enemyAiPrefab: {fileID: 5580339338825623332, guid: 1ccf15cde2332ec4f9803c543fe8deea, type: 3}

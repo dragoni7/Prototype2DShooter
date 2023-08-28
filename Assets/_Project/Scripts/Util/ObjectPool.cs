@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Utils
+namespace Util
 {
     public class ObjectPool<T> : IPool<T> where T : MonoBehaviour, IPoolable<T>
     {

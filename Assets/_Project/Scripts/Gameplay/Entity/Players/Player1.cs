@@ -4,7 +4,7 @@
     {
         public override void PerformAttack()
         {
-            Weapon.PerformAttack(Attributes.damageModifiers);
+            Weapon.PerformAttack(CurrentAttributes);
         }
     }
 }

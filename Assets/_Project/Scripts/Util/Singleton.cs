@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Utils
+namespace Util
 {
     /// <summary>
     /// Similar to singleton, but overrides current instance rather than destroying new attempted instances.

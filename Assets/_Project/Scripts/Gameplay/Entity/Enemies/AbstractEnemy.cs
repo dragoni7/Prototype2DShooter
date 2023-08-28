@@ -1,12 +1,11 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace dragoni7
 {
     public abstract class AbstractEnemy : Entity
     {
         public BaseEmitter Emitter { get; set; }
         public AbstractBrain Brain { get; set; }
+
+
         public void Start()
         {
             CanMove = true;
@@ -17,14 +16,13 @@ namespace dragoni7
         {
             if (gameObject.activeSelf)
             {
-                _attributes.health -= damage;
-                HealthBar.SetHealth(Attributes.health);
-
-                if (Attributes.health <= 0)
-                {
-                    Die();
-                }
+                CurrentHealth -= damage;
             }
+        }
+
+        public override void Heal(float amount)
+        {
+            CurrentHealth += amount;
         }
 
         public override void Die()

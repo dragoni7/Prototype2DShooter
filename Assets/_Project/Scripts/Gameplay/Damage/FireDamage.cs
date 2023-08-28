@@ -7,11 +7,11 @@ namespace dragoni7
         public Color Color => Color.red;
 
         public Color GetColor() => Color;
-        public float PerformDamage(DamageModifiers damageModifier, Entity target)
+        public float PerformDamage(Attributes attributes, Entity target)
         {
             // do fire stuff
-            float fireDamage = 1 + damageModifier.fireModifier;
-            float damageAfterResist = fireDamage - (target.Attributes.damageResistances.fireResistance * fireDamage);
+            float fireDamage = 1 + attributes.Get(AttributeType.FireDamage);
+            float damageAfterResist = fireDamage - (target.CurrentAttributes.Get(AttributeType.FireResistance) * fireDamage);
             target.TakeDamage(damageAfterResist);
 
             return damageAfterResist;

@@ -9,7 +9,7 @@ namespace dragoni7
     {
         public Vector2 Velocity { get; set; }
         public float BulletForce { get; set; }
-        public DamageModifiers CurrentDamageModifier { get; set; }
+        public Attributes ParentAttributes { get; set; }
         public BulletAttributes Attributes { get; protected set; }
         public IDamage DamageType { get; set; }
 
@@ -50,8 +50,9 @@ namespace dragoni7
                             gameObject.SetActive(false);
 
                             if (hitObject.TryGetComponent(out Entity target))
-                            {
-                                EventSystem.Instance.TriggerEvent(Events.OnEntityDamaged, new Dictionary<string, object> { { "damage", DamageType }, { "damageModifier", CurrentDamageModifier }, { "target", target }, { "source", gameObject } });
+                            {     
+                                // TODO: replace damage modifier with attribute
+                                GameEventManager.Instance.EventBus.Raise(new EntityDamagedEvent { damage = DamageType, attackerAttributes = ParentAttributes, target = target, source = gameObject });
                             }
                         }
                     }

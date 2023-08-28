@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace dragoni7
 {
+    /// <summary>
+    /// Spawn points for bullets
+    /// </summary>
     public class BasePattern : MonoBehaviour
     {
         public List<Transform> points = new();

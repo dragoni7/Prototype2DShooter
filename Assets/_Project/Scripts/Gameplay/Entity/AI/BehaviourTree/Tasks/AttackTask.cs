@@ -11,7 +11,7 @@ namespace dragoni7
         protected override NodeStatus OnRun(AIData aiData)
         {
             aiData.MovementInput = Vector2.zero;
-            EventSystem.Instance.TriggerEvent(Events.OnEntityAttack, new Dictionary<string, object> { { "Entity", aiData.entity } });
+            GameEventManager.Instance.EventBus.Raise(new EntityAttackEvent { entity = aiData.entity });
             return NodeStatus.Running;
         }
     }

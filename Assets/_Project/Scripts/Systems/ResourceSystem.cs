@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {
@@ -37,10 +37,12 @@ namespace dragoni7
         {
             // Players
             ScriptablePlayers = Resources.LoadAll<PlayerData>("Players").ToList();
+            ScriptablePlayers.ForEach(s => { s.BaseAttributes.Initialize(); });
             _playersDict = ScriptablePlayers.ToDictionary(r => r.name, r => r);
 
             // Enemies
             ScriptableEnemies = Resources.LoadAll<EnemyData>("Enemies").ToList();
+            ScriptableEnemies.ForEach(s => { s.BaseAttributes.Initialize(); });
             _enemiesDict = ScriptableEnemies.ToDictionary(r => r.name, r => r);
 
             // Weapons

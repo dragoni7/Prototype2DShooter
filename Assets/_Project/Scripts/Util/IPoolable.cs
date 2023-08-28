@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Utils
+namespace Util
 {
     public interface IPoolable<T>
     {

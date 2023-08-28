@@ -1,17 +1,24 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {
+    /// <summary>
+    /// Controller class for non player entities
+    /// </summary>
     public class EntityController : Singleton<EntityController>
     {
-        public List<AbstractEnemy> CurrentEnemies { get; set; }
         protected override void Awake()
         {
-            CurrentEnemies = new();
             base.Awake();
         }
+
+        /// <summary>
+        /// Instantiates a new enemy entity
+        /// </summary>
+        /// <param name="name">name of the enemy type</param>
+        /// <param name="position">position to spawn at</param>
         public void SpawnEnemy(string name, Vector2 position)
         {
             // create enemy
@@ -20,7 +27,7 @@ namespace dragoni7
             spawnedEnemy.SetAttributes(scriptableEnemy.BaseAttributes);
 
             // create enemy's emitter
-            var scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);
+            EmitterData scriptableEmitter = ResourceSystem.Instance.GetEmitter(scriptableEnemy.scriptableEmitter.name);
             BaseEmitter spawnedEmitter = Instantiate(scriptableEmitter.emitterPrefab, position, Quaternion.identity, spawnedEnemy.transform);
             spawnedEmitter.SetAttributes(scriptableEmitter.BaseAttributes);
             spawnedEmitter.Pattern = Instantiate(scriptableEmitter.patternPrefab, spawnedEmitter.transform.position, Quaternion.identity, spawnedEmitter.transform);
@@ -28,17 +35,22 @@ namespace dragoni7
 
             spawnedEnemy.Emitter = spawnedEmitter;
 
-            // add enemy hp bar to canvas
-            EventSystem.Instance.TriggerEvent(Events.OnEnemySpawned, new Dictionary<string, object> { { "Enemy", spawnedEnemy} });
-
             // create enemy ai
             AbstractBrain spawnedAI = Instantiate(scriptableEnemy.enemyAiPrefab, position, Quaternion.identity, spawnedEnemy.transform);
             spawnedEnemy.Brain = spawnedAI;
-            CurrentEnemies.Add(spawnedEnemy);
+
+            // add enemy hp bar to canvas
+            GameEventManager.Instance.EventBus.Raise(new EnemySpawnedEvent { enemy = spawnedEnemy});
         }
+
+        /// <summary>
+        /// Moves an entity
+        /// </summary>
+        /// <param name="entity">entity to move</param>
+        /// <param name="moveThisFrame">entity's movement</param>
         public void MoveEntity(Entity entity, Vector2 moveThisFrame)
         {
-            entity.rb.velocity = moveThisFrame * entity.Attributes.speed;
+            entity.rb.velocity = moveThisFrame * entity.CurrentSpeed;
             entity.HealthBar.transform.position = entity.transform.position + (Vector3.up * 0.5f);
         }
     }

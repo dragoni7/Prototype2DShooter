@@ -20,22 +20,9 @@ namespace dragoni7
             }
         }
 
-        protected float currentSpeed;
-        public float CurrentSpeed
-        {
-            get { return currentSpeed; }
-            set
-            {
-                if (value != currentSpeed)
-                {
-                    currentSpeed = value;
-                }
-                return;
-            }
-        }
+
         public virtual void Start()
         {
-            CurrentSpeed = _attributes.speed;
             CanMove = true;
             CanAttack = true;
         }
@@ -47,18 +34,13 @@ namespace dragoni7
         {
             if (gameObject.activeSelf)
             {
-                _attributes.health -= damage;
-
-                if (_attributes.health <= 0)
-                {
-                    Die();
-                }
+                CurrentHealth -= damage;
             }
         }
 
-        public virtual void Heal(float amount)
+        public override void Heal(float amount)
         {
-            _attributes.health += amount;
+            CurrentHealth += amount;
         }
         public override void Die()
         {

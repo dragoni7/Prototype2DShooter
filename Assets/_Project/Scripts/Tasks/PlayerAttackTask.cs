@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Util;
+﻿using Util;
 
 namespace dragoni7
 {
@@ -12,11 +10,11 @@ namespace dragoni7
 
             if (PlayerInputController.Instance.IsAttacking && player.CanAttack)
             {
-                EventSystem.Instance.TriggerEvent(Events.OnEntityAttack, new Dictionary<string, object> { { "Entity", player } });
+                GameEventManager.Instance.EventBus.Raise(new PlayerAttackEvent());
             }
             else
             {
-                player.CurrentSpeed = player.Attributes.speed;
+                player.CurrentSpeed = player.BaseSpeed;
             }
         }
     }

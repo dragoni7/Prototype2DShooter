@@ -2,10 +2,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Util;
-using Utils;
 
 namespace dragoni7
 {
+    /// <summary>
+    /// Controller class for recieving inputs and manipulating player
+    /// </summary>
     public class PlayerInputController : Singleton<PlayerInputController>
     {
         private bool _isAttacking = false;

@@ -4,6 +4,9 @@ using WUG.BehaviorTreeVisualizer;
 
 namespace dragoni7
 {
+    /// <summary>
+    /// AI for an entity. Contains behaviour tree and ai data
+    /// </summary>
     public abstract class AbstractBrain : MonoBehaviour, IBehaviorTree
     {
         public NodeBase BehaviorTree { get; set; }

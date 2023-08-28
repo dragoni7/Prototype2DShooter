@@ -1,8 +1,11 @@
 using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {
+    /// <summary>
+    /// Controller class for the cursor
+    /// </summary>
     public class CursorController : Singleton<CursorController>
     {
         [SerializeField] private Texture2D _cursorTexture;

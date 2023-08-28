@@ -4,7 +4,7 @@ using UnityEngine;
 namespace dragoni7
 {
     [CreateAssetMenu(fileName = "New Scriptable Emitter")]
-    public class EmitterData : AbstractData
+    public class EmitterData : ScriptableObject
     {
         public BaseEmitter emitterPrefab;
         public BulletData scriptableBullet;

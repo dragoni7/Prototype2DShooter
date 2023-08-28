@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Util;
-using Utils;
 
 namespace dragoni7
 {
+
+    /// <summary>
+    /// Controller class for handling ui manipulations
+    /// </summary>
     public class UIController : Singleton<UIController>
     {
         [SerializeField]
@@ -23,7 +26,7 @@ namespace dragoni7
         [SerializeField]
         private float _zoomSensitivity = 10f;
 
-        private List<ITask> _uiTasks = new();
+        private readonly List<ITask> _uiTasks = new();
 
         private float _shakerTimeTotal;
         private float _startingIntensity;
@@ -40,19 +43,40 @@ namespace dragoni7
             PlayerCamZoom = playerCam.m_Lens.OrthographicSize;
             _uiTasks.Add(new CameraShakeTask());
         }
+
+        /// <summary>
+        /// Updates the screen health bar's value
+        /// </summary>
+        /// <param name="value">new value</param>
         public void UpdatePlayerHealthBar(float value)
         {
             _playerHealthBar.SetHealth(value);
         }
+
+        /// <summary>
+        /// Updates the screen health bar's max value
+        /// </summary>
+        /// <param name="value">new value</param>
         public void UpdatePlayerHealthBarMaxHP(float value)
         {
             _playerHealthBar.SetMaxHealth(value);
         }
+
+        /// <summary>
+        /// Adds a entity's health bar to the canvas
+        /// </summary>
+        /// <param name="entity">entity with healthbar</param>
         public void AddEntityHealthBar(Entity entity)
         {
             entity.HealthBar.transform.SetParent(_worldCanvas.transform);
             entity.HealthBar.transform.position = entity.transform.position + (Vector3.up * 0.5f);
         }
+
+        /// <summary>
+        /// Spawns a floating message
+        /// </summary>
+        /// <param name="position">position of spawn</param>
+        /// <param name="value">message value</param>
         public void SendFloatingMessage(Vector2 position, string value)
         {
             SendFloatingMessage(position, value, Color.white);
@@ -63,6 +87,11 @@ namespace dragoni7
             var floatingText = messageObj.GetComponent<FloatingText>();
             floatingText.SetText(value, color, PlayerCamZoom);
         }
+
+        /// <summary>
+        /// Zooms the player cam
+        /// </summary>
+        /// <param name="axisValue">mouse wheel zoom value</param>
         public void ZoomPlayerCamera(float axisValue)
         {
             float _orthoSize = axisValue * _zoomSensitivity;
@@ -75,6 +104,12 @@ namespace dragoni7
                 PlayerCamZoom = newSize;
             }
         }
+
+        /// <summary>
+        /// Shakes the player cam
+        /// </summary>
+        /// <param name="intensity">shake intensity</param>
+        /// <param name="time">shake time</param>
         public void ShakePlayerCamera(float intensity, float time)
         {
             CinemachineBasicMultiChannelPerlin cinemachineBasicMultiChannelPerlin = playerCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();

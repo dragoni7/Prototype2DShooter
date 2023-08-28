@@ -3,6 +3,7 @@ using System;
 
 namespace dragoni
 {
+    // TODO: refactor for new attribute system
     [Serializable]
     public struct BulletAttributes
     {

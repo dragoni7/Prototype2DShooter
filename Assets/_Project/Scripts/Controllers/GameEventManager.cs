@@ -1,83 +1,100 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using Utils;
-using static UnityEngine.EventSystems.EventTrigger;
+using Util;
 
 namespace dragoni7
 {
+
+    /// <summary>
+    /// Mediator class for handling events triggered by objects
+    /// </summary>
     public class GameEventManager : Singleton<GameEventManager>
     {
+        private GenericEventBus<IEvent> _eventBus;
+        public GenericEventBus<IEvent> EventBus => _eventBus;
         protected override void Awake()
         {
             base.Awake();
+            _eventBus = new();
         }
         public void Start()
         {
-            EventSystem eventSystem = EventSystem.Instance;
-            eventSystem.StartListening(Events.OnEntityDamaged, OnEntityDamaged);
-            eventSystem.StartListening(Events.OnEntityMove, OnEntityMove);
-            eventSystem.StartListening(Events.OnEntityAttack, OnEntityAttack);
-            eventSystem.StartListening(Events.OnEnemySpawned, OnEnemySpawned);
-            eventSystem.StartListening(Events.OnPlayerSpawned, OnPlayerSpawned);
-            eventSystem.StartListening(Events.OnEntityDie, OnEntityDie);
+            // subscribe to all relevant events
+            // allow other objects to raise events when needed
+            _eventBus.SubscribeTo<EntityDamagedEvent>(OnEntityDamaged);
+            _eventBus.SubscribeTo<EntityHealthChangedEvent>(OnEntityHealthChanged);
+            _eventBus.SubscribeTo<EntityMoveEvent>(OnEntityMove);
+            _eventBus.SubscribeTo<PlayerAttackEvent>(OnPlayerAttack);
+            _eventBus.SubscribeTo<EntityAttackEvent>(OnEntityAttack);
+            _eventBus.SubscribeTo<EnemySpawnedEvent>(OnEnemySpawned);
+            _eventBus.SubscribeTo<PlayerSpawnEvent>(OnPlayerSpawned);
+            _eventBus.SubscribeTo<EntityDeathEvent>(OnEntityDie);
         }
-        private void OnEntityDamaged(Dictionary<string, object> eventArgs)
+        private void OnEntityDamaged(ref EntityDamagedEvent e)
         {
-            GameObject source = (GameObject)eventArgs["source"];
-            Entity target = (Entity)eventArgs["target"];
-            IDamage damage = (IDamage)eventArgs["damage"];
-            DamageModifiers damageModifier = (DamageModifiers)eventArgs["damageModifier"];
+            GameObject source = e.source;
+            Entity target = e.target;
+            IDamage damage = e.damage;
+            Attributes attributes = e.attackerAttributes;
 
             Vector3 targetPosition = target.transform.position;
-            float damageTaken = damage.PerformDamage(damageModifier, target);
+            float damageTaken = damage.PerformDamage(attributes, target);
 
             UIController uiController = UIController.Instance;
-            if (target is AbstractPlayer)
-            {
-                uiController.UpdatePlayerHealthBar(target.Attributes.health);
-            }
 
             uiController.SendFloatingMessage(targetPosition + Random.insideUnitSphere, damageTaken.ToString(), damage.GetColor());
-
         }
-        private void OnEntityMove(Dictionary<string, object> eventArgs)
+        private void OnEntityHealthChanged(ref EntityHealthChangedEvent e)
         {
-            Entity entity = (Entity)eventArgs["entity"];
-            Vector3 moveThisFrame = (Vector2)eventArgs["moveThisFrame"];
+            Entity entity = e.entity;
 
-            EntityController.Instance.MoveEntity(entity, moveThisFrame);
-        }
-        private void OnEntityAttack(Dictionary<string, object> eventArgs)
-        {
-            Entity entity = (Entity)eventArgs["Entity"];
+            UIController uiController = UIController.Instance;
+
+            float health = entity.CurrentHealth;
 
             if (entity is AbstractPlayer)
             {
-                UIController.Instance.ShakePlayerCamera(1f, 0.08f);
-                PlayerController.Instance.PlayerAttack();
+                uiController.UpdatePlayerHealthBar(health);
             }
             else
             {
-                entity.PerformAttack();
+                entity.HealthBar.SetHealth(health);
             }
         }
-        private void OnEnemySpawned(Dictionary<string, object> eventArgs)
+        private void OnEntityMove(ref EntityMoveEvent e)
         {
-            AbstractEnemy spawnedEnemy = (AbstractEnemy)eventArgs["Enemy"];
+            Entity entity = e.entity;
+            Vector3 moveThisFrame = e.moveThisFrame;
+
+            EntityController.Instance.MoveEntity(entity, moveThisFrame);
+        }
+        private void OnEntityAttack(ref EntityAttackEvent e)
+        {
+            Entity entity = e.entity;
+            entity.PerformAttack();
+        }
+        private void OnPlayerAttack(ref PlayerAttackEvent e)
+        {
+            UIController.Instance.ShakePlayerCamera(1f, 0.08f);
+            PlayerController.Instance.PlayerAttack();
+        }
+        private void OnEnemySpawned(ref EnemySpawnedEvent e)
+        {
+            AbstractEnemy spawnedEnemy = e.enemy;
 
             UIController.Instance.AddEntityHealthBar(spawnedEnemy);
         }
-        private void OnPlayerSpawned(Dictionary<string, object> eventArgs)
+        private void OnPlayerSpawned(ref PlayerSpawnEvent e)
         {
-            AbstractPlayer spawnedPlayer = (AbstractPlayer)eventArgs["Player"];
-            float health = spawnedPlayer.Attributes.health;
+            AbstractPlayer spawnedPlayer = e.player;
+            float health = spawnedPlayer.MaxHealth;
 
             UIController.Instance.UpdatePlayerHealthBarMaxHP(health);
             UIController.Instance.UpdatePlayerHealthBar(health);
         }
-        private void OnEntityDie(Dictionary<string, object> eventArgs)
+        private void OnEntityDie(ref EntityDeathEvent e)
         {
-            Entity killedEntity = (Entity)eventArgs["Entity"];
+            Entity killedEntity = e.entity;
 
             if (killedEntity is AbstractPlayer)
             {

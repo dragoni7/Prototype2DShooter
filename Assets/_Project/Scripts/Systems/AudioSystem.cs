@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {

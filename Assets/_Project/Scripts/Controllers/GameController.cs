@@ -1,8 +1,12 @@
 using System;
-using Utils;
+using Util;
 
 namespace dragoni7
 {
+
+    /// <summary>
+    /// Controller class for manipulating game state
+    /// </summary>
     public class GameController : Singleton<GameController>
     {
         public static event Action<GameState> OnBeforeStateChanged;
@@ -12,6 +16,8 @@ namespace dragoni7
         {
             ChangeState(GameState.Starting);
         }
+        
+        // TODO: switch from using actions to event bus
         public void ChangeState(GameState newState)
         {
             OnBeforeStateChanged?.Invoke(newState);

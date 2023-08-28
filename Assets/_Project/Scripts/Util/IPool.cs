@@ -1,4 +1,4 @@
-﻿namespace Utils
+﻿namespace Util
 {
     public interface IPool<T>
     {

@@ -1,8 +1,12 @@
 ﻿using UnityEngine;
-using Utils;
+using Util;
 
 namespace dragoni7
 {
+
+    /// <summary>
+    /// Controller class for handling level manipulations
+    /// </summary>
     public class LevelController : Singleton<LevelController>
     {
         private Level _level;

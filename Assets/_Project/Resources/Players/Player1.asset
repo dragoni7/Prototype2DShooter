@@ -12,20 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c10f98751566ce48a3eece0c7dfe858, type: 3}
   m_Name: Player1
   m_EditorClassIdentifier: 
-  type: 0
-  displayName: Player1
-  description: 
   _abilities:
   - {fileID: 2385704455612521622, guid: c4980158e0cee4e42866916537fdcd72, type: 3}
   _baseAttributes:
-    damageModifiers:
-      genericModifier: 0
-      fireModifier: 0
-    damageResistances:
-      genericResistance: 0
-      fireResistance: 0
-    health: 3
-    speed: 12
-    shootingSpeed: 8
+    _attributeInfo:
+    - attributeType: 0
+      attributeValue: 5
+    - attributeType: 1
+      attributeValue: 10
+    - attributeType: 2
+      attributeValue: 4
   playerPrefab: {fileID: 3499843795311515925, guid: c4442fa501265294d9a92798a53082d5, type: 3}
   scriptableWeapon: {fileID: 11400000, guid: 236f17957f63b3d4eb78423038d2f281, type: 2}
